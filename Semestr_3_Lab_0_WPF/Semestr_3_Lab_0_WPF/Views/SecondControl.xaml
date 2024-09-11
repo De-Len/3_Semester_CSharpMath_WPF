@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Semestr_3_Lab_0_WPF.Views.SecondControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Semestr_3_Lab_0_WPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+
+             
+             Background="White"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+            <ui:Button Margin="0,0,10,0" Content="Сгенерировать данные" Command="{Binding GenerateDataCommand}"/>
+            <ui:Button Margin="0,0,10,0" Content="Сохранить данные" Command="{Binding SaveDataCommand}"/>
+            <ui:Button Margin="0,0,10,0" Content="Загрузить данные" Command="{Binding UploadDataCommand}"/>
+        </WrapPanel>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+
+                <ColumnDefinition Width="*"/>
+                <!-- Для TextBox, который будет растягиваться -->
+                <ColumnDefinition Width="Auto"/>
+                <!-- Для кнопки -->
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Путь к папке для сохранения данных (json): " VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Путь к файлу загрузки данных (json): " VerticalAlignment="Center"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FilePathToFolder}" HorizontalAlignment="Stretch" Margin="5"/>
+            <ui:Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenFolderDialogCommand}"
+                       Icon="{ui:SymbolIcon AttachText20}" HorizontalAlignment="Right" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FilePathToJson}" HorizontalAlignment="Stretch" Margin="5"/>
+            <ui:Button Grid.Row="1" Grid.Column="2" Command="{Binding OpenFileDialogCommand}"
+                       Icon="{ui:SymbolIcon AttachText20}" HorizontalAlignment="Right" />
+        </Grid>
+
+        <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="100"
+                  Name="FlowerDataGrid" HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding Flowers}"
+                  />
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Самый маленький цветок: "></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding SmallestFlowerName}"></TextBlock>
+    </Grid>
+</UserControl>

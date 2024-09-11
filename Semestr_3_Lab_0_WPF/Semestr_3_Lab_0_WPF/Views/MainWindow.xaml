@@ -1,0 +1,38 @@
+﻿<Window x:Class="Semestr_3_Lab_0_WPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semestr_3_Lab_0_WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Column="0" Grid.Row="0">
+            <ui:Button Content="Задание 1" Command="{Binding OpenFirstControlCommand}"/>
+            <ui:Button Content="Задание 2" Command="{Binding OpenSecondControlCommand}"/>
+        </WrapPanel>
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+            Padding="16"
+            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="2"
+            CornerRadius="8">
+            <ContentControl Grid.Row="1"
+                Content="{Binding CurrentView}" 
+                HorizontalAlignment="Stretch"  
+                VerticalAlignment="Stretch" />
+        </Border>
+        
+    </Grid>
+    
+</Window>
