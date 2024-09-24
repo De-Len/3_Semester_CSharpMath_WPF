@@ -1,0 +1,52 @@
+﻿<Page x:Class="_3_Semester_CSharpMath_WPF.Views.Pages.DichotomyMethodPage.DichotomyMethodPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_3_Semester_CSharpMath_WPF.Views.Pages.DichotomyMethodPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DichotomyMethodPageView"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+      xmlns:viewmodels="clr-namespace:_3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage" 
+        d:DataContext="{d:DesignInstance local:DichotomyMethodPageView,
+                                 IsDesignTimeCreatable=True}"      
+      ui:Design.Background="White"
+      ui:Design.Foreground="Black">
+    <Page.DataContext>
+        <viewmodels:DichotomyMethodPageViewModel/>
+    </Page.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock FontSize="32" Text="Метод Дихотомии" FontWeight="Bold"/>
+            <Rectangle
+            Fill="Black"            
+            MinWidth="1"
+            Height="2"
+            VerticalAlignment="Top" />
+        </StackPanel>
+        <TextBlock Grid.Row="1" Text="Введите функцию:" />
+        <TextBlock Grid.Row="2" Text="Введите начало интервала:" />
+        <TextBlock Grid.Row="3" Text="Введите конец интервала:" />
+        <TextBlock Grid.Row="4" Text="Введите точность (сколько знаков после запятой):" />
+        <lvc:CartesianChart Grid.Row="5"
+            Series="{Binding Series}">
+        </lvc:CartesianChart>
+    </Grid>
+</Page>
