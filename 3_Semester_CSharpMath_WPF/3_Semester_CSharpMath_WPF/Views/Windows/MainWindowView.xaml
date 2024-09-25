@@ -7,6 +7,8 @@
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
         d:DataContext="{d:DesignInstance local:MainWindowView,
                                  IsDesignTimeCreatable=True}"
+        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200">
         <ui:FluentWindow.InputBindings>

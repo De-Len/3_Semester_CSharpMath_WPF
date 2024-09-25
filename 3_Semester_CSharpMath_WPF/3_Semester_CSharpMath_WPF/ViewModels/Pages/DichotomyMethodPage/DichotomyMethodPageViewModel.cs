@@ -1,24 +1,44 @@
-﻿using LiveChartsCore.SkiaSharpView;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LiveChartsCore;
-using CommunityToolkit.Mvvm.ComponentModel;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.Drawing;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
+using _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage;
+using SkiaSharp;
+using System.Diagnostics.CodeAnalysis;
+using AngouriMath.Extensions;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
 {
-    class DichotomyMethodPageViewModel : ObservableObject
+    partial class DichotomyMethodPageViewModel : ObservableObject
     {
-        public ISeries[] Series { get; set; }
-            = new ISeries[]
-            {
-                new LineSeries<double>
-                {
-                    Values = new double[] { -22, 1, 3, 5, 3, 4, 60 },
-                    Fill = null
-                }
-            };
+        private DichotomyMethodPageModel _model = new();
 
+        public required ISeries[] Series { get; set; }
+        public required Axis[] XAxes { get; set; }
+        public required Axis[] YAxes { get; set; }
+        public required DrawMarginFrame Frame { get; set; }
+
+        [SetsRequiredMembers]
         public DichotomyMethodPageViewModel()
         {
+            Series = _model.Series;
+            XAxes = _model.XAxes;
+            YAxes = _model.YAxes;
+            Frame = _model.Frame;
 
         }
+
+        //private string _userMathFormula = string.Empty;
+        //public string UserMathFormula 
+        //{
+        //    get => _userMathFormula;
+        //    set => SetProperty(ref _userMathFormula, value);
+        //}
+
+        [ObservableProperty]
+        private string _userMathFormula = string.Empty;
     }
 }

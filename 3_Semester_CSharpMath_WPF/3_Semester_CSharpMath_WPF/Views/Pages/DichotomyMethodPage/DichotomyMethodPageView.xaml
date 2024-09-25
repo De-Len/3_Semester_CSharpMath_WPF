@@ -12,15 +12,27 @@
       xmlns:viewmodels="clr-namespace:_3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage" 
         d:DataContext="{d:DesignInstance local:DichotomyMethodPageView,
                                  IsDesignTimeCreatable=True}"      
-      ui:Design.Background="White"
-      ui:Design.Foreground="Black">
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
     <Page.DataContext>
         <viewmodels:DichotomyMethodPageViewModel/>
     </Page.DataContext>
+    <Page.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0 5 0 0" />
+            <Setter Property="Grid.Column" Value="1" />
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="26"/>
+        </Style>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -31,22 +43,40 @@
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0">
-            <TextBlock FontSize="32" Text="Метод Дихотомии" FontWeight="Bold"/>
-            <Rectangle
-            Fill="Black"            
-            MinWidth="1"
-            Height="2"
-            VerticalAlignment="Top" />
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="100" >
+            <TextBlock Margin="20 0 0 0" FontSize="30" Text="Метод Дихотомии" FontWeight="Bold"/>
         </StackPanel>
-        <TextBlock Grid.Row="1" Text="Введите функцию:" />
-        <TextBlock Grid.Row="2" Text="Введите начало интервала:" />
-        <TextBlock Grid.Row="3" Text="Введите конец интервала:" />
-        <TextBlock Grid.Row="4" Text="Введите точность (сколько знаков после запятой):" />
-        <lvc:CartesianChart Grid.Row="5"
-            Series="{Binding Series}">
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="100"
+    Padding="16"
+    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+    BorderThickness="1"
+    CornerRadius="8,8,8,8">
+            <StackPanel Margin="0 0 0 10">
+                <TextBlock Grid.Row="1" Text="Введите функцию: F(x)=" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox Grid.Row="1" Grid.Column="2" Height="20" Padding="1" Text="{Binding UserMathFormula}"/>
+                <TextBlock Grid.Row="2" Text="Введите начало и конец интервала:" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox Grid.Row="2" Grid.Column="1"/>
+                <TextBlock Grid.Row="4" Text="Введите точность (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox Grid.Row="4" Grid.Column="2"/>
+                <Button Grid.Row="5" Grid.Column="1" Width="200">
+                    <TextBlock Text="Порешать" Style="{StaticResource TextBlockStyle}"/>
+                </Button>
+            </StackPanel>
+        </Border>
+        <lvc:CartesianChart Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="100"
+            Margin="20"
+            Series="{Binding Series}"
+            XAxes="{Binding XAxes}"
+            YAxes="{Binding YAxes}"
+            DrawMarginFrame="{Binding Frame}"
+            ZoomMode="Both"
+            TooltipPosition="Hidden">
         </lvc:CartesianChart>
     </Grid>
 </Page>
