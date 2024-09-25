@@ -27,6 +27,9 @@
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="FontSize" Value="26"/>
         </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="20"/>
+        </Style>
     </Page.Resources>
 
     <Grid>
@@ -52,22 +55,34 @@
             <TextBlock Margin="20 0 0 0" FontSize="30" Text="Метод Дихотомии" FontWeight="Bold"/>
         </StackPanel>
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="100"
-    Padding="16"
-    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-    BorderThickness="1"
-    CornerRadius="8,8,8,8">
-            <StackPanel Margin="0 0 0 10">
-                <TextBlock Grid.Row="1" Text="Введите функцию: F(x)=" Style="{StaticResource TextBlockStyle}"/>
-                <TextBox Grid.Row="1" Grid.Column="2" Height="20" Padding="1" Text="{Binding UserMathFormula}"/>
-                <TextBlock Grid.Row="2" Text="Введите начало и конец интервала:" Style="{StaticResource TextBlockStyle}"/>
-                <TextBox Grid.Row="2" Grid.Column="1"/>
-                <TextBlock Grid.Row="4" Text="Введите точность (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
-                <TextBox Grid.Row="4" Grid.Column="2"/>
-                <Button Grid.Row="5" Grid.Column="1" Width="200">
-                    <TextBlock Text="Порешать" Style="{StaticResource TextBlockStyle}"/>
-                </Button>
+            Padding="16" Margin="20"
+            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="8,8,8,8">
+            <StackPanel>
+                <DockPanel Margin="0 0 0 10">
+                    <TextBlock Grid.Row="1" Text="Введите функцию: F(x)=" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" Padding="1" Text="{Binding UserMathFormula}"/>
+                </DockPanel>
+                <StackPanel>
+                    <WrapPanel>
+                        <TextBlock Grid.Row="2" Text="Введите начало интервала:" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="50" Padding="1" Margin="10 0 5 0"/>
+                        <TextBlock Text="и конец интервала:" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="50" Padding="1" Margin="10 0 5 0"/>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Grid.Row="4" Text="Введите точность (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"/>
+                    </WrapPanel>
+                    
+                    <Button Grid.Row="5" Grid.Column="1" Width="200" Margin="0 20 0 0" Command="{Binding SolveFunctionCommand}">
+                        <TextBlock Text="Порешать" Style="{StaticResource TextBlockStyle}"/>
+                    </Button>
+                </StackPanel>
             </StackPanel>
+
         </Border>
         <lvc:CartesianChart Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="100"
             Margin="20"
@@ -76,7 +91,7 @@
             YAxes="{Binding YAxes}"
             DrawMarginFrame="{Binding Frame}"
             ZoomMode="Both"
-            TooltipPosition="Hidden">
-        </lvc:CartesianChart>
+            TooltipPosition="Hidden"
+            Visibility="{Binding ChartVisibility}" />
     </Grid>
 </Page>

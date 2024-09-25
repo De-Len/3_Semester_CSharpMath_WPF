@@ -9,6 +9,9 @@ using _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage;
 using SkiaSharp;
 using System.Diagnostics.CodeAnalysis;
 using AngouriMath.Extensions;
+using System.Windows;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
 {
@@ -29,16 +32,36 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
             YAxes = _model.YAxes;
             Frame = _model.Frame;
 
+            SolveFunctionCommand = new RelayCommand(SolveFunction);
         }
 
-        //private string _userMathFormula = string.Empty;
-        //public string UserMathFormula 
-        //{
-        //    get => _userMathFormula;
-        //    set => SetProperty(ref _userMathFormula, value);
-        //}
+        public ICommand SolveFunctionCommand { get; }
+
+        private Visibility _chartVisibility = Visibility.Hidden;
+        public Visibility ChartVisibility
+        {
+            get => _chartVisibility;
+            set => SetProperty(ref _chartVisibility, value);
+        }
 
         [ObservableProperty]
         private string _userMathFormula = string.Empty;
+
+        public void SolveFunction()
+        {
+            UpdateChartVisibility();
+        }
+        private void UpdateChartVisibility()
+        {
+            // Например, если имеются данные для отображения
+            if (Series != null && Series.Length > 0)
+            {
+                ChartVisibility = Visibility.Visible;
+            }
+            else
+            {
+                ChartVisibility = Visibility.Collapsed;
+            }
+        }
     }
 }
