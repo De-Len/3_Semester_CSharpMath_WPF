@@ -10,10 +10,15 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage
 {
     class DichotomyMethodPageModel
     {
-        private static readonly SKColor s_gray = new(195, 195, 195);
-        private static readonly SKColor s_gray1 = new(160, 160, 160);
-        private static readonly SKColor s_gray2 = new(90, 90, 90);
-        private static readonly SKColor s_dark3 = new(60, 60, 60);
+        private static readonly SKColor s_dark = new(00, 00, 00);
+        private static readonly SKColor s_gray1 = new(100, 100, 100);
+        private static readonly SKColor s_gray2 = new(200, 200, 200);
+        private static readonly SKColor s_white = new(255, 255, 255);
+
+        //private static readonly SKColor s_gray = new(195, 195, 195);
+        //private static readonly SKColor s_gray1 = new(160, 160, 160);
+        //private static readonly SKColor s_gray2 = new(90, 90, 90);
+        //private static readonly SKColor s_dark3 = new(60, 60, 60);
 
         public ISeries[] Series { get; set; } =
         {
@@ -34,10 +39,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage
             NamePaint = new SolidColorPaint(s_gray1),
             TextSize = 18,
             Padding = new Padding(5, 15, 5, 5),
-            LabelsPaint = new SolidColorPaint(s_gray),
+            LabelsPaint = new SolidColorPaint(s_dark),
             SeparatorsPaint = new SolidColorPaint
             {
-                Color = s_gray,
+                Color = s_dark,
                 StrokeThickness = 1,
                 PathEffect = new DashEffect(new float[] { 3, 3 })
             },
@@ -54,12 +59,12 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage
             },
             TicksPaint = new SolidColorPaint
             {
-                Color = s_gray,
+                Color = s_dark,
                 StrokeThickness = 1.5f
             },
             SubticksPaint = new SolidColorPaint
             {
-                Color = s_gray,
+                Color = s_dark,
                 StrokeThickness = 1
             }
         }
@@ -73,10 +78,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage
             NamePaint = new SolidColorPaint(s_gray1),
             TextSize = 18,
             Padding = new Padding(5, 0, 15, 0),
-            LabelsPaint = new SolidColorPaint(s_gray),
+            LabelsPaint = new SolidColorPaint(s_dark),
             SeparatorsPaint = new SolidColorPaint
             {
-                Color = s_gray,
+                Color = s_dark,
                 StrokeThickness = 1,
                 PathEffect = new DashEffect(new float[] { 3, 3 })
             },
@@ -93,12 +98,12 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage
             },
             TicksPaint = new SolidColorPaint
             {
-                Color = s_gray,
+                Color = s_dark,
                 StrokeThickness = 1.5f
             },
             SubticksPaint = new SolidColorPaint
             {
-                Color = s_gray,
+                Color = s_dark,
                 StrokeThickness = 1
             }
         }
@@ -107,10 +112,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage
         public DrawMarginFrame Frame { get; set; } =
         new()
         {
-            Fill = new SolidColorPaint(s_dark3),
+            Fill = new SolidColorPaint(s_white),
             Stroke = new SolidColorPaint
             {
-                Color = s_gray,
+                Color = s_dark,
                 StrokeThickness = 1
             }
         };

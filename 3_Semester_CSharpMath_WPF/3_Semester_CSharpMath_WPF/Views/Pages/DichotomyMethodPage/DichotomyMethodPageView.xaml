@@ -68,13 +68,16 @@
                 <StackPanel>
                     <WrapPanel>
                         <TextBlock Grid.Row="2" Text="Введите начало интервала:" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="50" Padding="1" Margin="10 0 5 0"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="50" Padding="1" Margin="10 0 5 0"
+                                 Text="{Binding StartLimit}"/>
                         <TextBlock Text="и конец интервала:" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="50" Padding="1" Margin="10 0 5 0"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="50" Padding="1" Margin="10 0 5 0"
+                                 Text="{Binding EndLimit}"/>
                     </WrapPanel>
                     <WrapPanel>
                         <TextBlock Grid.Row="4" Text="Введите точность (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"/>
+                        <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"
+                                 Text="{Binding CountDigitsAfterPoint}"/>
                     </WrapPanel>
                     
                     <Button Grid.Row="5" Grid.Column="1" Width="200" Margin="0 20 0 0" Command="{Binding SolveFunctionCommand}">
@@ -84,6 +87,8 @@
             </StackPanel>
 
         </Border>
+        <TextBlock Text="Найденный корень: " Grid.Row="5" Grid.Column="1" Visibility="{Binding FoundRootVisibility}" />
+        <TextBlock Text="{Binding FoundRoot}" Grid.Row="5" Grid.Column="2" Visibility="{Binding FoundRootVisibility}" />
         <lvc:CartesianChart Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="100"
             Margin="20"
             Series="{Binding Series}"

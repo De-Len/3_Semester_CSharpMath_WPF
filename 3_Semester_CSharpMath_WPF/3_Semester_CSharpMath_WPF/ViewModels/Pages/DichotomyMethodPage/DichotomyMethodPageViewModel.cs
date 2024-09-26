@@ -12,6 +12,7 @@ using AngouriMath.Extensions;
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using _3_Semester_CSharpMath_WPF.Models.MathMethods;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
 {
@@ -46,10 +47,52 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
 
         [ObservableProperty]
         private string _userMathFormula = string.Empty;
+        [ObservableProperty]
+        private string _startLimit = string.Empty;
+        [ObservableProperty]
+        private string _endLimit = string.Empty;
 
+        private string _countDigitsAfterPoint = string.Empty;
+        public string CountDigitsAfterPoint
+        {
+            get => _countDigitsAfterPoint;
+            set
+            {
+                if (SetProperty(ref _countDigitsAfterPoint, value))
+                {
+                    _tolerance = Math.Pow(10, -double.Parse(value)).ToString();
+                }
+            }
+        }
+        [ObservableProperty]
+        private string _tolerance = string.Empty;
+
+        [ObservableProperty]
+        private string _foundRoot = string.Empty;
+
+        private Visibility _foundRootVisibility = Visibility.Hidden;
+        public Visibility FoundRootVisibility
+        {
+            get => _foundRootVisibility;
+            set => SetProperty(ref _foundRootVisibility, value);
+        }
+        
         public void SolveFunction()
         {
-            UpdateChartVisibility();
+            double startLimitInt = double.Parse(StartLimit);
+            double endLimitInt = double.Parse(EndLimit);
+            double toleranceInt = double.Parse(Tolerance);
+
+            try
+            {
+                FoundRoot = MathMethodsGroup.Bisection(startLimitInt, endLimitInt, toleranceInt).ToString();
+
+                UpdateChartVisibility();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         private void UpdateChartVisibility()
         {
@@ -57,10 +100,12 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
             if (Series != null && Series.Length > 0)
             {
                 ChartVisibility = Visibility.Visible;
+                FoundRootVisibility = Visibility.Visible;
             }
             else
             {
                 ChartVisibility = Visibility.Collapsed;
+                FoundRootVisibility = Visibility.Visible;
             }
         }
     }
