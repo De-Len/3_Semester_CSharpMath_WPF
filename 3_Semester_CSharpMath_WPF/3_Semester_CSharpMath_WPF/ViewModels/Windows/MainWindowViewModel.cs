@@ -19,14 +19,14 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Windows
 
         public MainWindowViewModel()
         {
-            ApplicationTitle = "BugBusterWeb";
+            ApplicationTitle = "Prod by Gordei";
 
             NavigationItems =
             [
                 new NavigationViewItem()
             {
-                Content = "Home",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
+                Content = "Метод Дихотомии",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.MathFormatLinear24 },
                 TargetPageType = typeof(DichotomyMethodPageView) },
 
                 //new NavigationViewItem()

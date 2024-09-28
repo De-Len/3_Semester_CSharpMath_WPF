@@ -4,7 +4,6 @@ using Flee.PublicTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq.Expressions;
 using System.Windows;
 using static SkiaSharp.HarfBuzz.SKShaper;
 
@@ -15,42 +14,50 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
 
         public static double SolveFunction(double x)
         {
-            var factory = new ExpressionContext();
-            factory.Variables["x"] = x; // Устанавливаем значение переменной как double
 
-            return factory.CompileGeneric<double>(DichotomyMethodPageViewModel.UserMathFunction).Evaluate(); // Компилируем выражение как double и вычисляем
+            ExpressionContext context = new ExpressionContext();
+            context.Imports.AddType(typeof(Math));
+            context.Variables.Add("x", x);
+            IDynamicExpression e1 = context.CompileDynamic(DichotomyMethodPageViewModel.UserMathFunction); // Исп. свою функцию
+            var result = e1.Evaluate();
+            if (result is double)
+            {
+                return (double)result;
+            }
+            throw new InvalidOperationException("SolveFunction: Результат не является числом типа double."); 
         }
 
         public static double Bisection(double startLimit, double endLimit, double tolerance)
         {
-            int iterations = 0;
+            if (SolveFunction(startLimit) * SolveFunction(endLimit) >= 0)
+            {
+                throw new ArgumentException("Функция имеет одинаковый знак на концах. Корень не существует в этом интервале.");
+            }
+
             double root = startLimit;
 
             while ((endLimit - startLimit) >= tolerance)
             {
-                // Найдем среднюю точку
                 root = (startLimit + endLimit) / 2;
 
-                // Проверяем, является ли c корнем
+                // Если найденный корень достаточно близок к нулю, можно завершить
                 if (Math.Abs(SolveFunction(root)) < tolerance)
                 {
-                    break; // корень найден
+                    return root; // нашел корень
                 }
-                // Решение лежит в левой части
-                else if (SolveFunction(root) * SolveFunction(startLimit) < 0)
+
+                // Ищем в какую сторону двигаться
+                if (SolveFunction(root) * SolveFunction(startLimit) < 0)
                 {
-                    endLimit = root;
+                    endLimit = root; // корень слева
                 }
-                // Решение лежит в правой части
                 else
                 {
-                    startLimit = root;
+                    startLimit = root; // корень справа
                 }
-
-                ++iterations;
             }
 
-            return root; // Возвращаем полученное значение корня
+            return root; // Возвращаем корень после окончания итераций
         }
     }
 }

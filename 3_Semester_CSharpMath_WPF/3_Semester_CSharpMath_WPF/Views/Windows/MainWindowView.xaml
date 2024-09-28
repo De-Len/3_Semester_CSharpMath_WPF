@@ -57,17 +57,10 @@
                 Grid.Row="0"
                 Grid.Column="1" Grid.ColumnSpan="2" 
                  CloseWindowByDoubleClickOnIcon="True">
-                <!--<ui:TitleBar.Icon>
-                    <ui:ImageIcon Source="pack://application:,,,/Sources/Pica.png" />
-                </ui:TitleBar.Icon>-->
+                <ui:TitleBar.Icon>
+                    <ui:ImageIcon Source="C:\Users\princedelen\source\repos\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png" />
+                </ui:TitleBar.Icon>
             </ui:TitleBar>
-            <WrapPanel Margin="5 5 5 5" Grid.Column="0" >
-                <ui:Button Width="100" Padding="0" Panel.ZIndex="10"
-                        Height="20"
-                        HorizontalAlignment="Center">
-                    <TextBlock FontSize="13" Margin="0" VerticalAlignment="Top"><Run Text="Save"/></TextBlock>
-                </ui:Button>
-            </WrapPanel>
 
         </Grid>
         

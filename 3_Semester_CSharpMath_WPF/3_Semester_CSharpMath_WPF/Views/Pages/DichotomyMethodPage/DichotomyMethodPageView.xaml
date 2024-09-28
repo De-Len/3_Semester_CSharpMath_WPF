@@ -89,15 +89,7 @@
         </Border>
         <TextBlock Text="Найденный корень: " Grid.Row="5" Grid.Column="1" Visibility="{Binding FoundRootVisibility}" />
         <TextBlock Text="{Binding FoundRoot}" Grid.Row="5" Grid.Column="2" Visibility="{Binding FoundRootVisibility}" />
-        <lvc:CartesianChart Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="100"
-            Margin="20"
-            Series="{Binding Series}"
-            XAxes="{Binding XAxes}"
-            YAxes="{Binding YAxes}"
-            DrawMarginFrame="{Binding Frame}"
-            ZoomMode="Both"
-            TooltipPosition="Hidden"
-            Visibility="{Binding ChartVisibility}" />
+
         <ContentControl Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="100"
             Content="{Binding ChartView}" 
             HorizontalAlignment="Stretch"  

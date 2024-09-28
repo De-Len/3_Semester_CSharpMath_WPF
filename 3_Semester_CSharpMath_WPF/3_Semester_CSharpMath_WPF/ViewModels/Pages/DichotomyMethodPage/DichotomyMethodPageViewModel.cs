@@ -13,6 +13,8 @@ using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using _3_Semester_CSharpMath_WPF.Models.MathMethods;
+using _3_Semester_CSharpMath_WPF.Views.Pages.DichotomyMethodPage.UserControls;
+using _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserControls;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
 {
@@ -25,10 +27,9 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
         public Axis[] YAxes { get; set; }
         public DrawMarginFrame Frame { get; set; }
 
-
-        
         public DichotomyMethodPageViewModel()
         {
+
             SolveFunctionCommand = new RelayCommand(SolveFunction);
         }
 
@@ -88,20 +89,13 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
             get => _foundRootVisibility;
             set => SetProperty(ref _foundRootVisibility, value);
         }
-        
-        private void InitModel()
-        {
-            _model = new DichotomyMethodPageModel();
-            Series = _model.Series;
-            XAxes = _model.XAxes;
-            YAxes = _model.YAxes;
-            Frame = _model.Frame;
-        }
+
+        [ObservableProperty]
+        private object _chartView;
+
 
         public void SolveFunction()
         {
-            InitModel();
-
             double startLimitInt = double.Parse(StartLimit);
             double endLimitInt = double.Parse(EndLimit);
             double toleranceInt = double.Parse(Tolerance);
@@ -110,11 +104,15 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
             {
                 FoundRoot = MathMethodsGroup.Bisection(startLimitInt, endLimitInt, toleranceInt).ToString();
 
+                ChartModel.StartLimit = float.Parse(StartLimit);
+                ChartModel.EndLimit = float.Parse(EndLimit);
+                ChartView = new ChartView();
+
                 UpdateChartVisibility();
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
         }
         private void UpdateChartVisibility()
