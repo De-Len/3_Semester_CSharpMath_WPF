@@ -98,5 +98,9 @@
             ZoomMode="Both"
             TooltipPosition="Hidden"
             Visibility="{Binding ChartVisibility}" />
+        <ContentControl Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="100"
+            Content="{Binding ChartView}" 
+            HorizontalAlignment="Stretch"  
+            VerticalAlignment="Stretch" />
     </Grid>
 </Page>

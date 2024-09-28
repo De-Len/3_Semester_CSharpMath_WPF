@@ -1,18 +1,24 @@
-﻿using AngouriMath.Extensions;
+﻿using _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage;
+using AngouriMath.Extensions;
+using Flee.PublicTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Windows;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
 {
     internal class MathMethodsGroup
     {
-        public static double Function(double x)
+
+        public static double SolveFunction(double x)
         {
-            // Пример: f(x) = x^2 - 4
-            // return x * x - 4;
-            return 0; //TODO READ FUNCTION
+            var factory = new ExpressionContext();
+            factory.Variables["x"] = x; // Устанавливаем значение переменной как double
+
+            return factory.CompileGeneric<double>(DichotomyMethodPageViewModel.UserMathFunction).Evaluate(); // Компилируем выражение как double и вычисляем
         }
 
         public static double Bisection(double startLimit, double endLimit, double tolerance)
@@ -26,12 +32,12 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
                 root = (startLimit + endLimit) / 2;
 
                 // Проверяем, является ли c корнем
-                if (Math.Abs(Function(root)) < tolerance)
+                if (Math.Abs(SolveFunction(root)) < tolerance)
                 {
                     break; // корень найден
                 }
                 // Решение лежит в левой части
-                else if (Function(root) * Function(startLimit) < 0)
+                else if (SolveFunction(root) * SolveFunction(startLimit) < 0)
                 {
                     endLimit = root;
                 }

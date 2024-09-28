@@ -18,21 +18,17 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
 {
     partial class DichotomyMethodPageViewModel : ObservableObject
     {
-        private DichotomyMethodPageModel _model = new();
+        private DichotomyMethodPageModel _model;
 
-        public required ISeries[] Series { get; set; }
-        public required Axis[] XAxes { get; set; }
-        public required Axis[] YAxes { get; set; }
-        public required DrawMarginFrame Frame { get; set; }
+        public ISeries[] Series { get; set; }
+        public Axis[] XAxes { get; set; }
+        public Axis[] YAxes { get; set; }
+        public DrawMarginFrame Frame { get; set; }
 
-        [SetsRequiredMembers]
+
+        
         public DichotomyMethodPageViewModel()
         {
-            Series = _model.Series;
-            XAxes = _model.XAxes;
-            YAxes = _model.YAxes;
-            Frame = _model.Frame;
-
             SolveFunctionCommand = new RelayCommand(SolveFunction);
         }
 
@@ -45,8 +41,24 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
             set => SetProperty(ref _chartVisibility, value);
         }
 
-        [ObservableProperty]
+
+
         private string _userMathFormula = string.Empty;
+        public string UserMathFormula
+        {
+            get => _userMathFormula;
+            set
+            {
+                if (SetProperty(ref _userMathFormula, value))
+                {
+                    UserMathFunction = value;
+                }
+            }
+
+        }
+
+        public static string UserMathFunction { get; set; } = string.Empty;
+
         [ObservableProperty]
         private string _startLimit = string.Empty;
         [ObservableProperty]
@@ -77,8 +89,19 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
             set => SetProperty(ref _foundRootVisibility, value);
         }
         
+        private void InitModel()
+        {
+            _model = new DichotomyMethodPageModel();
+            Series = _model.Series;
+            XAxes = _model.XAxes;
+            YAxes = _model.YAxes;
+            Frame = _model.Frame;
+        }
+
         public void SolveFunction()
         {
+            InitModel();
+
             double startLimitInt = double.Parse(StartLimit);
             double endLimitInt = double.Parse(EndLimit);
             double toleranceInt = double.Parse(Tolerance);

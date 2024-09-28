@@ -1,4 +1,5 @@
-﻿using LiveChartsCore;
+﻿using _3_Semester_CSharpMath_WPF.Models.MathMethods;
+using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Drawing;
 using LiveChartsCore.SkiaSharpView;
@@ -122,10 +123,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage
         private static List<ObservablePoint> Fetch()
         {
             var list = new List<ObservablePoint>();
-            var fx = EasingFunctions.BounceInOut;
 
             for (var x = -1f; x < 1f; x += 0.001f)
             {
+                // var y = MathMethodsGroup.SolveFunction(x);
                 var y = x;
                 list.Add(new ObservablePoint(x, y));
             }
