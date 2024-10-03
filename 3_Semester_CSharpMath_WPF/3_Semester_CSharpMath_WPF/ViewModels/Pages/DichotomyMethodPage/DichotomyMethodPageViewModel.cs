@@ -65,18 +65,22 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
         [ObservableProperty]
         private string _endLimit = string.Empty;
 
-        private string _countDigitsAfterPoint = string.Empty;
-        public string CountDigitsAfterPoint
+        private string _accuracyCountDigitsAfterPoint = string.Empty;
+        public string AccuracyCountDigitsAfterPoint
         {
-            get => _countDigitsAfterPoint;
+            get => _accuracyCountDigitsAfterPoint;
             set
             {
-                if (SetProperty(ref _countDigitsAfterPoint, value))
+                if (SetProperty(ref _accuracyCountDigitsAfterPoint, value))
                 {
                     _tolerance = Math.Pow(10, -double.Parse(value)).ToString();
                 }
             }
         }
+
+        [ObservableProperty]
+        private string _answerCountDigitsAfterPoint = string.Empty;
+
         [ObservableProperty]
         private string _tolerance = string.Empty;
 
@@ -96,14 +100,14 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
 
         public void SolveFunction()
         {
-            double startLimitInt = double.Parse(StartLimit);
-            double endLimitInt = double.Parse(EndLimit);
-            double toleranceInt = double.Parse(Tolerance);
+            double startLimitDouble = double.Parse(StartLimit);
+            double endLimitDouble = double.Parse(EndLimit);
+            double toleranceDouble = double.Parse(Tolerance);
 
             try
             {
-                FoundRoot = MathMethodsGroup.Bisection(startLimitInt, endLimitInt, toleranceInt).ToString();
-
+                // FoundRoot = Math.Round(MathMethodsGroup.Bisection(startLimitInt, endLimitInt, toleranceInt), int.Parse(CountDigitsAfterPoint)).ToString();
+                FoundRoot = MathMethodsGroup.Bisection(startLimitDouble, endLimitDouble, toleranceDouble).ToString("G" + AnswerCountDigitsAfterPoint);
                 ChartModel.StartLimit = float.Parse(StartLimit);
                 ChartModel.EndLimit = float.Parse(EndLimit);
                 ChartView = new ChartView();
