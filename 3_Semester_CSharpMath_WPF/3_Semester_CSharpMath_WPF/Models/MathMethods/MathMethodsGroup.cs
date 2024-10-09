@@ -29,7 +29,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
 
         public static double Bisection(double startLimit, double endLimit, double tolerance)
         {
-
+            if (SolveFunction(startLimit) * SolveFunction(endLimit) > 0)
+            {
+                throw new ArgumentException("Функция имеет одинаковые знаки на границах");
+            }
 
             double root = startLimit;
 
