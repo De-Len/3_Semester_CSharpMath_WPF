@@ -20,8 +20,6 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
 {
     partial class DichotomyMethodPageViewModel : ObservableObject
     {
-        private DichotomyMethodPageModel _model;
-
         public ISeries[] Series { get; set; }
         public Axis[] XAxes { get; set; }
         public Axis[] YAxes { get; set; }
@@ -100,6 +98,8 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
 
         public void SolveFunction()
         {
+            MathMethodsGroup.UserMathFunction = UserMathFunction;
+
             double startLimitDouble = double.Parse(StartLimit);
             double endLimitDouble = double.Parse(EndLimit);
             double toleranceDouble = double.Parse(Tolerance);
@@ -107,7 +107,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage
             try
             {
                 // FoundRoot = Math.Round(MathMethodsGroup.Bisection(startLimitInt, endLimitInt, toleranceInt), int.Parse(CountDigitsAfterPoint)).ToString();
-                FoundRoot = MathMethodsGroup.Bisection(startLimitDouble, endLimitDouble, toleranceDouble).ToString("G" + AnswerCountDigitsAfterPoint);
+                FoundRoot = MathMethodsGroup.Bisection(startLimitDouble, endLimitDouble, toleranceDouble).ToString("F" + AnswerCountDigitsAfterPoint);
                 ChartModel.StartLimit = float.Parse(StartLimit);
                 ChartModel.EndLimit = float.Parse(EndLimit);
                 ChartView = new ChartView();

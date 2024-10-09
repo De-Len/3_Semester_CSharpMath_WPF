@@ -14,8 +14,6 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.GoldenSectionSearchPage
 {
     partial class GoldenSectionSearchPageViewModel : ObservableObject
     {
-        private DichotomyMethodPageModel _model;
-
         public ISeries[] Series { get; set; }
         public Axis[] XAxes { get; set; }
         public Axis[] YAxes { get; set; }
@@ -89,17 +87,28 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.GoldenSectionSearchPage
         [ObservableProperty]
         private object _chartView;
 
+        [ObservableProperty]
+        private bool _isToggleButtonOn;
+
 
         public void SolveFunction()
         {
+            MathMethodsGroup.UserMathFunction = UserMathFunction;
+
             double startLimitDouble = double.Parse(StartLimit);
             double endLimitDouble = double.Parse(EndLimit);
             double toleranceDouble = double.Parse(Tolerance);
 
             try
             {
-                // FoundRoot = Math.Round(MathMethodsGroup.Bisection(startLimitInt, endLimitInt, toleranceInt), int.Parse(CountDigitsAfterPoint)).ToString();
-                FoundRoot = MathMethodsGroup.GoldenSectionSeacthMinimum(startLimitDouble, endLimitDouble, toleranceDouble).ToString("G" + AnswerCountDigitsAfterPoint);
+                if (IsToggleButtonOn)
+                {
+                    FoundRoot = MathMethodsGroup.GoldenSectionSeacthMaximum(startLimitDouble, endLimitDouble, toleranceDouble).ToString("F" + AnswerCountDigitsAfterPoint);
+                }
+                else
+                {
+                    FoundRoot = MathMethodsGroup.GoldenSectionSeacthMinimum(startLimitDouble, endLimitDouble, toleranceDouble).ToString("F" + AnswerCountDigitsAfterPoint);
+                }
                 ChartModel.StartLimit = float.Parse(StartLimit);
                 ChartModel.EndLimit = float.Parse(EndLimit);
                 ChartView = new ChartView();

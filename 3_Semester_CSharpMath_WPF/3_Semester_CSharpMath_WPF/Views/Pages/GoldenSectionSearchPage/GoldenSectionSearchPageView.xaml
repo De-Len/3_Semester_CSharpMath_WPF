@@ -8,7 +8,7 @@
       Title="GoldenSectionSearchPageView"
             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
-      xmlns:viewmodels="clr-namespace:_3_Semester_CSharpMath_WPF.ViewModels.Pages.DichotomyMethodPage" 
+      xmlns:viewmodels="clr-namespace:_3_Semester_CSharpMath_WPF.ViewModels.Pages.GoldenSectionSearchPage" 
       xmlns:local="clr-namespace:_3_Semester_CSharpMath_WPF.ViewModels.Pages.GoldenSectionSearchPage"
       d:DataContext="{d:DesignInstance local:GoldenSectionSearchPageViewModel,
                                  IsDesignTimeCreatable=True}"      
@@ -16,7 +16,7 @@
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
     <Page.DataContext>
-        <viewmodels:DichotomyMethodPageViewModel/>
+        <viewmodels:GoldenSectionSearchPageViewModel/>
     </Page.DataContext>
     <Page.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
@@ -44,7 +44,6 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
 
-
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
@@ -63,37 +62,40 @@
         CornerRadius="8,8,8,8">
             <StackPanel>
                 <DockPanel Margin="0 0 0 10">
-                    <TextBlock Grid.Row="1" Text="Введите функцию: F(x)=" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBox Grid.Row="1" Grid.Column="2" Padding="1" Text="{Binding UserMathFormula}"/>
+                    <TextBlock Text="Введите функцию: F(x)=" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Padding="1" Text="{Binding UserMathFormula}"/>
                 </DockPanel>
                 <StackPanel>
                     <WrapPanel>
-                        <TextBlock Grid.Row="2" Text="Введите начало интервала:" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="50" Padding="1" Margin="10 0 5 0"
+                        <TextBlock Text="Введите начало интервала:" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox MinWidth="50" Padding="1" Margin="10 0 5 0"
                              Text="{Binding StartLimit}"/>
                         <TextBlock Text="и конец интервала:" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" MinWidth="50" Padding="1" Margin="10 0 5 0"
+                        <TextBox MinWidth="50" Padding="1" Margin="10 0 5 0"
                              Text="{Binding EndLimit}"/>
                     </WrapPanel>
                     <WrapPanel>
-                        <TextBlock Grid.Row="4" Text="Введите точность вычисления (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Text="Введите точность вычисления (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
                         <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"
                              Text="{Binding AccuracyCountDigitsAfterPoint}"/>
                     </WrapPanel>
                     <WrapPanel>
-                        <TextBlock Grid.Row="5" Text="Введите точность ответа (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Text="Введите точность ответа (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
                         <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"
          Text="{Binding AnswerCountDigitsAfterPoint}"/>
                     </WrapPanel>
-
-                    <Button Grid.Row="6" Grid.Column="1" Width="200" Margin="0 20 0 0" Command="{Binding SolveFunctionCommand}">
-                        <TextBlock Text="Порешать" Style="{StaticResource TextBlockStyle}"/>
-                    </Button>
+                    <WrapPanel Margin="0 20 0 0">
+                        <Button Width="200" Command="{Binding SolveFunctionCommand}">
+                            <TextBlock Text="Порешать" Style="{StaticResource TextBlockStyle}"/>
+                        </Button>
+                        <ui:ToggleSwitch IsChecked="{Binding IsToggleButtonOn}" OffContent="Minimum"
+                                                                                OnContent="Maximum" Margin="20 0 0 0"/>
+                    </WrapPanel>
                 </StackPanel>
             </StackPanel>
 
         </Border>
-        <TextBlock Text="Первый найденный корень: " Grid.Row="6" Grid.Column="1" Visibility="{Binding FoundRootVisibility}" />
+        <TextBlock Text="Найденный экстремум: " Grid.Row="6" Grid.Column="1" Visibility="{Binding FoundRootVisibility}" />
         <TextBlock Text="{Binding FoundRoot}" Grid.Row="6" Grid.Column="2" Visibility="{Binding FoundRootVisibility}" />
 
         <ContentControl Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="100"

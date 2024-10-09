@@ -11,14 +11,14 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
 {
     internal class MathMethodsGroup
     {
-
+        public static string UserMathFunction = string.Empty;
         public static double SolveFunction(double x)
         {
 
             ExpressionContext context = new ExpressionContext();
             context.Imports.AddType(typeof(Math));
             context.Variables.Add("x", x);
-            IDynamicExpression e1 = context.CompileDynamic(DichotomyMethodPageViewModel.UserMathFunction); // Исп. свою функцию
+            IDynamicExpression e1 = context.CompileDynamic(UserMathFunction); // Исп. свою функцию
             var result = e1.Evaluate();
             if (result is double)
             {
@@ -29,10 +29,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
 
         public static double Bisection(double startLimit, double endLimit, double tolerance)
         {
-            if (startLimit > 0 || endLimit < 0)
-            {
-                throw new ArgumentException("Начальная и конечная границы должны включать 0.");
-            }
+
 
             double root = startLimit;
 
@@ -69,6 +66,34 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
             while (Math.Abs(endLimit - startLimit) > epsilon)
             {
                 if (SolveFunction(x1) < SolveFunction(x2))
+                {
+                    endLimit = x2; // Исключаем x2
+                    x2 = x1; // Передвигаем x2
+                    resultPhi = (endLimit - startLimit) / phi;
+                    x1 = endLimit - resultPhi; // Находим новую x1
+                }
+                else
+                {
+                    startLimit = x1; // Исключаем x1
+                    x1 = x2; // Передвигаем x1
+                    resultPhi = (endLimit - startLimit) / phi;
+                    x2 = startLimit + resultPhi; // Находим новую x2
+                }
+            }
+
+            // Возвращаем середину отрезка как приближенное значение минимума
+            return (startLimit + endLimit) / 2;
+        }
+        public static double GoldenSectionSeacthMaximum(double startLimit, double endLimit, double epsilon)
+        {
+            double phi = (1 + Math.Sqrt(5)) / 2; // Золотое сечение
+            double resultPhi = (endLimit - startLimit) / phi; // длина отрезка
+            double x1 = endLimit - resultPhi; // точка 1
+            double x2 = startLimit + resultPhi; // точка 2
+
+            while (Math.Abs(endLimit - startLimit) > epsilon)
+            {
+                if (SolveFunction(x1) > SolveFunction(x2))
                 {
                     endLimit = x2; // Исключаем x2
                     x2 = x1; // Передвигаем x2
