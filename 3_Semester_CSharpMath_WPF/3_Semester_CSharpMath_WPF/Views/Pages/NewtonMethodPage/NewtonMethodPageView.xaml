@@ -91,14 +91,20 @@
                         Text="{Binding CountIterations}"/>
                     </WrapPanel>
 
-                    <Button Grid.Row="6" Grid.Column="1" Width="200" Margin="0 20 0 0" Command="{Binding SolveFunctionCommand}">
-                        <TextBlock Text="Порешать" Style="{StaticResource TextBlockStyle}"/>
-                    </Button>
+                    <WrapPanel Margin="0 20 0 0">
+                        <Button Width="200" Command="{Binding SolveFunctionCommand}">
+                            <TextBlock Text="Порешать" Style="{StaticResource TextBlockStyle}"/>
+                        </Button>
+                        <ui:ToggleSwitch IsChecked="{Binding IsToggleButtonOn}" OffContent="Minimum"
+                                                        OnContent="Maximum" Margin="20 0 0 0"/>
+                    </WrapPanel>
+                    
+                    
                 </StackPanel>
             </StackPanel>
 
         </Border>
-        <TextBlock Text="Ближайший от середины найденный корень: " Grid.Row="6" Grid.Column="1" Visibility="{Binding FoundRootVisibility}" />
+        <TextBlock Text="Ближайший от середины найденный экстремум: " Grid.Row="6" Grid.Column="1" Visibility="{Binding FoundRootVisibility}" />
         <TextBlock Text="{Binding FoundRoot}" Grid.Row="6" Grid.Column="2" Visibility="{Binding FoundRootVisibility}" />
 
         <ContentControl Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="100"

@@ -28,13 +28,13 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Windows
                 new NavigationViewItem()
             {
                 Content = "Метод Дихотомии",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardMathFormula16 },
+                Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardMathFormula20 },
                 TargetPageType = typeof(DichotomyMethodPageView) },
 
                 new NavigationViewItem()
                 {
                     Content = "Метод золотого сечения",
-                    Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardMathFormula20 },
+                    Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardMathFormula16 },
                     TargetPageType = typeof(GoldenSectionSearchPageView) },
 
                 new NavigationViewItem()

@@ -74,6 +74,9 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.NewtonMethodPage
         }
 
         [ObservableProperty]
+        private bool _isToggleButtonOn;
+
+        [ObservableProperty]
         private string _answerCountDigitsAfterPoint = string.Empty;
 
         [ObservableProperty]
@@ -146,9 +149,18 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.NewtonMethodPage
                 MathMethodsGroup.UserMathFunction = UserMathFunction;
 
                 // Вычисление корня методом Ньютона
-                FoundRoot = MathMethodsGroup.NewtonMethod(startLimitDouble, endLimitDouble, countIterationsInt, toleranceDouble)
-                    .ToString("F" + AnswerCountDigitsAfterPoint);
-
+                // FoundRoot = MathMethodsGroup.NewtonMethod(startLimitDouble, endLimitDouble, countIterationsInt, toleranceDouble)
+                //    .ToString("F" + AnswerCountDigitsAfterPoint);
+                if (IsToggleButtonOn)
+                {
+                    FoundRoot = MathMethodsGroup.NewtonRaphson(startLimitDouble, endLimitDouble, countIterationsInt, toleranceDouble, OptimizationType.Maximize)
+                        .ToString("F" + AnswerCountDigitsAfterPoint);
+                }
+                else
+                {
+                    FoundRoot = MathMethodsGroup.NewtonRaphson(startLimitDouble, endLimitDouble, countIterationsInt, toleranceDouble, OptimizationType.Minimize)
+                        .ToString("F" + AnswerCountDigitsAfterPoint);
+                }
                 ChartModel.StartLimit = float.Parse(StartLimit);
                 ChartModel.EndLimit = float.Parse(EndLimit);
                 ChartView = new ChartView();

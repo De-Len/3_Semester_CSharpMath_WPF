@@ -132,7 +132,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
         {
             var list = new List<ObservablePoint>();
 
-            for (var x = StartLimit; x < EndLimit; x += 0.001f)
+            for (var x = StartLimit; x < EndLimit; x += 0.01f)
             {
                 var y = MathMethodsGroup.SolveFunction(x);
                 list.Add(new ObservablePoint(x, y));

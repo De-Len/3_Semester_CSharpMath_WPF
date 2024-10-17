@@ -162,5 +162,50 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
 
             return derivative;
         }
+
+        public static double NewtonRaphson(double startLimit, double endLimit, double iterations, double tolerance, OptimizationType optimizationType)
+        {
+            // Инициализируем начальное приближение
+            double initialGuess = (startLimit + endLimit) / 2;
+
+            for (int index = 0; index < iterations; ++index)
+            {
+                double fPrime = FindDerivative(initialGuess);
+                double fDoublePrime = FindDerivative(FindDerivative(initialGuess));
+
+                // Проверка на ноль производной (возможная точка локального экстремума или седловая точка)
+                if (Math.Abs(fPrime) < tolerance)
+                {
+                    Console.WriteLine($"Найден эквивалентный корень в x = {initialGuess}");
+                    return initialGuess;
+                }
+
+                // В зависимости от типа оптимизации, выбираем значение для обновления
+                double step = (optimizationType == OptimizationType.Minimize) ?
+                              -fPrime / fDoublePrime :
+                              fPrime / fDoublePrime;
+
+                // Вычисление нового приближения
+                double x1 = initialGuess + step;
+
+                // Проверка выхода за границы
+                if (x1 < startLimit || x1 > endLimit)
+                {
+                    Console.WriteLine($"Выход за границы: найденное значение x = {x1} находится вне диапазона.");
+                    return x1;
+                }
+
+                initialGuess = x1;
+
+                // Проверка на сходимость: если изменение значения очень маленькое, то мы можем остановиться
+                if (Math.Abs(x1 - initialGuess) < tolerance)
+                {
+                    Console.WriteLine($"Оптимальное значение найдено в x = {x1}");
+                    return x1;
+                }
+            }
+
+            throw new InvalidOperationException("Не удалось найти оптимальное значение в заданном количестве итераций.");
+        }
     }
 }

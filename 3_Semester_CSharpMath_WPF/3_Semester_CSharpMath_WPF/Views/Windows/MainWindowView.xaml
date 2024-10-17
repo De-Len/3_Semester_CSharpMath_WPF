@@ -9,7 +9,7 @@
                                  IsDesignTimeCreatable=True}"
         Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Icon="C:\Users\princedelen\source\repos\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png"
         Title="MainWindow" Height="700" Width="1200">
         <ui:FluentWindow.InputBindings>
         <KeyBinding
