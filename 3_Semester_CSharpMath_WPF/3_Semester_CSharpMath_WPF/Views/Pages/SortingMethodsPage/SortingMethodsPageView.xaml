@@ -38,7 +38,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="100">
             <TextBlock Margin="20 0 0 0" FontSize="30" Text="Методы сортировки" FontWeight="Bold"/>
             <StackPanel Orientation="Horizontal">
-                <Button Margin="20 10 0 10" >
+                <Button Margin="20 10 0 10" Command="{Binding OpenSortingWindowCommand}">
                     <WrapPanel>
                         <ui:SymbolIcon
                              Grid.Row="0"
@@ -47,7 +47,7 @@
                         <TextBlock Padding="10 0 0 0" Text="Сортировать" VerticalAlignment="Center" />
                     </WrapPanel>
                 </Button>
-                <Button Margin="20 10 0 10" >
+                <Button Margin="20 10 0 10" Command="{Binding OpenFolderSelection}">
                     <WrapPanel>
                         <ui:SymbolIcon
                              Grid.Row="0"
