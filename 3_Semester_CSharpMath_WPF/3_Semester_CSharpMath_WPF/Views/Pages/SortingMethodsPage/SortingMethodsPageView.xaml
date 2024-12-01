@@ -47,16 +47,16 @@
                         <TextBlock Padding="10 0 0 0" Text="Сортировать" VerticalAlignment="Center" />
                     </WrapPanel>
                 </Button>
-                <Button Margin="20 10 0 10" Command="{Binding OpenFolderSelection}">
+                <Button Margin="20 10 0 10" Command="{Binding OpenFolderSelectionCommand}">
                     <WrapPanel>
                         <ui:SymbolIcon
                              Grid.Row="0"
                              FontSize="20"
-                             Symbol="Document16" /> 
-                        <TextBlock Padding="10 0 0 0" Text="Указать путь к папке" VerticalAlignment="Center" />
+                             Symbol="DocumentSave20" /> 
+                        <TextBlock Padding="10 0 0 0" Text="Папка для результатов" VerticalAlignment="Center" />
                     </WrapPanel>
                 </Button>
-                <Button Margin="20 10 0 10" >
+                <Button Margin="20 10 0 10" Command="{Binding OpenDataGeneratorWindowCommand}">
                     <WrapPanel>
                         <ui:SymbolIcon
                              Grid.Row="0"

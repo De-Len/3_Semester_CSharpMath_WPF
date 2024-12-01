@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage.Windows
+namespace _3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage.Windows.UserControls
 {
     /// <summary>
-    /// Interaction logic for SortingMethodsChooseFolderView.xaml
+    /// Interaction logic for DataGeneratorAutomaticallyView.xaml
     /// </summary>
-    public partial class SortingMethodsChooseFolderView : Window
+    public partial class DataGeneratorAutomaticallyView : UserControl
     {
-        public SortingMethodsChooseFolderView()
+        public DataGeneratorAutomaticallyView()
         {
             InitializeComponent();
         }

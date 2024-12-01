@@ -1,10 +1,9 @@
 ﻿using _3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Ookii.Dialogs.Wpf;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows.Input;
-using System.Windows.Forms;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
 {
@@ -12,7 +11,10 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
     {
         public ICommand OpenSortingWindowCommand { get; }
         public ICommand OpenFolderSelectionCommand { get; }
+        public ICommand OpenDataGeneratorWindowCommand { get; }
+
         public ObservableCollection<Person> DataGrid { get; set; }
+        private SortingMethodsDataGeneratorWindowView _sortingMethodsDataGeneratorWindowView;
         public SortingMethodsPageViewModel()
         {
             DataGrid = new ObservableCollection<Person>
@@ -26,6 +28,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
 
             OpenSortingWindowCommand = new RelayCommand(OpenSortingWindow);
             OpenFolderSelectionCommand = new RelayCommand(OpenFolderSelection);
+            OpenDataGeneratorWindowCommand = new RelayCommand(OpenDataGeneratorWindow);
         }
 
         public void OpenSortingWindow()
@@ -35,14 +38,16 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
         }
         public void OpenFolderSelection()
         {
-            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
-
-            DialogResult result = folderBrowser.ShowDialog();
-
-            if (!string.IsNullOrWhiteSpace(folderBrowser.SelectedPath))
+            var dialog = new VistaFolderBrowserDialog();
+            if (dialog.ShowDialog() == true)
             {
-                string[] files = Directory.GetFiles(folderBrowser.SelectedPath);
+                string folderPath = dialog.SelectedPath;
             }
+        }
+        public void OpenDataGeneratorWindow()
+        {
+            _sortingMethodsDataGeneratorWindowView = new SortingMethodsDataGeneratorWindowView();
+            _sortingMethodsDataGeneratorWindowView.Show();
         }
     }
 

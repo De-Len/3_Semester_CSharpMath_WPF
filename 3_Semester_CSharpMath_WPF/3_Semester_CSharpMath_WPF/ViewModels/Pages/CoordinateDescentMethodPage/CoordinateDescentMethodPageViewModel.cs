@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 
+
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.CoordinateDescentMethodPage
 {
     partial class CoordinateDescentMethodPageViewModel : ObservableObject

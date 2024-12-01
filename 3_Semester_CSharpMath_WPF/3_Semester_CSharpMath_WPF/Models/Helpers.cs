@@ -126,5 +126,34 @@ namespace _3_Semester_CSharpMath_WPF.Models
 
             return (startLimitDouble, endLimitDouble, stepSizeDouble, countIterationsInt);
         }
+        public static (double, double, int, int) CheckExceptionsSortingMethods(string startLimit = "0", string endLimit = "0", string accuracyCountDigitsAfterPoint = "0", string numbersCount = "0",
+            int numberCountInt = 0, double startLimitDouble = double.NaN, double endLimitDouble = double.NaN, int accuracyCountDigitsAfterPointInt = 0)
+        {
+            // Проверка и преобразование StartLimit
+            if (!double.TryParse(startLimit, out startLimitDouble))
+            {
+                throw new FormatException("Неверный формат для начала интервала. Пожалуйста, введите число.");
+            }
+
+            // Проверка и преобразование EndLimit
+            if (!double.TryParse(endLimit, out endLimitDouble))
+            {
+                throw new FormatException("Неверный формат для конца интервала. Пожалуйста, введите число.");
+            }
+
+            // Проверка и преобразование CountIterations (количества итераций)
+            if (!int.TryParse(accuracyCountDigitsAfterPoint, out accuracyCountDigitsAfterPointInt))
+            {
+                throw new FormatException("Неверный формат для количества знаков после запятой.");
+            }
+
+            // Проверка и преобразование Tolerance (точности)
+            if (!int.TryParse(numbersCount, out numberCountInt))
+            {
+                throw new FormatException("Неверный формат для количества чисел.");
+            }
+
+            return (startLimitDouble, endLimitDouble, accuracyCountDigitsAfterPointInt, numberCountInt);
+        }
     }
 }
