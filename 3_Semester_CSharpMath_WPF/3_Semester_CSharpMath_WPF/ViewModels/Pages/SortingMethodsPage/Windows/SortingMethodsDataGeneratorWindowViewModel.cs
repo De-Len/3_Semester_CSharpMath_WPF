@@ -13,7 +13,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
 {
     partial class SortingMethodsDataGeneratorWindowViewModel : ObservableObject
     {
-        public static ObservableCollection<double> NumbersCollection { get; set; }
+        public static ObservableCollection<double> NumbersCollection;
         private bool _isToggleButtonOn; 
         public bool IsToggleButtonOn
         {
@@ -43,6 +43,8 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
             _dataGeneratorAutomatically = new DataGeneratorAutomaticallyView();
 
             UpdateDataGeneratorUserControlVisibility();
+
+            NumbersCollection = new ObservableCollection<double>();
         }
 
         private void UpdateDataGeneratorUserControlVisibility()

@@ -64,6 +64,7 @@
                     <Button Width="200" Command="{Binding GenerateNumbersCommand}">
                         <TextBlock Text="Сгенерировать" Style="{StaticResource TextBlockStyle}"/>
                     </Button>
+                    <ProgressBar IsIndeterminate="False" Margin="45 0 0 0" Minimum="0" Maximum="100" Value="{Binding ProgressBarValue}" Width="200"/>
                 </WrapPanel>
 
 

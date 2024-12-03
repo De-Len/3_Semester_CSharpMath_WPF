@@ -74,9 +74,9 @@
             BorderThickness="1"
             CornerRadius="8,8,8,8">
             <DataGrid x:Name="dataGrid" ItemsSource="{Binding DataGrid}"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="True"
-                  Margin="10">
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          Margin="10">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Select">
                         <DataGridTemplateColumn.CellTemplate>
@@ -85,10 +85,30 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Название метода" Binding="{Binding SortMethodName}"/>
-                    <DataGridTextColumn Header="Тайминг" Binding="{Binding Timing}"/>
-                    <DataGridTextColumn Header="Progress bar?" Binding="{Binding Timing}"/>
 
+                    <DataGridTextColumn Header="Название метода" Binding="{Binding SortMethodName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Тайминг" Binding="{Binding Timing}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Progress bar?" Binding="{Binding Timing}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

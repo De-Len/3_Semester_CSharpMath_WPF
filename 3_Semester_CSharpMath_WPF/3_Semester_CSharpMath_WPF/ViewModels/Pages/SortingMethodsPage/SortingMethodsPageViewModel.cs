@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Ookii.Dialogs.Wpf;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows.UserControls;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
 {
@@ -21,14 +22,16 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
             {
                 new Person { IsSelected = true, SortMethodName = "Пузырьковая", Timing = 0},
                 new Person { IsSelected = true, SortMethodName = "Вставками", Timing = 0 },
-                new Person { IsSelected = true, SortMethodName = "Быстрая", Timing = 0 },
                 new Person { IsSelected = true, SortMethodName = "Шейкерная", Timing = 0 },
-                new Person { IsSelected = true, SortMethodName = "Быстрая", Timing = 0 }
+                new Person { IsSelected = true, SortMethodName = "Быстрая", Timing = 0 },
+                new Person { IsSelected = true, SortMethodName = "BOGO", Timing = 0 }
             };
 
             OpenSortingWindowCommand = new RelayCommand(OpenSortingWindow);
             OpenFolderSelectionCommand = new RelayCommand(OpenFolderSelection);
             OpenDataGeneratorWindowCommand = new RelayCommand(OpenDataGeneratorWindow);
+
+
         }
 
         public void OpenSortingWindow()
@@ -42,6 +45,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
             if (dialog.ShowDialog() == true)
             {
                 string folderPath = dialog.SelectedPath;
+                DataGeneratorAutomaticallyViewModel.FilePath = folderPath;
             }
         }
         public void OpenDataGeneratorWindow()
