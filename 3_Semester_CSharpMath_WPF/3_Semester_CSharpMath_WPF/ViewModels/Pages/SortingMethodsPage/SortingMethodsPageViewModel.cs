@@ -1,10 +1,10 @@
-﻿using _3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage.Windows;
+﻿using _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows.UserControls;
+using _3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Ookii.Dialogs.Wpf;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows.UserControls;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
 {
@@ -14,8 +14,22 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
         public ICommand OpenFolderSelectionCommand { get; }
         public ICommand OpenDataGeneratorWindowCommand { get; }
 
-        public ObservableCollection<Person> DataGrid { get; set; }
+        public static ObservableCollection<Person> DataGrid { get; set; }
+
         private SortingMethodsDataGeneratorWindowView _sortingMethodsDataGeneratorWindowView;
+
+        [ObservableProperty]
+        private static string _bubbleSortOutput;
+
+
+        //public static string BubbleSortOutput;
+
+        public static string InsertionSortOutput;
+        public static string CocktailShakerSortOutput;
+        public static string QuickSortOutput;
+        public static string BogoSortOutput;
+
+
         public SortingMethodsPageViewModel()
         {
             DataGrid = new ObservableCollection<Person>
@@ -55,10 +69,28 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
         }
     }
 
-    public class Person
+    public class Person : ObservableObject
     {
-        public string SortMethodName { get; set; }
-        public int Timing { get; set; }
-        public bool IsSelected { get; set; }
+        private string _sortMethodName;
+        private long _timing;
+        private bool _isSelected;
+
+        public string SortMethodName
+        {
+            get => _sortMethodName;
+            set => SetProperty(ref _sortMethodName, value);
+        }
+
+        public long Timing
+        {
+            get => _timing;
+            set => SetProperty(ref _timing, value);
+        }
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set => SetProperty(ref _isSelected, value);
+        }
     }
 }

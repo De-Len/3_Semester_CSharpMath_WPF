@@ -2,11 +2,205 @@
 
 namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
 {
+    public class Sorter
+    {
+        private ISortStrategy _sortStrategy;
+
+        public void SetSortStrategy(ISortStrategy sortStrategy)
+        {
+            _sortStrategy = sortStrategy;
+        }
+
+        public double[] Sort(double[] list)
+        {
+            return _sortStrategy.Sort(list);
+        }
+    }
+
+    public interface ISortStrategy
+    {
+        double[] Sort(double[] list);
+    }
+
+    public class BubbleSort : ISortStrategy
+    {
+        public double[] Sort(double[] array)
+        {
+            int n = array.Length;
+            bool swapped;
+            for (int i = 0; i < n - 1; i++)
+            {
+                swapped = false;
+                for (int j = 0; j < n - i - 1; j++)
+                {
+                    if (array[j] > array[j + 1])
+                    {
+                        // Обмен значениями
+                        double temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                        swapped = true;
+                    }
+                }
+                // Если за проход не было замен, массив отсортирован
+                if (!swapped)
+                    break;
+            }
+            return array;
+        }
+    }
+
+    public class InsertionSort : ISortStrategy
+    {
+        public double[] Sort(double[] array)
+        {
+            int n = array.Length;
+            for (int i = 1; i < n; i++)
+            {
+                double key = array[i];
+                int j = i - 1;
+
+                // Сдвигаем элементы, которые больше ключа, на одну позицию вперед
+                while (j >= 0 && array[j] > key)
+                {
+                    array[j + 1] = array[j];
+                    j--;
+                }
+                array[j + 1] = key;
+            }
+            return array;
+        }
+    }
+
+    public class CocktailShakerSort : ISortStrategy
+    {
+        public double[] Sort(double[] array)
+        {
+            int n = array.Length;
+            bool swapped;
+            do
+            {
+                swapped = false;
+
+                // Проход в прямом направлении
+                for (int i = 0; i < n - 1; i++)
+                {
+                    if (array[i] > array[i + 1])
+                    {
+                        // Обмен значениями
+                        double temp = array[i];
+                        array[i] = array[i + 1];
+                        array[i + 1] = temp;
+                        swapped = true;
+                    }
+                }
+
+                // Если по прямому проходу не было замен, массив отсортирован
+                if (!swapped)
+                    break;
+
+                swapped = false;
+
+                // Проход в обратном направлении
+                for (int i = n - 2; i >= 0; i--)
+                {
+                    if (array[i] > array[i + 1])
+                    {
+                        // Обмен значениями
+                        double temp = array[i];
+                        array[i] = array[i + 1];
+                        array[i + 1] = temp;
+                        swapped = true;
+                    }
+                }
+            } while (swapped);
+            return array;
+        }
+    }
+
+    public class QuickSort : ISortStrategy
+    {
+        public double[] Sort(double[] array)
+        {
+            // Создаем копию исходного массива, чтобы не изменять оригинал
+            double[] result = (double[])array.Clone();
+            QuickSortHelper(result, 0, result.Length - 1);
+            return result; // Возвращаем отсортированный массив
+        }
+
+        private void QuickSortHelper(double[] array, int low, int high)
+        {
+            if (low < high)
+            {
+                int pivotIndex = Partition(array, low, high); // Разделяем массив и получаем индекс опорного элемента
+                QuickSortHelper(array, low, pivotIndex - 1); // Рекурсивно сортируем левую часть
+                QuickSortHelper(array, pivotIndex + 1, high); // Рекурсивно сортируем правую часть
+            }
+        }
+
+        private int Partition(double[] array, int low, int high)
+        {
+            double pivot = array[high]; // Опорный элемент
+            int i = low - 1; // Индекс меньшего элемента
+
+            for (int j = low; j < high; j++)
+            {
+                if (array[j] <= pivot) // Если текущий элемент меньше или равен опорному
+                {
+                    i++; // Увеличиваем индекс меньшего элемента
+                    Swap(array, i, j); // Меняем местами элементы
+                }
+            }
+            Swap(array, i + 1, high); // Перемещаем опорный элемент в правильное место
+            return i + 1; // Возвращаем индекс опорного элемента
+        }
+
+        private void Swap(double[] array, int index1, int index2)
+        {
+            double temp = array[index1];
+            array[index1] = array[index2];
+            array[index2] = temp; // Меняем их местами
+        }
+    }
+
+    public class Bogosort : ISortStrategy
+    {
+        public double[] Sort(double[] array)
+        {
+            Random rand = new Random();
+            while (!IsSorted(array))
+            {
+                // Перемешиваем массив
+                for (int i = 0; i < array.Length; i++)
+                {
+                    int j = rand.Next(array.Length);
+                    // Обмен значениями
+                    double temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
+            }
+            return array;
+        }
+
+        private static bool IsSorted(double[] array)
+        {
+            for (int i = 1; i < array.Length; i++)
+            {
+                if (array[i - 1] > array[i])
+                    return false;
+            }
+            return true;
+        }
+    }
+
+
     static class SortingMethods
     {
         // Пузырьковая сортировка
-        public static double[] BubbleSort(double[] array)
+        public async static Task<double[]> BubbleSort(double[] array)
         {
+            Thread.Sleep(1);
             int n = array.Length;
             bool swapped;
             for (int i = 0; i < n - 1; i++)
@@ -31,8 +225,9 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
         }
 
         // Сортировка вставками
-        public static double[] InsertionSort(double[] array)
+        public async static Task<double[]> InsertionSort(double[] array)
         {
+            Thread.Sleep(1);
             int n = array.Length;
             for (int i = 1; i < n; i++)
             {
@@ -51,8 +246,9 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
         }
 
         // Шейкерная сортировка
-        public static double[] CocktailShakerSort(double[] array)
+        public async static Task<double[]> CocktailShakerSort(double[] array)
         {
+            Thread.Sleep(1);
             int n = array.Length;
             bool swapped;
             do
@@ -95,7 +291,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
         }
 
         // Быстрая сортировка
-        public static double[] QuickSort(double[] array)
+        public async static Task<double[]> QuickSort(double[] array)
         {
             // Проверяем базовый случай: если массив пустой или содержит один элемент, он уже отсортирован
             if (array.Length <= 1)
@@ -105,7 +301,8 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
 
             // Выбор опорного элемента - здесь выбираем последний элемент массива
             double pivot = array[array.Length - 1];
-            // Создаем массивы для элементов меньше и больше опорного
+
+            // Создаем списки для хранения элементов меньше и больше опорного
             var less = new List<double>();
             var greater = new List<double>();
 
@@ -122,14 +319,21 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 }
             }
 
-            // Рекурсивно сортируем подмассивы и объединяем: меньше + опорный элемент + больше
-            return QuickSort(less.ToArray())
+            // Параллельно сортируем подмассивы и объединяем: меньше + опорный элемент + больше
+            var sortedLessTask = QuickSort(less.ToArray());
+            var sortedGreaterTask = QuickSort(greater.ToArray());
+
+            // Дожидаемся завершения асинхронных задач и объединяем результаты
+            var sortedLess = await sortedLessTask;
+            var sortedGreater = await sortedGreaterTask;
+
+            return sortedLess
                 .Concat(new double[] { pivot })
-                .Concat(QuickSort(greater.ToArray()))
+                .Concat(sortedGreater)
                 .ToArray();
         }
 
-    private static int Partition(double[] array, int low, int high)
+        private static int Partition(double[] array, int low, int high)
         {
             double pivot = array[high]; // Опорный элемент
             int i = (low - 1); // Индекс меньшего элемента
@@ -156,8 +360,9 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
         }
 
         // Сортировка Бого
-        public static double[] Bogosort(double[] array)
+        public async static Task<double[]> Bogosort(double[] array)
         {
+            Thread.Sleep(1);
             Random rand = new Random();
             while (!IsSorted(array))
             {

@@ -81,7 +81,7 @@
                     <DataGridTemplateColumn Header="Select">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsSelected}"/>
+                                <CheckBox IsChecked="{Binding IsSelected,  Mode=TwoWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -113,11 +113,18 @@
             </DataGrid>
         </Border>
         <!-- Accordion Implementation -->
-        <Expander Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Header="Дополнительные настройки" IsExpanded="False">
+        <Expander Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Header="Вывод" IsExpanded="False">
             <StackPanel>
-                <TextBlock Text="Настройки сортировки"/>
-                <TextBox Width="200" Margin="5" Text="sdasd"/>
-                <Button Content="Сохранить" Width="100" Margin="5"/>
+                <TextBlock Text="Пузырьком:"/>
+                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
+                <TextBlock Text="Вставками:"/>
+                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
+                <TextBlock Text="Шейкерная:"/>
+                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
+                <TextBlock Text="Быстрая:"/>
+                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
+                <TextBlock Text="Бого:"/>
+                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
             </StackPanel>
         </Expander>
 

@@ -83,7 +83,8 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
                 //NumberTextBox = string.Join(", ", SortingMethodsDataGeneratorWindowViewModel.NumbersCollection);
 
                 await Task.Run(() => {
-                    DataGeneratorAutomaticallyModel.GenerateRandomDoubles(numbersCountInt, startLimitDouble, endLimitDouble, accuracyCountDigitsAfterPointInt);
+                    DataGeneratorAutomaticallyModel.GenerateRandomDoubles(numbersCountInt, startLimitDouble, 
+                                                                          endLimitDouble, accuracyCountDigitsAfterPointInt);
                 });
                 // Обновление UI после завершения фоновой операции
                 //NumberTextBox = string.Join(", ", SortingMethodsDataGeneratorWindowViewModel.NumbersCollection);
