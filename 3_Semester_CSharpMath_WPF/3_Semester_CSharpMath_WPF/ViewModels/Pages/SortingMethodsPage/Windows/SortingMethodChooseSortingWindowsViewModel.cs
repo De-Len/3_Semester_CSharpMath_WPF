@@ -1,37 +1,39 @@
 ﻿using _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage;
+using _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows.UserControls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows.UserControls;
-using static AngouriMath.MathS;
-using System.Diagnostics;
-using _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage.Windows.UserControls;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
-using HelixToolkit.Wpf;
-using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks.Dataflow;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
 {
     partial class SortingMethodChooseSortingWindowsViewModel : ObservableObject
     {
+        private SortingMethodsPageViewModel _sortingMethodsPageViewModel;
         [ObservableProperty]
         private bool _isAscendingChecked = true;
         [ObservableProperty]
         private bool _isDescendingChecked = false;
         double[] NumbersFromFile;
-        List<ISortStrategy> ListSortStrategies = [new BubbleSort(), new InsertionSort(), new CocktailShakerSort(), 
+        List<ISortStrategy> ListSortStrategies = [new BubbleSort(), new InsertionSort(), new CocktailShakerSort(),
                                                     new QuickSort(), new Bogosort()];
-        List<string> ListSortOutputCollections = [SortingMethodsPageViewModel., SortingMethodsPageViewModel.InsertionSortOutput,
-                                                                        SortingMethodsPageViewModel.CocktailShakerSortOutput,
-                                                                        SortingMethodsPageViewModel.QuickSortOutput, SortingMethodsPageViewModel.BogoSortOutput];
+        List<string> ListSortOutputCollections;
 
         public ICommand SortCommand { get; }
-        public SortingMethodChooseSortingWindowsViewModel()
+        public SortingMethodChooseSortingWindowsViewModel(SortingMethodsPageViewModel sortingMethodsPageViewModel)
         {
+            _sortingMethodsPageViewModel = sortingMethodsPageViewModel;
+            ListSortOutputCollections = new List<string>
+            {
+                sortingMethodsPageViewModel.BubbleSortOutput,
+                sortingMethodsPageViewModel.InsertionSortOutput,
+                sortingMethodsPageViewModel.CocktailShakerSortOutput,
+                sortingMethodsPageViewModel.QuickSortOutput,
+                sortingMethodsPageViewModel.BogoSortOutput
+            };
+
             SortCommand = new RelayCommand(Sort);
         }
 
@@ -140,8 +142,24 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
                                 SortingMethodsPageViewModel.DataGrid[index].Timing = stopwatch.ElapsedMilliseconds - 10;
                                 // Сохранение отсортированного массива
 
-                                ListSortOutputCollections[index] = string.Join(", ", sortedArray);
-
+                                switch (index)
+                                {
+                                    case 0:
+                                        _sortingMethodsPageViewModel.BubbleSortOutput = string.Join(", ", sortedArray);
+                                        break;
+                                    case 1:
+                                        _sortingMethodsPageViewModel.InsertionSortOutput = string.Join(", ", sortedArray);
+                                        break;
+                                    case 2:
+                                        _sortingMethodsPageViewModel.CocktailShakerSortOutput = string.Join(", ", sortedArray);
+                                        break;
+                                    case 3:
+                                        _sortingMethodsPageViewModel.QuickSortOutput = string.Join(", ", sortedArray);
+                                        break;
+                                    case 4:
+                                        _sortingMethodsPageViewModel.BogoSortOutput = string.Join(", ", sortedArray);
+                                        break;
+                                }
                             }));
                         }
                     }

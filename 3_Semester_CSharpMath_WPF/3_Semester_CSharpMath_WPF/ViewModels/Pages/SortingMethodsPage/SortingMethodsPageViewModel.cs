@@ -8,49 +8,52 @@ using System.Windows.Input;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
 {
-    public class SortingMethodsPageViewModel : ObservableObject
+    partial class SortingMethodsPageViewModel : ObservableObject
     {
         public ICommand OpenSortingWindowCommand { get; }
         public ICommand OpenFolderSelectionCommand { get; }
         public ICommand OpenDataGeneratorWindowCommand { get; }
 
-        public static ObservableCollection<Person> DataGrid { get; set; }
+        public static ObservableCollection<DataGridSortColumn> DataGrid { get; set; }
 
         private SortingMethodsDataGeneratorWindowView _sortingMethodsDataGeneratorWindowView;
 
         [ObservableProperty]
-        private static string _bubbleSortOutput;
+        private string _bubbleSortOutput;
 
+        [ObservableProperty]
+        private string _insertionSortOutput;
 
-        //public static string BubbleSortOutput;
+        [ObservableProperty]
+        private string _cocktailShakerSortOutput;
 
-        public static string InsertionSortOutput;
-        public static string CocktailShakerSortOutput;
-        public static string QuickSortOutput;
-        public static string BogoSortOutput;
+        [ObservableProperty]
+        private string _quickSortOutput;
+
+        [ObservableProperty]
+        private string _bogoSortOutput;
 
 
         public SortingMethodsPageViewModel()
         {
-            DataGrid = new ObservableCollection<Person>
+            DataGrid = new ObservableCollection<DataGridSortColumn>
             {
-                new Person { IsSelected = true, SortMethodName = "Пузырьковая", Timing = 0},
-                new Person { IsSelected = true, SortMethodName = "Вставками", Timing = 0 },
-                new Person { IsSelected = true, SortMethodName = "Шейкерная", Timing = 0 },
-                new Person { IsSelected = true, SortMethodName = "Быстрая", Timing = 0 },
-                new Person { IsSelected = true, SortMethodName = "BOGO", Timing = 0 }
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "Пузырьковая", Timing = 0},
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "Вставками", Timing = 0 },
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "Шейкерная", Timing = 0 },
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "Быстрая", Timing = 0 },
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "BOGO", Timing = 0 }
             };
 
             OpenSortingWindowCommand = new RelayCommand(OpenSortingWindow);
             OpenFolderSelectionCommand = new RelayCommand(OpenFolderSelection);
             OpenDataGeneratorWindowCommand = new RelayCommand(OpenDataGeneratorWindow);
-
-
         }
 
         public void OpenSortingWindow()
         {
-            SortingMethodChooseSortingWindowsView sortingMethodChooseSortingWindowsView = new SortingMethodChooseSortingWindowsView();
+            var asd = BubbleSortOutput;
+            SortingMethodChooseSortingWindowsView sortingMethodChooseSortingWindowsView = new SortingMethodChooseSortingWindowsView(this);
             sortingMethodChooseSortingWindowsView.Show();
         }
         public void OpenFolderSelection()
@@ -69,7 +72,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
         }
     }
 
-    public class Person : ObservableObject
+    public class DataGridSortColumn : ObservableObject
     {
         private string _sortMethodName;
         private long _timing;

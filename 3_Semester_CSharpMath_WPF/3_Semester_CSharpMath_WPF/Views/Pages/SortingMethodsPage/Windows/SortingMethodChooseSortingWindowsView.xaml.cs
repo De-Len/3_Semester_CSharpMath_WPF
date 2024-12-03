@@ -1,4 +1,5 @@
-﻿using _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows;
+﻿using _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage;
+using _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows;
 using System.Windows;
 
 namespace _3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage.Windows
@@ -9,9 +10,9 @@ namespace _3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage.Windows
     public partial class SortingMethodChooseSortingWindowsView : Window
     {
         SortingMethodChooseSortingWindowsViewModel SortingMethodChooseSortingWindowsViewModel { get; }
-        public SortingMethodChooseSortingWindowsView()
+        internal SortingMethodChooseSortingWindowsView(SortingMethodsPageViewModel sortingMethodsPageViewModel)
         {
-            SortingMethodChooseSortingWindowsViewModel = new SortingMethodChooseSortingWindowsViewModel();
+            SortingMethodChooseSortingWindowsViewModel = new SortingMethodChooseSortingWindowsViewModel(sortingMethodsPageViewModel);
 
             this.DataContext = SortingMethodChooseSortingWindowsViewModel;
             InitializeComponent();

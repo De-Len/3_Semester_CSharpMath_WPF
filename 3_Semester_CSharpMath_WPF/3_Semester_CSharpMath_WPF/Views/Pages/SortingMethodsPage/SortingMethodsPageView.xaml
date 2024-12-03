@@ -116,15 +116,15 @@
         <Expander Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Header="Вывод" IsExpanded="False">
             <StackPanel>
                 <TextBlock Text="Пузырьком:"/>
-                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding BubbleSortOutput}"/>
                 <TextBlock Text="Вставками:"/>
-                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding InsertionSortOutput}"/>
                 <TextBlock Text="Шейкерная:"/>
-                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding CocktailShakerSortOutput}"/>
                 <TextBlock Text="Быстрая:"/>
-                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding QuickSortOutput}"/>
                 <TextBlock Text="Бого:"/>
-                <TextBox MinWidth="20" Margin="5" Text="sdasd"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding BogoSortOutput}"/>
             </StackPanel>
         </Expander>
 
