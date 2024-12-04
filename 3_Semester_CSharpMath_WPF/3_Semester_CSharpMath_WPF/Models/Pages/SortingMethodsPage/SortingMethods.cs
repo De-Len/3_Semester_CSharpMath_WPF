@@ -26,6 +26,11 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
     {
         public double[] Sort(double[] array)
         {
+            if (SortingMethods.IsSorted(array))
+            {
+                return array;
+            }
+
             int n = array.Length;
             bool swapped;
             for (int i = 0; i < n - 1; i++)
@@ -54,6 +59,11 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
     {
         public double[] Sort(double[] array)
         {
+            if (SortingMethods.IsSorted(array))
+            {
+                return array;
+            }
+
             int n = array.Length;
             for (int i = 1; i < n; i++)
             {
@@ -76,6 +86,11 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
     {
         public double[] Sort(double[] array)
         {
+            if (SortingMethods.IsSorted(array))
+            {
+                return array;
+            }
+
             int n = array.Length;
             bool swapped;
             do
@@ -122,6 +137,11 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
     {
         public double[] Sort(double[] array)
         {
+            if (SortingMethods.IsSorted(array))
+            {
+                return array;
+            }
+
             // Создаем копию исходного массива, чтобы не изменять оригинал
             double[] result = (double[])array.Clone();
             QuickSortHelper(result, 0, result.Length - 1);
@@ -167,6 +187,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
     {
         public double[] Sort(double[] array)
         {
+            if (SortingMethods.IsSorted(array))
+            {
+                return array;
+            }
             Random rand = new Random();
             while (!IsSorted(array))
             {
@@ -379,7 +403,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
             return array;
         }
 
-        private static bool IsSorted(double[] array)
+        public static bool IsSorted(double[] array)
         {
             for (int i = 1; i < array.Length; i++)
             {
