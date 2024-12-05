@@ -38,11 +38,11 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
         {
             DataGrid = new ObservableCollection<DataGridSortColumn>
             {
-                new DataGridSortColumn { IsSelected = true, SortMethodName = "Пузырьковая", Timing = 0},
-                new DataGridSortColumn { IsSelected = true, SortMethodName = "Вставками", Timing = 0 },
-                new DataGridSortColumn { IsSelected = true, SortMethodName = "Шейкерная", Timing = 0 },
-                new DataGridSortColumn { IsSelected = true, SortMethodName = "Быстрая", Timing = 0 },
-                new DataGridSortColumn { IsSelected = true, SortMethodName = "BOGO", Timing = 0 }
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "Пузырьковая", Timing = 0, Iterations = 0},
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "Вставками", Timing = 0, Iterations = 0 },
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "Шейкерная", Timing = 0, Iterations = 0 },
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "Быстрая", Timing = 0, Iterations = 0 },
+                new DataGridSortColumn { IsSelected = true, SortMethodName = "BOGO", Timing = 0, Iterations = 0 }
             };
 
             OpenSortingWindowCommand = new RelayCommand(OpenSortingWindow);
@@ -52,7 +52,6 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
 
         public void OpenSortingWindow()
         {
-            var asd = BubbleSortOutput;
             SortingMethodChooseSortingWindowsView sortingMethodChooseSortingWindowsView = new SortingMethodChooseSortingWindowsView(this);
             sortingMethodChooseSortingWindowsView.Show();
         }
@@ -70,12 +69,26 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
             _sortingMethodsDataGeneratorWindowView = new SortingMethodsDataGeneratorWindowView();
             _sortingMethodsDataGeneratorWindowView.Show();
         }
+
+        public static void AddIteration(int sortingIndex)
+        {
+            ++DataGrid[sortingIndex].Iterations;
+        }
+        public static void CleanIterations()
+        {
+            DataGrid[0].Iterations = 0;
+            DataGrid[1].Iterations = 0;
+            DataGrid[2].Iterations = 0;
+            DataGrid[3].Iterations = 0;
+            DataGrid[4].Iterations = 0;
+        }
     }
 
     public class DataGridSortColumn : ObservableObject
     {
         private string _sortMethodName;
         private long _timing;
+        private int _iterations;
         private bool _isSelected;
 
         public string SortMethodName
@@ -88,6 +101,12 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage
         {
             get => _timing;
             set => SetProperty(ref _timing, value);
+        }
+
+        public int Iterations
+        {
+            get => _iterations;
+            set => SetProperty(ref _iterations, value);
         }
 
         public bool IsSelected

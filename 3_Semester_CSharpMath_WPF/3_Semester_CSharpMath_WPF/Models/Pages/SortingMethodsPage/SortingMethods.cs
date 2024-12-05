@@ -1,4 +1,4 @@
-﻿using System;
+﻿using _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage;
 
 namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
 {
@@ -38,6 +38,8 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 swapped = false;
                 for (int j = 0; j < n - i - 1; j++)
                 {
+                    // Увеличиваем итераторы
+                    SortingMethodsPageViewModel.AddIteration(0);
                     if (array[j] > array[j + 1])
                     {
                         // Обмен значениями
@@ -59,22 +61,28 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
     {
         public double[] Sort(double[] array)
         {
-            if (SortingMethods.IsSorted(array))
-            {
-                return array;
-            }
+            //if (SortingMethods.IsSorted(array))
+            //{
+            //    return array;
+            //}
 
             int n = array.Length;
             for (int i = 1; i < n; i++)
             {
+                SortingMethodsPageViewModel.AddIteration(1);
                 double key = array[i];
                 int j = i - 1;
 
                 // Сдвигаем элементы, которые больше ключа, на одну позицию вперед
-                while (j >= 0 && array[j] > key)
+                while (j >= 0)
                 {
-                    array[j + 1] = array[j];
-                    j--;
+                    SortingMethodsPageViewModel.AddIteration(1);
+                    if (array[j] > key)
+                    {
+                        array[j + 1] = array[j];
+                        j--;
+                    }
+                    else break; // добавлено для оптимизации
                 }
                 array[j + 1] = key;
             }
@@ -86,10 +94,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
     {
         public double[] Sort(double[] array)
         {
-            if (SortingMethods.IsSorted(array))
-            {
-                return array;
-            }
+            //if (SortingMethods.IsSorted(array))
+            //{
+            //    return array;
+            //}
 
             int n = array.Length;
             bool swapped;
@@ -100,6 +108,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 // Проход в прямом направлении
                 for (int i = 0; i < n - 1; i++)
                 {
+                    SortingMethodsPageViewModel.AddIteration(2);
                     if (array[i] > array[i + 1])
                     {
                         // Обмен значениями
@@ -119,6 +128,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 // Проход в обратном направлении
                 for (int i = n - 2; i >= 0; i--)
                 {
+                    SortingMethodsPageViewModel.AddIteration(2);
                     if (array[i] > array[i + 1])
                     {
                         // Обмен значениями
@@ -137,10 +147,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
     {
         public double[] Sort(double[] array)
         {
-            if (SortingMethods.IsSorted(array))
-            {
-                return array;
-            }
+            //if (SortingMethods.IsSorted(array))
+            //{
+            //    return array;
+            //}
 
             // Создаем копию исходного массива, чтобы не изменять оригинал
             double[] result = (double[])array.Clone();
@@ -152,6 +162,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
         {
             if (low < high)
             {
+                SortingMethodsPageViewModel.AddIteration(3);
                 int pivotIndex = Partition(array, low, high); // Разделяем массив и получаем индекс опорного элемента
                 QuickSortHelper(array, low, pivotIndex - 1); // Рекурсивно сортируем левую часть
                 QuickSortHelper(array, pivotIndex + 1, high); // Рекурсивно сортируем правую часть
@@ -165,6 +176,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
 
             for (int j = low; j < high; j++)
             {
+                SortingMethodsPageViewModel.AddIteration(3);
                 if (array[j] <= pivot) // Если текущий элемент меньше или равен опорному
                 {
                     i++; // Увеличиваем индекс меньшего элемента
@@ -194,6 +206,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
             Random rand = new Random();
             while (!IsSorted(array))
             {
+                SortingMethodsPageViewModel.AddIteration(4);
                 // Перемешиваем массив
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -211,6 +224,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
         {
             for (int i = 1; i < array.Length; i++)
             {
+                SortingMethodsPageViewModel.AddIteration(4);
                 if (array[i - 1] > array[i])
                     return false;
             }
@@ -232,6 +246,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 swapped = false;
                 for (int j = 0; j < n - i - 1; j++)
                 {
+                    SortingMethodsPageViewModel.AddIteration(0); // Добавлен счетчик
                     if (array[j] > array[j + 1])
                     {
                         // Обмен значениями
@@ -259,10 +274,15 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 int j = i - 1;
 
                 // Сдвигаем элементы, которые больше ключа, на одну позицию вперед
-                while (j >= 0 && array[j] > key)
+                while (j >= 0)
                 {
-                    array[j + 1] = array[j];
-                    j--;
+                    SortingMethodsPageViewModel.AddIteration(1); // добавлено
+                    if (array[j] > key)
+                    {
+                        array[j + 1] = array[j];
+                        j--;
+                    }
+                    else break; // добавлено для предотвращения лишних итераций
                 }
                 array[j + 1] = key;
             }
@@ -282,6 +302,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 // Проход в прямом направлении
                 for (int i = 0; i < n - 1; i++)
                 {
+                    SortingMethodsPageViewModel.AddIteration(2); // добавлено
                     if (array[i] > array[i + 1])
                     {
                         // Обмен значениями
@@ -301,6 +322,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 // Проход в обратном направлении
                 for (int i = n - 2; i >= 0; i--)
                 {
+                    SortingMethodsPageViewModel.AddIteration(2); // добавлено
                     if (array[i] > array[i + 1])
                     {
                         // Обмен значениями
@@ -333,6 +355,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
             // Разделяем массив на два подмассива
             for (int i = 0; i < array.Length - 1; i++)
             {
+                SortingMethodsPageViewModel.AddIteration(3); // добавлено
                 if (array[i] <= pivot)
                 {
                     less.Add(array[i]);
@@ -357,32 +380,6 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 .ToArray();
         }
 
-        private static int Partition(double[] array, int low, int high)
-        {
-            double pivot = array[high]; // Опорный элемент
-            int i = (low - 1); // Индекс меньшего элемента
-
-            for (int j = low; j < high; j++)
-            {
-                if (array[j] < pivot)
-                {
-                    i++;
-
-                    // Обмен значениями
-                    double temp = array[i];
-                    array[i] = array[j];
-                    array[j] = temp;
-                }
-            }
-
-            // Обмен опорного элемента с элементом по индексу из левой части
-            double temp1 = array[i + 1];
-            array[i + 1] = array[high];
-            array[high] = temp1;
-
-            return i + 1;
-        }
-
         // Сортировка Бого
         public async static Task<double[]> Bogosort(double[] array)
         {
@@ -390,6 +387,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
             Random rand = new Random();
             while (!IsSorted(array))
             {
+                SortingMethodsPageViewModel.AddIteration(4); // добавлено
                 // Перемешиваем массив
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -407,6 +405,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
         {
             for (int i = 1; i < array.Length; i++)
             {
+                SortingMethodsPageViewModel.AddIteration(4); // добавлено
                 if (array[i - 1] > array[i])
                     return false;
             }

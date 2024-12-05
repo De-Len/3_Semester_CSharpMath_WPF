@@ -59,6 +59,8 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
         {
             try
             {
+                SortingMethodsPageViewModel.CleanIterations();
+
                 string fileContent = File.ReadAllText(DataGeneratorAutomaticallyViewModel.FilePath + "\\ДаныеДляТеста.txt");
                 string[] numberStrings = fileContent.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
                 // Преобразование строк в числа
@@ -68,58 +70,6 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
 
                 if (_isAscendingChecked)
                 {
-                    //for (int sortingIndex = 0; sortingIndex < ListSortStrategies.Count; sortingIndex++)
-                    //{
-                    //    Task.Run(() =>
-                    //    {
-                    //        SortByIndexAsync(sortingIndex);
-                    //    });
-                    //}
-
-                    //Task.Run(() =>
-                    //{
-                    //    Stopwatch stopwatch1 = new Stopwatch();
-                    //    stopwatch1.Start();
-                    //    Task<double[]> SortedArrayBubbleSort = SortingMethods.BubbleSort(NumbersFromFile);
-                    //    stopwatch1.Stop();
-                    //    SortingMethodsPageViewModel.DataGrid[0].Timing = stopwatch1.ElapsedMilliseconds;
-                    //});
-
-                    //Task.Run(() =>
-                    //{
-                    //    Stopwatch stopwatch2 = new Stopwatch();
-                    //    stopwatch2.Start();
-                    //    Task<double[]> SortedArrayInsertionSort = SortingMethods.InsertionSort(NumbersFromFile);
-                    //    stopwatch2.Stop();
-                    //    SortingMethodsPageViewModel.DataGrid[1].Timing = stopwatch2.ElapsedMilliseconds;
-                    //});
-
-                    //Task.Run(() =>
-                    //{
-                    //    Stopwatch stopwatch3 = new Stopwatch();
-                    //    stopwatch3.Start();
-                    //    Task<double[]> SortedArrayCocktailShakerSort = SortingMethods.CocktailShakerSort(NumbersFromFile);
-                    //    stopwatch3.Stop();
-                    //    SortingMethodsPageViewModel.DataGrid[2].Timing = stopwatch3.ElapsedMilliseconds;
-                    //});
-
-                    //Task.Run(() =>
-                    //{
-                    //    Stopwatch stopwatch4 = new Stopwatch();
-                    //    stopwatch4.Start();
-                    //    Task<double[]> SortedArrayQuickSort = SortingMethods.QuickSort(NumbersFromFile);
-                    //    stopwatch4.Stop();
-                    //    SortingMethodsPageViewModel.DataGrid[3].Timing = stopwatch4.ElapsedMilliseconds;
-                    //});
-
-                    //Task.Run(() =>
-                    //{
-                    //    Stopwatch stopwatch5 = new Stopwatch();
-                    //    stopwatch5.Start();
-                    //    Task<double[]> SortedArrayBogosort = SortingMethods.Bogosort(NumbersFromFile);
-                    //    stopwatch5.Stop();
-                    //    SortingMethodsPageViewModel.DataGrid[4].Timing = stopwatch5.ElapsedMilliseconds;
-                    //});
                     var tasks = new List<Task>();
 
                     for (int i = 0; i < ListSortStrategies.Count; i++)
@@ -134,6 +84,8 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
 
                                 Stopwatch stopwatch = Stopwatch.StartNew(); // Запуск таймера
                                 sorter.SetSortStrategy(ListSortStrategies[index]);
+
+
                                 var sortedArray = sorter.Sort(NumbersFromFile);
                                 Thread.Sleep(10);
                                 stopwatch.Stop(); // Остановка таймера
