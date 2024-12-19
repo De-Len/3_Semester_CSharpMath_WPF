@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _3_Semester_CSharpMath_WPF.Models.MathMethods;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -13,9 +14,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
     class ChartModel
     {
         #region Для определённых интегралов
-        public static bool IsSelectedRectangleMethod { get; set; }
-        public static bool IsSelectedTrapezoidalMethod { get; set; }
-        public static bool IsSelectedSimpsonMethod { get; set; }
+        public static bool IsSelectedRectangleMethod = false;
+        public static bool IsSelectedTrapezoidalMethod = false;
+        public static bool IsSelectedSimpsonMethod = false;
+        public static int SubintervalsNumber;
         #endregion
 
         public static int GraphsCount = 1;
@@ -46,21 +48,104 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
         private static ISeries[] CreateSeries()
         {
             var seriesList = new List<ISeries>();
-            var colors = new List<SKColor>
+            seriesList.Add(new LineSeries<ObservablePoint>
             {
-                new SKColor(33, 150, 243), // Цвет первого графика
-                new SKColor(239, 83, 80),  // Цвет второго графика
-                new SKColor(76, 175, 80),   // Цвет третьего графика
-                new SKColor(255, 193, 7)    // Цвет четвертого графика
-            };
+                Values = Fetch(), // Вызываем Fetch с индексом
+                Stroke = new SolidColorPaint(SKColors.Blue, 4),
+                Fill = null,
+                GeometrySize = 0
+            });
 
-            // Добавьте количество графиков, которое вам нужно
-            for (int i = 0; i < GraphsCount; i++)
+            if (IsSelectedRectangleMethod)
+            {
+                double lowerBound = StartLimit;
+                double upperBound = EndLimit;
+
+                double subintervalWidth = (upperBound - lowerBound) / SubintervalsNumber; // Ширина подынтервалов
+
+                for (int index = 0; index < SubintervalsNumber; ++index)
+                {
+                    double x = lowerBound + index * subintervalWidth;
+                    var y = MathMethodsGroup.SolveFunctionSingleArgument(x); 
+
+                    seriesList.Add(new ScatterSeries<ObservablePoint>
+                    {
+                        Values = FetchRectangleMethodX(x, y, 0), // Вызываем Fetch с индексом
+                        Fill = new SolidColorPaint(SKColors.Red, 4), // Цвет точки
+                        GeometrySize = 5 // Размер точки
+                    });
+                    seriesList.Add(new LineSeries<ObservablePoint>
+                    {
+                        Values = FetchRectangleMethodX(x, y, subintervalWidth), // Вызываем Fetch с индексом
+                        Stroke = new SolidColorPaint(SKColors.Red, 4),
+                        Fill = null,
+                        GeometrySize = 0
+                    });
+                    seriesList.Add(new LineSeries<ObservablePoint>
+                    {
+                        Values = FetchRectangleMethodY1(x, y, subintervalWidth), // Вызываем Fetch с индексом
+                        Stroke = new SolidColorPaint(SKColors.Red, 4),
+                        Fill = null,
+                        GeometrySize = 0
+                    });
+                    seriesList.Add(new LineSeries<ObservablePoint>
+                    {
+                        Values = FetchRectangleMethodY2(x, y, subintervalWidth), // Вызываем Fetch с индексом
+                        Stroke = new SolidColorPaint(SKColors.Red, 4),
+                        Fill = null,
+                        GeometrySize = 0
+                    });
+                }
+            }
+
+            if (IsSelectedTrapezoidalMethod)
+            {
+                double lowerBound = StartLimit;
+                double upperBound = EndLimit;
+
+                double subintervalWidth = (upperBound - lowerBound) / SubintervalsNumber; // Ширина подынтервалов
+
+                // Рисую первый столбец
+                seriesList.Add(new LineSeries<ObservablePoint>
+                {
+                    Values = FetchTrapezoidalMethodY(lowerBound, MathMethodsGroup.SolveFunctionSingleArgument(lowerBound), subintervalWidth),
+                    Stroke = new SolidColorPaint(SKColors.Green, 4),
+                    Fill = null,
+                    GeometrySize = 0
+                });
+
+                for (int index = 0; index < SubintervalsNumber; ++index)
+                {
+                    double x = lowerBound + index * subintervalWidth;
+                    var y = MathMethodsGroup.SolveFunctionSingleArgument(x); 
+
+                    seriesList.Add(new LineSeries<ObservablePoint>
+                    {
+                        Values = FetchTrapezoidalMethodX(x, y, subintervalWidth), 
+                        Stroke = new SolidColorPaint(SKColors.Green, 4),
+                        Fill = null,
+                        GeometrySize = 0
+                    });
+                    
+                    // Дорисовываю последий столбик
+                    seriesList.Add(new LineSeries<ObservablePoint>
+                    {
+                        Values = FetchTrapezoidalMethodY(x + subintervalWidth, MathMethodsGroup.SolveFunctionSingleArgument(x + subintervalWidth), subintervalWidth),
+                        Stroke = new SolidColorPaint(SKColors.Green, 4),
+                        Fill = null,
+                        GeometrySize = 0
+                    });
+                }
+                
+
+            }
+
+            if (IsSelectedSimpsonMethod)
             {
                 seriesList.Add(new LineSeries<ObservablePoint>
                 {
-                    Values = Fetch(i), // Вызываем Fetch с индексом
-                    Stroke = new SolidColorPaint(colors[i], 4),
+                    Values = FetchSimpsonMethod(), // Вызываем Fetch с индексом
+                    Stroke = new SolidColorPaint(SKColors.Yellow, 4),
                     Fill = null,
                     GeometrySize = 0
                 });
@@ -111,18 +196,94 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
             };
         }
 
-        private static List<ObservablePoint> Fetch(int seriesIndex)
+        private static List<ObservablePoint> Fetch()
         {
             var list = new List<ObservablePoint>();
 
             // Реализуйте вашу логику для выбора данных в зависимости от индекса серии
             for (var x = StartLimit; x < EndLimit; x += 0.01f)
             {
-                var y = MathMethodsGroup.SolveFunctionSingleArgument(x + seriesIndex); // Меняем поведение на основе индекса
+                var y = MathMethodsGroup.SolveFunctionSingleArgument(x); // Меняем поведение на основе индекса
                 list.Add(new ObservablePoint(x, y));
             }
 
             return list;
         }
+        #region Отрисовка метода прямоугольников
+        private static List<ObservablePoint> FetchRectangleMethodX(double x, double y, double subintervalWidth)
+        {
+            var list = new List<ObservablePoint>() 
+            {
+                new ObservablePoint(x, y),
+                new ObservablePoint(x + subintervalWidth, y)
+            };
+            return list;
+        }
+        private static List<ObservablePoint> FetchRectangleMethodY1(double x, double y, double subintervalWidth)
+        {
+            var list = new List<ObservablePoint>()
+            {
+                new ObservablePoint(x, y),
+                new ObservablePoint(x, 0)
+            };
+            return list;
+        }
+        private static List<ObservablePoint> FetchRectangleMethodY2(double x, double y, double subintervalWidth)
+        {
+            var list = new List<ObservablePoint>()
+            {
+                new ObservablePoint(x + subintervalWidth, y),
+                new ObservablePoint(x + subintervalWidth, 0)
+            };
+            return list;
+        }
+        #endregion
+        #region Отрисовка метода трапеций
+        private static List<ObservablePoint> FetchTrapezoidalMethodX(double x, double y, double subintervalWidth)
+        {
+            var list = new List<ObservablePoint>()
+            {
+                new ObservablePoint(x, y),
+                new ObservablePoint(x + subintervalWidth, MathMethodsGroup.SolveFunctionSingleArgument(x + subintervalWidth))
+            };
+            return list;
+        }
+        private static List<ObservablePoint> FetchTrapezoidalMethodY(double x, double y, double subintervalWidth)
+        {
+            var list = new List<ObservablePoint>()
+            {
+                new ObservablePoint(x, y),
+                new ObservablePoint(x, 0)
+            };
+            return list;
+        }
+        #endregion
+
+        #region Отрисовка метода Симсона
+        private static List<ObservablePoint> FetchSimpsonMethod()
+        {
+            var list = new List<ObservablePoint>();
+
+            double upperBound = EndLimit;
+            double lowerBound = StartLimit;
+            int subintervalsNumber = SubintervalsNumber;
+
+            if (subintervalsNumber % 2 != 0)
+            {
+                ++subintervalsNumber; // Делим количество подынтервалов на 2, если оно нечетное
+            }
+
+            double subintervalWidth = (upperBound - lowerBound) / subintervalsNumber;
+
+            for (int index = 0; index <= subintervalsNumber; ++index)
+            {
+                double x = lowerBound + index * subintervalWidth;
+                list.Add(new ObservablePoint(x, MathMethodsGroup.SolveFunctionSingleArgument(x)));
+
+            }
+
+            return list;
+        }
+        #endregion
     }
 }

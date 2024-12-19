@@ -20,11 +20,6 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
         List<ISortStrategy> ListSortStrategies = [new BubbleSort(), new InsertionSort(), new CocktailShakerSort(),
                                                     new QuickSort(), new Bogosort()];
         List<string> ListSortOutputCollections;
-        private double[] sortedArray0;
-        private double[] sortedArray1;
-        private double[] sortedArray2;
-        private double[] sortedArray3;
-        private double[] sortedArray4;
 
         public ICommand SortCommand { get; }
         public SortingMethodChooseSortingWindowsViewModel(SortingMethodsPageViewModel sortingMethodsPageViewModel)
@@ -62,6 +57,11 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
 
         public async void Sort()
         {
+            double[] _sortedArray0 = [];
+            double[] _sortedArray1 = [];
+            double[] _sortedArray2 = [];
+            double[] _sortedArray3 = [];
+            double[] _sortedArray4 = [];
             try
             {
                 SortingMethodsPageViewModel.CleanIterations();
@@ -71,16 +71,22 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
                 // Преобразование строк в числа
                 NumbersFromFile = Array.ConvertAll(numberStrings, double.Parse);
 
+                double[] NumbersFromFile0 = Array.ConvertAll(numberStrings, double.Parse);
+                double[] NumbersFromFile1 = Array.ConvertAll(numberStrings, double.Parse);
+                double[] NumbersFromFile2 = Array.ConvertAll(numberStrings, double.Parse);
+                double[] NumbersFromFile3 = Array.ConvertAll(numberStrings, double.Parse);
+                double[] NumbersFromFile4 = Array.ConvertAll(numberStrings, double.Parse);
+                
 
 
                 if (_isAscendingChecked)
                 {
                     var tasks = new List<Task>();
 
-                    for (int i = 0; i < ListSortStrategies.Count; i++)
+                    for (int index = 0; index < ListSortStrategies.Count; index++)
                     {
-                        int index = i; // Необходимо для замыкания
-                        if (SortingMethodsPageViewModel.DataGrid[index].IsSelected)
+                        int sortIndex = index;
+                        if (SortingMethodsPageViewModel.DataGrid[sortIndex].IsSelected)
                         {
                             tasks.Add(Task.Run(async () =>
                             {
@@ -88,24 +94,24 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
                                 var sorter = new Sorter();
 
                                 Stopwatch stopwatch = Stopwatch.StartNew(); // Запуск таймера
-                                sorter.SetSortStrategy(ListSortStrategies[index]);
+                                sorter.SetSortStrategy(ListSortStrategies[sortIndex]);
 
-                                switch (index)
+                                switch (sortIndex)
                                 {
                                     case 0:
-                                        sortedArray0 = sorter.Sort(NumbersFromFile);
+                                        _sortedArray0 = sorter.Sort(NumbersFromFile0);
                                         break;
                                     case 1:
-                                        sortedArray1 = sorter.Sort(NumbersFromFile);
+                                        _sortedArray1 = sorter.Sort(NumbersFromFile1);
                                         break;
                                     case 2:
-                                        sortedArray2 = sorter.Sort(NumbersFromFile);
+                                        _sortedArray2 = sorter.Sort(NumbersFromFile2);
                                         break;
                                     case 3:
-                                        sortedArray3 = sorter.Sort(NumbersFromFile);
+                                        _sortedArray3 = sorter.Sort(NumbersFromFile3);
                                         break;
                                     case 4:
-                                        sortedArray4 = sorter.Sort(NumbersFromFile);
+                                        _sortedArray4 = sorter.Sort(NumbersFromFile4);
                                         break;
                                 }
 
@@ -113,25 +119,25 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
                                 stopwatch.Stop(); // Остановка таймера
 
                                 // Обновление временного значения в DataGrid
-                                SortingMethodsPageViewModel.DataGrid[index].Timing = stopwatch.ElapsedMilliseconds - 10;
+                                SortingMethodsPageViewModel.DataGrid[sortIndex].Timing = stopwatch.ElapsedMilliseconds - 10;
                                 // Сохранение отсортированного массива
 
-                                switch (index)
+                                switch (sortIndex)
                                 {
                                     case 0:
-                                        _sortingMethodsPageViewModel.BubbleSortOutput = string.Join(", ", sortedArray0);
+                                        _sortingMethodsPageViewModel.BubbleSortOutput = string.Join(", ", _sortedArray0);
                                         break;
                                     case 1:
-                                        _sortingMethodsPageViewModel.InsertionSortOutput = string.Join(", ", sortedArray1);
+                                        _sortingMethodsPageViewModel.InsertionSortOutput = string.Join(", ", _sortedArray1);
                                         break;
                                     case 2:
-                                        _sortingMethodsPageViewModel.CocktailShakerSortOutput = string.Join(", ", sortedArray2);
+                                        _sortingMethodsPageViewModel.CocktailShakerSortOutput = string.Join(", ", _sortedArray2);
                                         break;
                                     case 3:
-                                        _sortingMethodsPageViewModel.QuickSortOutput = string.Join(", ", sortedArray3);
+                                        _sortingMethodsPageViewModel.QuickSortOutput = string.Join(", ", _sortedArray3);
                                         break;
                                     case 4:
-                                        _sortingMethodsPageViewModel.BogoSortOutput = string.Join(", ", sortedArray4);
+                                        _sortingMethodsPageViewModel.BogoSortOutput = string.Join(", ", _sortedArray4);
                                         break;
                                 }
                             }));
@@ -142,9 +148,9 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
                 {
                     var tasks = new List<Task>();
 
-                    for (int i = 0; i < ListSortStrategies.Count; i++)
+                    for (int index = 0; index < ListSortStrategies.Count; index++)
                     {
-                        int index = i; // Необходимо для замыкания
+                        int sortIndex = index; // Необходимо для замыкания
                         if (SortingMethodsPageViewModel.DataGrid[index].IsSelected)
                         {
                             tasks.Add(Task.Run(async () =>
@@ -153,31 +159,48 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
                                 var sorter = new Sorter();
 
                                 Stopwatch stopwatch = Stopwatch.StartNew(); // Запуск таймера
-                                sorter.SetSortStrategy(ListSortStrategies[index]);
-                                var sortedReversedArray = sorter.Sort(NumbersFromFile).Reverse();
+                                sorter.SetSortStrategy(ListSortStrategies[sortIndex]);
+                                switch (sortIndex)
+                                {
+                                    case 0:
+                                        _sortedArray0 = sorter.Sort(NumbersFromFile0).Reverse().ToArray();
+                                        break;
+                                    case 1:
+                                        _sortedArray1 = sorter.Sort(NumbersFromFile1).Reverse().ToArray();
+                                        break;
+                                    case 2:
+                                        _sortedArray2 = sorter.Sort(NumbersFromFile2).Reverse().ToArray();
+                                        break;
+                                    case 3:
+                                        _sortedArray3 = sorter.Sort(NumbersFromFile3).Reverse().ToArray();
+                                        break;
+                                    case 4:
+                                        _sortedArray4 = sorter.Sort(NumbersFromFile4).Reverse().ToArray();
+                                        break;
+                                }
                                 Thread.Sleep(10);
                                 stopwatch.Stop(); // Остановка таймера
 
                                 // Обновление временного значения в DataGrid
-                                SortingMethodsPageViewModel.DataGrid[index].Timing = stopwatch.ElapsedMilliseconds - 10;
+                                SortingMethodsPageViewModel.DataGrid[sortIndex].Timing = stopwatch.ElapsedMilliseconds - 10;
                                 // Сохранение отсортированного массива
 
-                                switch (index)
+                                switch (sortIndex)
                                 {
                                     case 0:
-                                        _sortingMethodsPageViewModel.BubbleSortOutput = string.Join(", ", sortedReversedArray);
+                                        _sortingMethodsPageViewModel.BubbleSortOutput = string.Join(", ", _sortedArray0);
                                         break;
                                     case 1:
-                                        _sortingMethodsPageViewModel.InsertionSortOutput = string.Join(", ", sortedReversedArray);
+                                        _sortingMethodsPageViewModel.InsertionSortOutput = string.Join(", ", _sortedArray1);
                                         break;
                                     case 2:
-                                        _sortingMethodsPageViewModel.CocktailShakerSortOutput = string.Join(", ", sortedReversedArray);
+                                        _sortingMethodsPageViewModel.CocktailShakerSortOutput = string.Join(", ", _sortedArray2);
                                         break;
                                     case 3:
-                                        _sortingMethodsPageViewModel.QuickSortOutput = string.Join(", ", sortedReversedArray);
+                                        _sortingMethodsPageViewModel.QuickSortOutput = string.Join(", ", _sortedArray3);
                                         break;
                                     case 4:
-                                        _sortingMethodsPageViewModel.BogoSortOutput = string.Join(", ", sortedReversedArray);
+                                        _sortingMethodsPageViewModel.BogoSortOutput = string.Join(", ", _sortedArray4);
                                         break;
                                 }
                             }));

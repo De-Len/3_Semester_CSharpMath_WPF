@@ -52,7 +52,7 @@
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="100" >
-            <TextBlock Margin="20 0 0 0" FontSize="30" Text="Метод Ньютона" FontWeight="Bold"/>
+            <TextBlock Margin="20 0 0 0" FontSize="30" Text="Метод покоординатного спуска" FontWeight="Bold"/>
         </StackPanel>
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="100"
     Padding="16" Margin="20"

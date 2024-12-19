@@ -89,9 +89,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.EvaluatingDefiniteIntegral
             FoundRootRectangleMethodVisibility = Visibility.Collapsed;
             FoundRootTrapezoidalMethodVisibility = Visibility.Collapsed;
             FoundRootSimpsonMethodVisibility = Visibility.Collapsed;
-            ChartModel.IsSelectedRectangleMethod = false;
-            ChartModel.IsSelectedTrapezoidalMethod = false;
-            ChartModel.IsSelectedSimpsonMethod = false;
+            
 
             double upperBound = double.NaN;
             double lowerBound = double.NaN;
@@ -134,6 +132,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.EvaluatingDefiniteIntegral
 
                 MathMethodsGroup.UserMathFunction = UserMathFunction;
 
+                ChartModel.SubintervalsNumber = subintervalsNumber;
                 if (IsSelectedRectangleMethod)
                 {
                     ChartModel.IsSelectedRectangleMethod = true;
@@ -171,6 +170,9 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.EvaluatingDefiniteIntegral
             {
                 MessageBox.Show("Произошла ошибка: " + ex.Message, "Неопределённая ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            ChartModel.IsSelectedRectangleMethod = false;
+            ChartModel.IsSelectedTrapezoidalMethod = false;
+            ChartModel.IsSelectedSimpsonMethod = false;
         }
 
         public ISeries[] Series { get; set; }
