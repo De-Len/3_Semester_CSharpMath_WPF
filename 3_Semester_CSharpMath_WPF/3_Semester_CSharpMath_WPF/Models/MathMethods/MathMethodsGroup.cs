@@ -1,10 +1,8 @@
 ﻿using Flee.PublicTypes;
-using System.Text.RegularExpressions;
-using static AngouriMath.Entity;
 
 namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
 {
-    internal class MathMethodsGroup 
+    internal class MathMethodsGroup
     {
         public static string UserMathFunction = string.Empty;
 
@@ -124,11 +122,11 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
             // Возвращаем середину отрезка как приближенное значение минимума или максимума
             return (startLimit + endLimit) / 2;
         }
-    
 
 
-    // МЕТОД НЬЮТОНА - КЛАССИКА
-    public static double NewtonMethod(double startLimit, double endLimit, int iterationsCount, double tolerance)
+
+        // МЕТОД НЬЮТОНА - КЛАССИКА
+        public static double NewtonMethod(double startLimit, double endLimit, int iterationsCount, double tolerance)
         {
             if (iterationsCount < 0)
             {

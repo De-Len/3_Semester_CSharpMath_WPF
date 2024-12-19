@@ -15,9 +15,9 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.GoldenSectionSearchPage
     partial class GoldenSectionSearchPageViewModel : ObservableObject
     {
         public ISeries[] Series { get; set; }
-        public Axis[] XAxes { get; set; }
-        public Axis[] YAxes { get; set; }
-        public DrawMarginFrame Frame { get; set; }
+        //public Axis[] XAxes { get; set; }
+        //public Axis[] YAxes { get; set; }
+        //public DrawMarginFrame Frame { get; set; }
 
         public GoldenSectionSearchPageViewModel()
         {
