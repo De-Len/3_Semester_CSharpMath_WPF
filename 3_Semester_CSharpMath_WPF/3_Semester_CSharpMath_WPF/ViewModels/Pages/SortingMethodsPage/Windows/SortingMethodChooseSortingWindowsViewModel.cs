@@ -20,6 +20,11 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
         List<ISortStrategy> ListSortStrategies = [new BubbleSort(), new InsertionSort(), new CocktailShakerSort(),
                                                     new QuickSort(), new Bogosort()];
         List<string> ListSortOutputCollections;
+        private double[] _sortedArray0;
+        private double[] _sortedArray1;
+        private double[] _sortedArray2;
+        private double[] _sortedArray3;
+        private double[] _sortedArray4;
 
         public ICommand SortCommand { get; }
         public SortingMethodChooseSortingWindowsViewModel(SortingMethodsPageViewModel sortingMethodsPageViewModel)
@@ -85,8 +90,25 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
                                 Stopwatch stopwatch = Stopwatch.StartNew(); // Запуск таймера
                                 sorter.SetSortStrategy(ListSortStrategies[index]);
 
+                                switch (index)
+                                {
+                                    case 0:
+                                        _sortedArray0 = sorter.Sort(NumbersFromFile);
+                                        break;
+                                    case 1:
+                                        _sortedArray1 = sorter.Sort(NumbersFromFile);
+                                        break;
+                                    case 2:
+                                        _sortedArray2 = sorter.Sort(NumbersFromFile);
+                                        break;
+                                    case 3:
+                                        _sortedArray3 = sorter.Sort(NumbersFromFile);
+                                        break;
+                                    case 4:
+                                        _sortedArray4 = sorter.Sort(NumbersFromFile);
+                                        break;
+                                }
 
-                                var sortedArray = sorter.Sort(NumbersFromFile);
                                 Thread.Sleep(10);
                                 stopwatch.Stop(); // Остановка таймера
 
@@ -97,19 +119,19 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage.Windows
                                 switch (index)
                                 {
                                     case 0:
-                                        _sortingMethodsPageViewModel.BubbleSortOutput = string.Join(", ", sortedArray);
+                                        _sortingMethodsPageViewModel.BubbleSortOutput = string.Join(", ", _sortedArray0);
                                         break;
                                     case 1:
-                                        _sortingMethodsPageViewModel.InsertionSortOutput = string.Join(", ", sortedArray);
+                                        _sortingMethodsPageViewModel.InsertionSortOutput = string.Join(", ", _sortedArray1);
                                         break;
                                     case 2:
-                                        _sortingMethodsPageViewModel.CocktailShakerSortOutput = string.Join(", ", sortedArray);
+                                        _sortingMethodsPageViewModel.CocktailShakerSortOutput = string.Join(", ", _sortedArray2);
                                         break;
                                     case 3:
-                                        _sortingMethodsPageViewModel.QuickSortOutput = string.Join(", ", sortedArray);
+                                        _sortingMethodsPageViewModel.QuickSortOutput = string.Join(", ", _sortedArray3);
                                         break;
                                     case 4:
-                                        _sortingMethodsPageViewModel.BogoSortOutput = string.Join(", ", sortedArray);
+                                        _sortingMethodsPageViewModel.BogoSortOutput = string.Join(", ", _sortedArray4);
                                         break;
                                 }
                             }));

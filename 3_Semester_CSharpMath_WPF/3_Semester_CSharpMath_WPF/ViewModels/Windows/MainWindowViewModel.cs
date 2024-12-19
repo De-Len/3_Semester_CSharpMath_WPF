@@ -9,6 +9,7 @@ using _3_Semester_CSharpMath_WPF.Views.Pages.GoldenSectionSearchPage;
 using _3_Semester_CSharpMath_WPF.Views.Pages.NewtonMethodPage;
 using _3_Semester_CSharpMath_WPF.Views.Pages.CoordinateDescentMethodPage;
 using _3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage;
+using _3_Semester_CSharpMath_WPF.Views.Pages.EvaluatingDefiniteIntegralsPage;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Windows
 {
@@ -28,32 +29,43 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Windows
             NavigationItems =
             [
                 new NavigationViewItem()
-            {
+                {
                 Content = "Метод Дихотомии",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardMathFormula20 },
-                TargetPageType = typeof(DichotomyMethodPageView) },
+                TargetPageType = typeof(DichotomyMethodPageView) 
+                },
 
                 new NavigationViewItem()
                 {
                     Content = "Метод золотого сечения",
                     Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardMathFormula16 },
-                    TargetPageType = typeof(GoldenSectionSearchPageView) },
+                    TargetPageType = typeof(GoldenSectionSearchPageView) 
+                },
 
                 new NavigationViewItem()
                 {
                     Content = "Метод Ньютона",
                     Icon = new SymbolIcon { Symbol = SymbolRegular.MathFormatProfessional16 },
-                    TargetPageType = typeof(NewtonMethodPageView) },
+                    TargetPageType = typeof(NewtonMethodPageView) 
+                },
                 new NavigationViewItem()
                 {
                     Content = "Метод покоординатного спуска",
                     Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardMathFormula24 },
-                    TargetPageType = typeof(CoordinateDescentMethodPageView) },
+                    TargetPageType = typeof(CoordinateDescentMethodPageView) 
+                },
                 new NavigationViewItem()
                 {
                     Content = "Методы сортировки",
                     Icon = new SymbolIcon { Symbol = SymbolRegular.ArrowCircleUp20 },
-                    TargetPageType = typeof(SortingMethodsPageView) },
+                    TargetPageType = typeof(SortingMethodsPageView) 
+                },
+                    new NavigationViewItem()
+                {
+                    Content = "Вычисление определённых интегралов",
+                    Icon = new SymbolIcon { Symbol = SymbolRegular.Calendar20 },
+                    TargetPageType = typeof(EvaluatingDefiniteIntegralsPageView) 
+                }
             ];
             //    },
             //    new NavigationViewItem()
