@@ -19,7 +19,11 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.EvaluatingDefiniteIntegral
         [ObservableProperty]
         private string _lowerBound = string.Empty;
         [ObservableProperty]
-        private string _subintervalsNumber = string.Empty;
+        private string _subintervalsNumberRectangleMethod = string.Empty;
+        [ObservableProperty]
+        private string _subintervalsNumberTrapezoidalMethod = string.Empty;
+        [ObservableProperty]
+        private string _subintervalsNumberSimpsonMethod = string.Empty;
         [ObservableProperty]
         private string _answerCountDigitsAfterPoint = string.Empty;
         [ObservableProperty]
@@ -77,13 +81,55 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.EvaluatingDefiniteIntegral
         }
 
         public ICommand SolveFunctionCommand { get; }
+        public ICommand FindOptimalPartitionsCommand { get; }   
 
         public EvaluatingDefiniteIntegralsPageViewModel()
         {
             SolveFunctionCommand = new RelayCommand(SolveFunction);
+            FindOptimalPartitionsCommand = new RelayCommand(FindOptimalPartitions);
         }
 
+        public void FindOptimalPartitions()
+        {
+            double upperBound = double.NaN;
+            double lowerBound = double.NaN;
+            try
+            {
+                if (UserMathFunction == "")
+                {
+                    throw new FormatException("Функция не задана.");
+                }
+                MathMethodsGroup.UserMathFunction = UserMathFunction;
+                // Проверка и преобразование StartLimit
+                if (!double.TryParse(UpperBound, out upperBound))
+                {
+                    throw new FormatException("Неверный формат для начала интервала. Пожалуйста, введите число.");
+                }
 
+                // Проверка и преобразование EndLimit
+                if (!double.TryParse(LowerBound, out lowerBound))
+                {
+                    throw new FormatException("Неверный формат для конца интервала. Пожалуйста, введите число.");
+                }
+                SubintervalsNumberRectangleMethod = EvaluatingDifiniteIntegralsModel.FindOptimalPartitionsRectangles(lowerBound, upperBound, 0.1).ToString();
+                SubintervalsNumberTrapezoidalMethod = EvaluatingDifiniteIntegralsModel.FindOptimalPartitionsTrapezoids(lowerBound, upperBound, 0.1).ToString();
+                SubintervalsNumberSimpsonMethod = EvaluatingDifiniteIntegralsModel.FindOptimalPartitionsSimpson(lowerBound, upperBound, 0.1).ToString();
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка аргументов", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Произошла ошибка: " + ex.Message, "Неопределённая ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            
+        }
         public void SolveFunction()
         {
             FoundRootRectangleMethodVisibility = Visibility.Collapsed;
@@ -93,7 +139,9 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.EvaluatingDefiniteIntegral
 
             double upperBound = double.NaN;
             double lowerBound = double.NaN;
-            int subintervalsNumber = 0;
+            int subintervalsNumberRectangleMethod = 0;
+            int subintervalsNumberTrapezoidalMethod = 0;
+            int subintervalsNumberSimpsonMethod = 0;
 
             try
             {
@@ -113,11 +161,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.EvaluatingDefiniteIntegral
                     throw new FormatException("Неверный формат для конца интервала. Пожалуйста, введите число.");
                 }
 
-                // Проверка и преобразование Tolerance (точности)
-                if (!int.TryParse(SubintervalsNumber, out subintervalsNumber))
-                {
-                    throw new FormatException("Неверный формат для количества итераций. Пожалуйста, введите число.");
-                }
+                
 
                 if (!double.TryParse(AnswerCountDigitsAfterPoint, out double answerCountDigitsAfterPoint))
                 {
@@ -132,23 +176,42 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.EvaluatingDefiniteIntegral
 
                 MathMethodsGroup.UserMathFunction = UserMathFunction;
 
-                ChartModel.SubintervalsNumber = subintervalsNumber;
+
+
                 if (IsSelectedRectangleMethod)
                 {
+                    if (!int.TryParse(SubintervalsNumberRectangleMethod, out subintervalsNumberRectangleMethod))
+                    {
+                        throw new FormatException("Неверный формат для количества итераций (Метод прямоугольников). Пожалуйста, введите число.");
+                    }
+                    ChartModel.SubintervalsNumberRectangleMethod = subintervalsNumberRectangleMethod;
+
                     ChartModel.IsSelectedRectangleMethod = true;
-                    FoundRootRectangleMethod = EvaluatingDifiniteIntegralsModel.CalculateUsingRectangleMethod(lowerBound, upperBound, subintervalsNumber).ToString("F" + AnswerCountDigitsAfterPoint);
+                    FoundRootRectangleMethod = EvaluatingDifiniteIntegralsModel.CalculateUsingRectangleMethod(lowerBound, upperBound, subintervalsNumberRectangleMethod).ToString("F" + AnswerCountDigitsAfterPoint);
                     FoundRootRectangleMethodVisibility = Visibility.Visible;
                 }
                 if (IsSelectedTrapezoidalMethod)
                 {
+                    if (!int.TryParse(SubintervalsNumberTrapezoidalMethod, out subintervalsNumberTrapezoidalMethod))
+                    {
+                        throw new FormatException("Неверный формат для количества итераций (Метод трапеций). Пожалуйста, введите число.");
+                    }
+                    ChartModel.SubintervalsNumberTrapezoidalMethod = subintervalsNumberTrapezoidalMethod;
+
                     ChartModel.IsSelectedTrapezoidalMethod = true;  
-                    FoundRootTrapezoidalMethod = EvaluatingDifiniteIntegralsModel.CalculateUsingTrapezoidalMethod(lowerBound, upperBound, subintervalsNumber).ToString("F" + AnswerCountDigitsAfterPoint);
+                    FoundRootTrapezoidalMethod = EvaluatingDifiniteIntegralsModel.CalculateUsingTrapezoidalMethod(lowerBound, upperBound, subintervalsNumberTrapezoidalMethod).ToString("F" + AnswerCountDigitsAfterPoint);
                     FoundRootTrapezoidalMethodVisibility = Visibility.Visible;
                 }
                 if (IsSelectedSimpsonMethod)
                 {
+                    if (!int.TryParse(SubintervalsNumberSimpsonMethod, out subintervalsNumberSimpsonMethod))
+                    {
+                        throw new FormatException("Неверный формат для количества итераций (Метод Симпсона). Пожалуйста, введите число.");
+                    }
+                    ChartModel.SubintervalsNumberNumberSimpsonMethod = subintervalsNumberSimpsonMethod;
+
                     ChartModel.IsSelectedSimpsonMethod = true;
-                    FoundRootSimpsonMethod = EvaluatingDifiniteIntegralsModel.CalculateUsingSimpsonMethod(lowerBound, upperBound, subintervalsNumber).ToString("F" + AnswerCountDigitsAfterPoint);
+                    FoundRootSimpsonMethod = EvaluatingDifiniteIntegralsModel.CalculateUsingSimpsonMethod(lowerBound, upperBound, subintervalsNumberSimpsonMethod).ToString("F" + AnswerCountDigitsAfterPoint);
                     FoundRootSimpsonMethodVisibility = Visibility.Visible;
                 }
 

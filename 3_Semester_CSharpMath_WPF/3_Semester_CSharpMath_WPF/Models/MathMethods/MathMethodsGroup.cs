@@ -53,6 +53,10 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
         {
             return FindDerivative(FindDerivative(x));
         }
+        public static double FindFourthDerivative(double x)
+        {
+            return FindDerivative(FindDerivative(FindDerivative(FindDerivative(x))));
+        }
 
         // МЕТОД ПОЛОВИННОГО ДЕЛЕНИЯ
         public static double Bisection(double startLimit, double endLimit, double tolerance)

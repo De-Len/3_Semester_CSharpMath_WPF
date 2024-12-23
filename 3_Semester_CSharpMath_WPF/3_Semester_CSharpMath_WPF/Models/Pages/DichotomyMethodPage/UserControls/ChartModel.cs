@@ -17,7 +17,9 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
         public static bool IsSelectedRectangleMethod = false;
         public static bool IsSelectedTrapezoidalMethod = false;
         public static bool IsSelectedSimpsonMethod = false;
-        public static int SubintervalsNumber;
+        public static int SubintervalsNumberRectangleMethod;
+        public static int SubintervalsNumberTrapezoidalMethod;
+        public static int SubintervalsNumberNumberSimpsonMethod;
         #endregion
 
         public static int GraphsCount = 1;
@@ -61,9 +63,9 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
                 double lowerBound = StartLimit;
                 double upperBound = EndLimit;
 
-                double subintervalWidth = (upperBound - lowerBound) / SubintervalsNumber; // Ширина подынтервалов
+                double subintervalWidth = (upperBound - lowerBound) / SubintervalsNumberRectangleMethod; // Ширина подынтервалов
 
-                for (int index = 0; index < SubintervalsNumber; ++index)
+                for (int index = 0; index < SubintervalsNumberRectangleMethod; ++index)
                 {
                     double x = lowerBound + index * subintervalWidth;
                     var y = MathMethodsGroup.SolveFunctionSingleArgument(x); 
@@ -103,7 +105,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
                 double lowerBound = StartLimit;
                 double upperBound = EndLimit;
 
-                double subintervalWidth = (upperBound - lowerBound) / SubintervalsNumber; // Ширина подынтервалов
+                double subintervalWidth = (upperBound - lowerBound) / SubintervalsNumberTrapezoidalMethod; // Ширина подынтервалов
 
                 // Рисую первый столбец
                 seriesList.Add(new LineSeries<ObservablePoint>
@@ -114,7 +116,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
                     GeometrySize = 0
                 });
 
-                for (int index = 0; index < SubintervalsNumber; ++index)
+                for (int index = 0; index < SubintervalsNumberTrapezoidalMethod; ++index)
                 {
                     double x = lowerBound + index * subintervalWidth;
                     var y = MathMethodsGroup.SolveFunctionSingleArgument(x); 
@@ -266,7 +268,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
 
             double upperBound = EndLimit;
             double lowerBound = StartLimit;
-            int subintervalsNumber = SubintervalsNumber;
+            int subintervalsNumber = SubintervalsNumberNumberSimpsonMethod;
 
             if (subintervalsNumber % 2 != 0)
             {

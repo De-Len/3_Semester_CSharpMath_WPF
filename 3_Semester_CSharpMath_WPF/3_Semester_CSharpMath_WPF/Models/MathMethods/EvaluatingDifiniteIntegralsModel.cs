@@ -56,5 +56,48 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
 
             return areaSum * (subintervalWidth / 3); // Умножаем на вес
         }
+
+        public static int FindOptimalPartitionsRectangles(double a, double b, double precision)
+        {
+            int partitions = 1; // Начальное число разбиений
+            double error;
+
+            do
+            {
+                
+                error = ((b - a) * (b - a) / (2 * partitions)) * Math.Abs(MathMethodsGroup.FindSecondDerivative((a + b) / 2)); // Оценка ошибки
+                partitions++; // Увеличение числа разбиений
+            } while (error > precision); // Пытаемся добиться нужной точности
+
+            return partitions - 1; // Возвращаем оптимальное число разбиений
+        }
+
+        public static int FindOptimalPartitionsTrapezoids(double a, double b, double precision)
+        {
+            int partitions = 1; // Начальное число разбиений
+            double error;
+
+            do
+            {
+                error = ((b - a) * (b - a) * (b - a)) / (12 * partitions * partitions) * Math.Abs(MathMethodsGroup.FindSecondDerivative((a + b) / 2)); // Оценка ошибки
+                partitions++; // Увеличение числа разбиений
+            } while (error > precision); // Пытаемся добиться нужной точности
+
+            return partitions - 1; // Возвращаем оптимальное число разбиений
+        }
+
+        public static int FindOptimalPartitionsSimpson(double a, double b, double precision)
+        {
+            int partitions = 1; // Начальное число разбиений
+            double error;
+
+            do
+            {
+                error = ((b - a) * (b - a) * (b - a) * (b - a) * (b - a)) / (180 * partitions * partitions * partitions * partitions) * Math.Abs(MathMethodsGroup.FindFourthDerivative((a + b) / 2)); // Оценка ошибки
+                partitions++; // Увеличение числа разбиений
+            } while (error > precision); // Пытаемся добиться нужной точности
+
+            return partitions - 1; // Возвращаем оптимальное число разбиений
+        }
     }
 }

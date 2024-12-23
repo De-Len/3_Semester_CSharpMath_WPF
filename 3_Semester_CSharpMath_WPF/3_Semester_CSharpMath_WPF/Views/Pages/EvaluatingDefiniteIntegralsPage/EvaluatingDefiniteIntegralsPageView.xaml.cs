@@ -16,5 +16,7 @@ namespace _3_Semester_CSharpMath_WPF.Views.Pages.EvaluatingDefiniteIntegralsPage
 
             InitializeComponent();
         }
+
+       
     }
 }
