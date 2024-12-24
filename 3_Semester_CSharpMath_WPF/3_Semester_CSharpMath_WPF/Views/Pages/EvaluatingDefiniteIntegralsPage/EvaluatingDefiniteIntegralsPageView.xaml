@@ -15,9 +15,9 @@
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
-    <Page.DataContext>
-        <viewmodel:GoldenSectionSearchPageViewModel/>
-    </Page.DataContext>
+    <!--<Page.DataContext>
+        <viewmodel:EvaluatingDefiniteIntegralsPageViewModel/>
+    </Page.DataContext>-->
     <Page.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16"/>
@@ -60,49 +60,101 @@
                 BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="5">
-                    <WrapPanel>
-                        <ui:SymbolIcon
-                     Grid.Row="0"
-                     FontSize="20"
-                     Symbol="RectangleLandscape12" />
-                        <TextBlock Padding="10 0 0 0" Text="Прямоугольников" VerticalAlignment="Center" />
-                        <CheckBox Content="" HorizontalAlignment="Right"/>
-                    </WrapPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
+                        <WrapPanel Grid.Row="0">
+                            <ui:SymbolIcon
+                         Grid.Row="0"
+                         FontSize="20" 
+                         Symbol="RectangleLandscape12" Foreground="Red" />
+                            <TextBlock Padding="10 0 0 0" Text="Прямоугольников" VerticalAlignment="Center" />
+                            <CheckBox Content="" HorizontalAlignment="Right" IsChecked="{Binding IsSelectedRectangleMethod, UpdateSourceTrigger=PropertyChanged}"/>
+                        </WrapPanel>
+
+                        <Line Grid.Row="1" Stroke="Gray"  StrokeThickness="1" X1="0" Y1="0" X2="150" Y2="0" HorizontalAlignment="Center" Margin="10,5" />
+
+                        <WrapPanel Grid.Row="2">
+                            <TextBlock Padding="0 0 0 0" Text="Количество разбиений:" VerticalAlignment="Center" />
+                            <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"
+                            Text="{Binding SubintervalsNumberRectangleMethod}" IsEnabled="{Binding IsSelectedRectangleMethod}"/>
+                        </WrapPanel>
+                    </Grid>
                 </Border>
+
                 <Border Padding="10 0 10 0" Margin="20"
-                Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="5">
-                    <WrapPanel>
-                        <ui:SymbolIcon
-                     Grid.Row="0"
-                     FontSize="20"
-                     Symbol="Triangle12" />
-                        <TextBlock Padding="10 0 0 0" Text="Трапеций" VerticalAlignment="Center" />
-                        <CheckBox Content="" HorizontalAlignment="Right"/>
-                    </WrapPanel>
+                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <WrapPanel>
+                            <ui:SymbolIcon
+                                 Grid.Row="0"
+                                 FontSize="20"
+                                 Symbol="Triangle12" Foreground="#FF087D09" />
+                            <TextBlock Padding="10 0 0 0" Text="Трапеций" VerticalAlignment="Center" />
+                            <CheckBox Content="" HorizontalAlignment="Right" IsChecked="{Binding IsSelectedTrapezoidalMethod, UpdateSourceTrigger=PropertyChanged}"/>
+                        </WrapPanel>
+
+                        <Line Grid.Row="1" Stroke="Gray"  StrokeThickness="1" X1="0" Y1="0" X2="150" Y2="0" HorizontalAlignment="Center" Margin="10,5" />
+
+                        <WrapPanel Grid.Row="2">
+                            <TextBlock Padding="0 0 0 0" Text="Количество разбиений:" VerticalAlignment="Center" />
+                            <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"
+                                Text="{Binding SubintervalsNumberTrapezoidalMethod}" IsEnabled="{Binding IsSelectedTrapezoidalMethod}"/>
+                        </WrapPanel>
+                    </Grid>
                 </Border>
+
+
                 <Border Padding="10 0 10 0" Margin="20"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="5">
-                    <WrapPanel>
-                        <ui:SymbolIcon
-                     Grid.Row="0"
-                     FontSize="20"
-                     Symbol="VideoPersonPulse24" VerticalAlignment="Center" Margin="0,0,0,5" />
-                        <TextBlock Padding="10 0 0 0" Text="Симпсона" VerticalAlignment="Center" />
-                        <CheckBox Content="" HorizontalAlignment="Right"/>
-                    </WrapPanel>
+        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <WrapPanel>
+                            <ui:SymbolIcon
+                                 Grid.Row="0"
+                                 FontSize="20"
+                                 Symbol="VideoPersonPulse24" VerticalAlignment="Center" Margin="0,0,0,5" Foreground="Yellow" />
+                            <TextBlock Padding="10 0 0 0" Text="Симпсона" VerticalAlignment="Center" />
+                            <CheckBox Content="" HorizontalAlignment="Right" IsChecked="{Binding IsSelectedSimpsonMethod, UpdateSourceTrigger=PropertyChanged}"/>
+                        </WrapPanel>
+
+                        <Line Grid.Row="1" Stroke="Gray"  StrokeThickness="1" X1="0" Y1="0" X2="150" Y2="0" HorizontalAlignment="Center" Margin="10,5" />
+
+                        <WrapPanel Grid.Row="2">
+                            <TextBlock Padding="0 0 0 0" Text="Количество разбиений:" VerticalAlignment="Center" />
+                            <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"
+                                 Text="{Binding SubintervalsNumberSimpsonMethod}" IsEnabled="{Binding IsSelectedSimpsonMethod}"/>
+                        </WrapPanel>
+                    </Grid>
                 </Border>
+                
+                
             </StackPanel>
         </StackPanel>
 
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="100"
-        Padding="16" Margin="20"
+        Padding="16" Margin="20 20 20 20"
         Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
@@ -111,48 +163,52 @@
                 <DockPanel Margin="0 0 0 10">
                     <!--<TextBlock Text="Введите функцию:" Style="{StaticResource TextBlockStyle}"/>-->
                     <StackPanel>
-                        <TextBox Padding="1" Height="26.28"/>
+                        <TextBox Padding="1" Height="26.28" Text="{Binding UpperBound}"/>
                         <Image Source="C:\Users\princedelen\source\repos\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Integral.png" 
                               Width="22" Height="40"/>
-                        <TextBox Padding="1" Height="26.28"/>
+                        <TextBox Padding="1" Height="26.28" Text="{Binding LowerBound}"/>
                     </StackPanel>
                     <TextBox Padding="1" Text="{Binding UserMathFormula}" Height="26" MinWidth="50" HorizontalAlignment="Stretch" Grid.Column="0"/>
                     <TextBlock Text="dx" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" />
+                    
+                    
 
                 </DockPanel>
                 <StackPanel>
                     <WrapPanel>
-                        <TextBlock Text="Введите начало интервала:" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBox MinWidth="50" Padding="1" Margin="10 0 5 0"
-                             Text="{Binding StartLimit}"/>
-                        <TextBlock Text="и конец интервала:" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBox MinWidth="50" Padding="1" Margin="10 0 5 0"
-                             Text="{Binding EndLimit}"/>
-                    </WrapPanel>
-                    <WrapPanel>
-                        <TextBlock Text="Введите точность вычисления (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"
-                             Text="{Binding AccuracyCountDigitsAfterPoint}"/>
-                    </WrapPanel>
-                    <WrapPanel>
                         <TextBlock Text="Введите точность ответа (сколько знаков после запятой):" Style="{StaticResource TextBlockStyle}"/>
                         <TextBox MinWidth="25" Margin="10 0 0 0" Padding="1"
-         Text="{Binding AnswerCountDigitsAfterPoint}"/>
+                            Text="{Binding AnswerCountDigitsAfterPoint}"/>
                     </WrapPanel>
                     <WrapPanel Margin="0 20 0 0">
                         <Button Width="200" Command="{Binding SolveFunctionCommand}">
                             <TextBlock Text="Порешать" Style="{StaticResource TextBlockStyle}"/>
                         </Button>
-                        <ui:ToggleSwitch IsChecked="{Binding IsToggleButtonOn}" OffContent="Minimum"
-                                                                                OnContent="Maximum" Margin="20 0 0 0"/>
+
+                        <Button Width="370" Margin="20 0 0 0" Command="{Binding FindOptimalPartitionsCommand}">
+                            <TextBlock Text="Найти оптимальное количество разбиений" Style="{StaticResource TextBlockStyle}"/>
+                        </Button>
+                        
                     </WrapPanel>
                 </StackPanel>
             </StackPanel>
 
         </Border>
-        <TextBlock Text="Найденный экстремум: " Grid.Row="6" Grid.Column="1" Visibility="{Binding FoundRootVisibility}" />
-        <TextBlock Text="{Binding FoundRoot}" Grid.Row="6" Grid.Column="2" Visibility="{Binding FoundRootVisibility}" />
-
+        <StackPanel  Grid.Row="6" Grid.Column="1">
+            <WrapPanel>
+                <TextBlock Text="Методом прямоугольников: " Visibility="{Binding FoundRootRectangleMethodVisibility}" />
+                <TextBlock Text="{Binding FoundRootRectangleMethod}" Grid.Row="6" Grid.Column="2" Visibility="{Binding FoundRootRectangleMethodVisibility}" />
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Text="Методом трапеций: " Visibility="{Binding FoundRootTrapezoidalMethodVisibility}" />
+                <TextBlock Text="{Binding FoundRootTrapezoidalMethod}" Grid.Row="6" Grid.Column="2" Visibility="{Binding FoundRootTrapezoidalMethodVisibility}" />
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Text="Методом Симпсона: " Visibility="{Binding FoundRootSimpsonMethodVisibility}" />
+                <TextBlock Text="{Binding FoundRootSimpsonMethod}" Grid.Row="6" Grid.Column="2" Visibility="{Binding FoundRootSimpsonMethodVisibility}" />
+            </WrapPanel>
+        </StackPanel>
+            
         <ContentControl Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="100"
         Content="{Binding ChartView}" 
         HorizontalAlignment="Stretch"  

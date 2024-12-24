@@ -10,6 +10,7 @@ using _3_Semester_CSharpMath_WPF.Views.Pages.NewtonMethodPage;
 using _3_Semester_CSharpMath_WPF.Views.Pages.CoordinateDescentMethodPage;
 using _3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage;
 using _3_Semester_CSharpMath_WPF.Views.Pages.EvaluatingDefiniteIntegralsPage;
+using _3_Semester_CSharpMath_WPF.Views.Pages.LinearEquationsSystemMethodsPage;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Windows
 {
@@ -65,6 +66,12 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Windows
                     Content = "Вычисление определённых интегралов",
                     Icon = new SymbolIcon { Symbol = SymbolRegular.Calendar20 },
                     TargetPageType = typeof(EvaluatingDefiniteIntegralsPageView) 
+                },
+                    new NavigationViewItem()
+                {
+                    Content = "Вычисление определённых интегралов",
+                    Icon = new SymbolIcon { Symbol = SymbolRegular.SlideGrid20 },
+                    TargetPageType = typeof(LinearEquationsSystemMethodsPageView)
                 }
             ];
             //    },

@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Pages\GoldenSectionSearchPage\UserControls\" />
-    <Folder Include="Views\Pages\LinearEquationsSystemMethodsPage\" />
     <Folder Include="Views\Pages\NewtonMethodPage\UserControls\" />
   </ItemGroup>
 

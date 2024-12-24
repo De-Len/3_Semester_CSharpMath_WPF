@@ -31,15 +31,16 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 return array;
             }
 
-            int n = array.Length;
+            int arrayLength = array.Length;
             bool swapped;
-            for (int i = 0; i < n - 1; i++)
+            for (int i = 0; i < arrayLength - 1; ++i)
             {
+                // Увеличиваем итераторы
+                SortingMethodsPageViewModel.AddIteration(0);
                 swapped = false;
-                for (int j = 0; j < n - i - 1; j++)
+                for (int j = 0; j < arrayLength - i - 1; ++j)
                 {
-                    // Увеличиваем итераторы
-                    SortingMethodsPageViewModel.AddIteration(0);
+                    
                     if (array[j] > array[j + 1])
                     {
                         // Обмен значениями
@@ -66,8 +67,8 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
             //    return array;
             //}
 
-            int n = array.Length;
-            for (int i = 1; i < n; i++)
+            int arrayLength = array.Length;
+            for (int i = 1; i < arrayLength; ++i)
             {
                 SortingMethodsPageViewModel.AddIteration(1);
                 double key = array[i];
@@ -76,11 +77,11 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
                 // Сдвигаем элементы, которые больше ключа, на одну позицию вперед
                 while (j >= 0)
                 {
-                    SortingMethodsPageViewModel.AddIteration(1);
+                    
                     if (array[j] > key)
                     {
                         array[j + 1] = array[j];
-                        j--;
+                        --j;
                     }
                     else break; // добавлено для оптимизации
                 }
@@ -92,54 +93,51 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.SortingMethodsPage
 
     public class CocktailShakerSort : ISortStrategy
     {
+        //метод обмена элементов
+        static void Swap(ref double e1, ref double e2)
+        {
+            var temp = e1;
+            e1 = e2;
+            e2 = temp;
+        }
+
+        //сортировка перемешиванием
         public double[] Sort(double[] array)
         {
-            //if (SortingMethods.IsSorted(array))
-            //{
-            //    return array;
-            //}
-
-            int n = array.Length;
-            bool swapped;
-            do
+            for (var i = 0; i < array.Length / 2; i++)
             {
-                swapped = false;
-
-                // Проход в прямом направлении
-                for (int i = 0; i < n - 1; ++i)
-                {
-                    if (array[i] > array[i + 1])
-                    {
-                        // Обмен значениями
-                        double temp = array[i];
-                        array[i] = array[i + 1];
-                        array[i + 1] = temp;
-                        swapped = true;
-                    }
-                }
-
-                // Если по прямому проходу не было замен, массив отсортирован
-                if (!swapped)
-                    break;
-
-                swapped = false;
-
-                // Проход в обратном направлении
-                for (int i = n - 2; i >= 0; --i)
-                {
-                    if (array[i] > array[i + 1])
-                    {
-                        // Обмен значениями
-                        double temp = array[i];
-                        array[i] = array[i + 1];
-                        array[i + 1] = temp;
-                        swapped = true;
-                    }
-                }
                 SortingMethodsPageViewModel.AddIteration(2);
-            } while (swapped);
+                var swapFlag = false;
+                //проход слева направо
+                for (var j = i; j < array.Length - i - 1; j++)
+                {
+                    if (array[j] > array[j + 1])
+                    {
+                        Swap(ref array[j], ref array[j + 1]);
+                        swapFlag = true;
+                    }
+                }
+
+                //проход справа налево
+                for (var j = array.Length - 2 - i; j > i; j--)
+                {
+                    if (array[j - 1] > array[j])
+                    {
+                        Swap(ref array[j - 1], ref array[j]);
+                        swapFlag = true;
+                    }
+                }
+
+                //если обменов не было выходим
+                if (!swapFlag)
+                {
+                    break;
+                }
+            }
+
             return array;
         }
+
     }
 
     public class QuickSort : ISortStrategy
