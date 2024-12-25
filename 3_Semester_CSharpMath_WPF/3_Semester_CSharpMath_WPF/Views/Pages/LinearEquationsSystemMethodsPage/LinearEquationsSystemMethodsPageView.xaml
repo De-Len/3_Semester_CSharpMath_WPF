@@ -81,13 +81,13 @@
                     </WrapPanel>
                 </Border>
 
-                <Button Margin="20 10 0 10" Command="{Binding OpenDataGeneratorWindowCommand}">
+                <Button Margin="20 10 0 10" Command="{Binding GetDataFromExcelCommand}">
                     <WrapPanel>
                         <ui:SymbolIcon
                          Grid.Row="0"
                          FontSize="20"
-                         Symbol="ClipboardDataBar20" />     
-                        <TextBlock Padding="10 0 0 0" Text="Данные" VerticalAlignment="Center" />
+                         Symbol="Folder20" />     
+                        <TextBlock Padding="10 0 0 0" Text="Из Excel файла" VerticalAlignment="Center" />
                     </WrapPanel>
                 </Button>
 
@@ -133,5 +133,24 @@
                 </Button>
             </StackPanel>
         </Border>
+        
+        <StackPanel Orientation="Vertical" Grid.Row="6" Grid.Column="1">
+            <WrapPanel>
+                <TextBlock Text="Гаусса: " Visibility="{Binding ResultGaussVisibility}" />
+                <TextBlock Text="{Binding ResultGauss}" Visibility="{Binding ResultGaussVisibility}" />
+            </WrapPanel>
+
+            <WrapPanel>
+                <TextBlock Text="Гаусса-Жордана: " Visibility="{Binding ResultGaussJordanVisibility}" />
+                <TextBlock Text="{Binding ResultGaussJordan}" Visibility="{Binding ResultGaussJordanVisibility}" />
+            </WrapPanel>
+
+            <WrapPanel>
+                <TextBlock Text="Крамера: " Visibility="{Binding ResultCramerVisibility}" />
+                <TextBlock Text="{Binding ResultCramer}" Visibility="{Binding ResultCramerVisibility}" />
+            </WrapPanel>
+        </StackPanel>
+        
+        
     </Grid>
 </Page>

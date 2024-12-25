@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
 {
@@ -17,6 +13,12 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
                 // Прямой ход
                 for (int pivotIndex = 0; pivotIndex < numberOfVariables; pivotIndex++)
                 {
+                    // Проверка на нуль в ведущем элементе
+                    if (Math.Abs(coefficients[pivotIndex, pivotIndex]) < 1e-10)
+                    {
+                        throw new InvalidOperationException($"Ведущий элемент в строке {pivotIndex + 1} равен нулю. Система либо несогласованная, либо имеет бесконечно много решений.");
+                    }
+
                     for (int rowIndex = pivotIndex + 1; rowIndex < numberOfVariables; rowIndex++)
                     {
                         double factor = coefficients[rowIndex, pivotIndex] / coefficients[pivotIndex, pivotIndex];
@@ -38,12 +40,20 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
                     {
                         solution[pivotIndex] -= coefficients[pivotIndex, colIndex] * solution[colIndex];
                     }
+
+                    // Проверка на нуль в ведущем элементе
+                    if (Math.Abs(coefficients[pivotIndex, pivotIndex]) < 1e-10)
+                    {
+                        throw new InvalidOperationException($"Деление на ноль. Ведущий элемент в строке {pivotIndex + 1} равен нулю.");
+                    }
+
                     solution[pivotIndex] /= coefficients[pivotIndex, pivotIndex];
                 }
 
                 return solution;
             }
         }
+
         public static class GaussJordanElimination
         {
             public static double[] Solve(double[,] coefficients, double[] constants)
@@ -53,6 +63,12 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
                 // Расширение матрицы
                 for (int rowIndex = 0; rowIndex < numberOfVariables; rowIndex++)
                 {
+                    // Проверка на нуль перед дальнейшим ходом
+                    if (Math.Abs(coefficients[rowIndex, rowIndex]) < 1e-10)
+                    {
+                        throw new InvalidOperationException($"Ведущий элемент в строке {rowIndex + 1} равен нулю. Система либо несогласованная, либо имеет бесконечно много решений.");
+                    }
+
                     // Прямой ход для нормализации и исключения
                     for (int pivotIndex = 0; pivotIndex < numberOfVariables; pivotIndex++)
                     {
@@ -72,6 +88,13 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
                 for (int rowIndex = 0; rowIndex < numberOfVariables; rowIndex++)
                 {
                     double normalizingFactor = coefficients[rowIndex, rowIndex];
+
+                    // Проверка на нуль перед делением
+                    if (Math.Abs(normalizingFactor) < 1e-10)
+                    {
+                        throw new InvalidOperationException($"Деление на ноль при нормализации. Ведущий элемент в строке {rowIndex + 1} равен нулю.");
+                    }
+
                     for (int colIndex = 0; colIndex < numberOfVariables; colIndex++)
                     {
                         coefficients[rowIndex, colIndex] /= normalizingFactor;
@@ -82,6 +105,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
                 return constants;
             }
         }
+
         public static class Cramer
         {
             // Метод для вычисления определителя матрицы
@@ -130,6 +154,12 @@ namespace _3_Semester_CSharpMath_WPF.Models.MathMethods
                 int size = coefficientMatrix.GetLength(0); // Получаем размерность матрицы
                 double determinant = CalculateDeterminant(coefficientMatrix);
                 double[] solution = new double[size];
+
+                // Проверка на нуль определителя
+                if (Math.Abs(determinant) < 1e-10)
+                {
+                    throw new InvalidOperationException("Определитель матрицы равен нулю. Система либо несогласованная, либо имеет бесконечно много решений.");
+                }
 
                 // Решение для каждой переменной
                 for (int column = 0; column < size; column++)

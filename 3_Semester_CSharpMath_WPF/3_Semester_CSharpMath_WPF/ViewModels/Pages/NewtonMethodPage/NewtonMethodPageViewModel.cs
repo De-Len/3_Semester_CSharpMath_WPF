@@ -38,8 +38,6 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.NewtonMethodPage
             set => SetProperty(ref _chartVisibility, value);
         }
 
-
-
         private string _userMathFormula = string.Empty;
         public string UserMathFormula
         {

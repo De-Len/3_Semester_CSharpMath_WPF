@@ -1,11 +1,15 @@
 ﻿using _3_Semester_CSharpMath_WPF.Models.MathMethods;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Ookii.Dialogs.Wpf;
+using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Security.RightsManagement;
 using System.Windows;
 using System.Windows.Input;
 using static AngouriMath.MathS;
+using Clo
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMethodsPage
 {
@@ -28,7 +32,12 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
         private string _resultGaussJordan;
         [ObservableProperty]
         private string _resultCramer;
-
+        [ObservableProperty]
+        private Visibility _resultGaussVisibility = Visibility.Hidden;
+        [ObservableProperty]
+        private Visibility _resultGaussJordanVisibility = Visibility.Hidden;
+        [ObservableProperty]
+        private Visibility _resultCramerVisibility = Visibility.Hidden;
 
 
 
@@ -36,7 +45,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
         public ICommand RemoveFromTableCommand { get; }
         public ICommand ClearTableCommand { get; }
         public ICommand SolveEquationsCommand { get; }
-
+        public ICommand GetDataFromExcelCommand { get; }
         public LinearEquationsSystemMethodsPageViewModel()
         {
             InitTable();
@@ -44,6 +53,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
             RemoveFromTableCommand = new RelayCommand(RemoveFromTable);
             ClearTableCommand = new RelayCommand(ClearTable);
             SolveEquationsCommand = new RelayCommand(SolveEquations);
+            GetDataFromExcelCommand = new RelayCommand(GetDataFromExcel);
         }
 
         private void InitTable()
@@ -61,7 +71,6 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
 
         private void AddToTable()
         {
-
             try
             {
                 if (LastColumnRow >= 51)
@@ -92,7 +101,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
                 }
 
                 DataView = dataTable.DefaultView;
-
+                DataTable = dataTable;
             }
             catch (Exception ex)
             {
@@ -132,6 +141,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
                 }
 
                 DataView = dataTable.DefaultView;
+                DataTable = dataTable;
             }
 
             catch (Exception ex)
@@ -152,13 +162,81 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
             }
         }
 
+        public void GetDataFromExcel()
+        {
+            DataTable dataTable = new DataTable();
+
+            var dlg = new VistaOpenFileDialog
+            {
+                Title = "Выберите файл Excel",
+                Filter = "Файлы Excel (*.xlsx)|*.xlsx",
+                Multiselect = false // Возможность выбора нескольких файлов
+            };
+
+            // Открываем диалог и проверяем, было ли выбрано что-либо
+            if (dlg.ShowDialog() == true)
+            {
+                string filePath = dlg.FileName;
+
+                // Чтение данных из Excel файла
+                using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    workbook = new XL(file); // Открываем книгу
+                    ISheet sheet = workbook.GetSheetAt(0); // Получаем первый лист
+
+                    // Получаем количество используемых строк
+                    int rowCount = sheet.LastRowNum + 1;
+
+                    // Предполагаем, что в первом ряду находятся заголовки
+                    IRow headerRow = sheet.GetRow(0);
+                    int colCount = headerRow.LastCellNum;
+
+
+
+
+                    // Добавляем колонки в DataTable
+                    for (int col = 0; col < colCount; col++)
+                    {
+                        dataTable.Columns.Add(headerRow.GetCell(col).StringCellValue);
+                    }
+
+                    // Чтение данных из остальных строк
+                    for (int row = 1; row < rowCount; row++)
+                    {
+                        DataRow dataRow = dataTable.NewRow();
+
+                        for (int col = 0; col < colCount; col++)
+                        {
+                            if (currentRow.GetCell(col) != null) // Проверяем, чтобы ячейка не была пустой
+                            {
+                                dataRow[col] = currentRow.GetCell(col).ToString();
+                            }
+                        }
+                        dataTable.Rows.Add(dataRow);
+                    }
+                }
+
+                // Присваиваем DataView и DataTable (предполагается, что у вас есть соответствующие члены класса)
+                DataView = dataTable.DefaultView;
+                DataTable = dataTable;
+            }
+        }
+
         public void SolveEquations()
         {
+            ResultGauss = "";
+            ResultGaussJordan = "";
+            ResultCramer = "";
+
+            ResultGaussVisibility = Visibility.Hidden;
+            ResultGaussJordanVisibility = Visibility.Hidden;
+            ResultCramerVisibility = Visibility.Hidden;
+
+
             int rows = DataView.Table.DefaultView.Table.Rows.Count;
             int cols = DataView.Table.DefaultView.Table.Columns.Count;
             double[,] coefficients = new double[rows, cols - 1];
             double[] constants = new double[rows];
-
 
             for (int row = 0; row < rows; ++row)
             {
@@ -177,22 +255,70 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
                                         : 0.0;
             }
 
-            if (IsSelectedGauss)
+            try
             {
-                double[] resultGaussDoubles = LinearEquationsSystemMethods.GaussianElimination.Solve(coefficients, constants);
-
-                for (int col = 0; col < cols - 1; ++col)
+                if (IsSelectedGauss)
                 {
-                    ResultGauss += "x" + (col + 1).ToString() + " = " + resultGaussDoubles[col].ToString() + ", ";
+                    double[] resultGaussDoubles = LinearEquationsSystemMethods.GaussianElimination.Solve(coefficients, constants);
+
+                    for (int col = 0; col < cols - 1; ++col)
+                    {
+                        if (col == cols - 2)
+                        {
+                            ResultGauss += "x" + (col + 1).ToString() + " = " + resultGaussDoubles[col].ToString("F3");
+
+                        }
+                        else
+                        {
+                            ResultGauss += "x" + (col + 1).ToString() + " = " + resultGaussDoubles[col].ToString("F3") + ", ";
+
+                        }
+                    }
+                    ResultGaussVisibility = Visibility.Visible;
+                }
+                if (IsSelectedGaussJordan)
+                {
+                    double[] resultGaussJordanDoubles = LinearEquationsSystemMethods.GaussJordanElimination.Solve(coefficients, constants);
+
+                    for (int col = 0; col < cols - 1; ++col)
+                    {
+                        if (col == cols - 2)
+                        {
+                            ResultGaussJordan += "x" + (col + 1).ToString() + " = " + resultGaussJordanDoubles[col].ToString("F3");
+
+                        }
+                        else
+                        {
+                            ResultGaussJordan += "x" + (col + 1).ToString() + " = " + resultGaussJordanDoubles[col].ToString("F3") + ", ";
+
+                        }
+                    }
+                    ResultGaussJordanVisibility = Visibility.Visible;
+
+                }
+                if (IsSelectedCramer)
+                {
+                    double[] resultCramerDoubles = LinearEquationsSystemMethods.Cramer.Solve(coefficients, constants);
+
+                    for (int col = 0; col < cols - 1; ++col)
+                    {
+                        if (col == cols - 2)
+                        {
+                            ResultCramer += "x" + (col + 1).ToString() + " = " + resultCramerDoubles[col].ToString("F3");
+
+                        }
+                        else
+                        {
+                            ResultCramer += "x" + (col + 1).ToString() + " = " + resultCramerDoubles[col].ToString("F3") + ", ";
+
+                        }
+                    }
+                    ResultCramerVisibility = Visibility.Visible;
                 }
             }
-            if (IsSelectedGaussJordan)
+            catch (Exception ex)
             {
-                ResultGaussJordan = string.Join(", ", LinearEquationsSystemMethods.GaussJordanElimination.Solve(coefficients, constants));
-            }
-            if (IsSelectedCramer)
-            {
-                ResultCramer = string.Join(", ", LinearEquationsSystemMethods.Cramer.Solve(coefficients, constants));
+                MessageBox.Show(ex.Message, "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
