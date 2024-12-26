@@ -69,8 +69,14 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Windows
                 },
                     new NavigationViewItem()
                 {
-                    Content = "Вычисление определённых интегралов",
+                    Content = "Методы решения СЛАУ",
                     Icon = new SymbolIcon { Symbol = SymbolRegular.SlideGrid20 },
+                    TargetPageType = typeof(LinearEquationsSystemMethodsPageView)
+                },
+                new NavigationViewItem()
+                {
+                    Content = "Метод наименьших квадратов",
+                    Icon = new SymbolIcon { Symbol = SymbolRegular.LocationTargetSquare24 },
                     TargetPageType = typeof(LinearEquationsSystemMethodsPageView)
                 }
             ];

@@ -9,7 +9,7 @@
                                  IsDesignTimeCreatable=True}"
         Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-        mc:Ignorable="d" Icon="C:\Users\princedelen\source\repos\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png"
+        mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200">
         <ui:FluentWindow.InputBindings>
         <KeyBinding
@@ -58,7 +58,7 @@
                 Grid.Column="1" Grid.ColumnSpan="2" 
                  CloseWindowByDoubleClickOnIcon="True">
                 <ui:TitleBar.Icon>
-                    <ui:ImageIcon Source="C:\Users\princedelen\source\repos\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png" />
+                    <ui:ImageIcon/>
                 </ui:TitleBar.Icon>
             </ui:TitleBar>
 

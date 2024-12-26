@@ -9,7 +9,8 @@ using System.Security.RightsManagement;
 using System.Windows;
 using System.Windows.Input;
 using static AngouriMath.MathS;
-using Clo
+using ClosedXML;
+using ClosedXML.Excel;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMethodsPage
 {
@@ -161,7 +162,6 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
                 }
             }
         }
-
         public void GetDataFromExcel()
         {
             DataTable dataTable = new DataTable();
@@ -179,46 +179,38 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
                 string filePath = dlg.FileName;
 
                 // Чтение данных из Excel файла
-                using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                using (var workbook = new XLWorkbook(filePath)) // Открываем книгу
                 {
-                    workbook = new XL(file); // Открываем книгу
-                    ISheet sheet = workbook.GetSheetAt(0); // Получаем первый лист
+                    DataTable dtA = new DataTable();
+                    DataTable dtB = new DataTable();
+                    var workbookxls = new XLWorkbook(filePath);
+                    var worksheet = workbookxls.Worksheet(1);
+                    var range = worksheet.RangeUsed();
+                    LastColumnRow = range.FirstColumn().CellCount() + 1;
 
-                    // Получаем количество используемых строк
-                    int rowCount = sheet.LastRowNum + 1;
-
-                    // Предполагаем, что в первом ряду находятся заголовки
-                    IRow headerRow = sheet.GetRow(0);
-                    int colCount = headerRow.LastCellNum;
-
-
-
-
-                    // Добавляем колонки в DataTable
-                    for (int col = 0; col < colCount; col++)
+                    for (int i = 0; i < range.FirstRow().CellCount(); ++i)
                     {
-                        dataTable.Columns.Add(headerRow.GetCell(col).StringCellValue);
+                        dtA.Columns.Add($"x{i + 1}");
                     }
 
-                    // Чтение данных из остальных строк
-                    for (int row = 1; row < rowCount; row++)
-                    {
-                        DataRow dataRow = dataTable.NewRow();
 
-                        for (int col = 0; col < colCount; col++)
+                    foreach (var row in range.RowsUsed())
+                    {
+                        var drA = dtA.NewRow();
+
+                        for (int i = 0; i < row.Cells().Count(); ++i)
                         {
-                            if (currentRow.GetCell(col) != null) // Проверяем, чтобы ячейка не была пустой
-                            {
-                                dataRow[col] = currentRow.GetCell(col).ToString();
-                            }
+                            drA[i] = row.Cell(i + 1).Value;
                         }
-                        dataTable.Rows.Add(dataRow);
+
+                        dtA.Rows.Add(drA);
                     }
+                    // Присваиваем DataView и DataTable (предполагается, что у вас есть соответствующие члены класса)
+                    DataView = dtA.DefaultView;
+                    DataTable = dtA;
                 }
 
-                // Присваиваем DataView и DataTable (предполагается, что у вас есть соответствующие члены класса)
-                DataView = dataTable.DefaultView;
-                DataTable = dataTable;
+                
             }
         }
 
