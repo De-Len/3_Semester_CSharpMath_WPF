@@ -1,0 +1,83 @@
+﻿<ui:FluentWindow x:Class="_3_Semester_CSharpMath_WPF.Views.Windows.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_3_Semester_CSharpMath_WPF.Views.Windows"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+        d:DataContext="{d:DesignInstance local:MainWindowView,
+                                 IsDesignTimeCreatable=True}"
+        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+        mc:Ignorable="d"
+                 Icon="\\Mac\Home\Desktop\3_Semester_CSharpMath_WPF-Lab_7-SLAE_Methods\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png"
+        Title="MainWindow" Height="700" Width="1200">
+        <ui:FluentWindow.InputBindings>
+        <KeyBinding
+        Key="F"
+        Command="{Binding ElementName=AutoSuggestBox, Path=FocusCommand}"
+        Modifiers="Control" />
+
+    </ui:FluentWindow.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ui:NavigationView
+        x:Name="RootNavigation"
+        Grid.Row="1"
+        FooterMenuItemsSource="{Binding ViewModel.NavigationFooter, Mode=OneWay}"
+        MenuItemsSource="{Binding ViewModel.NavigationItems, Mode=OneWay}">
+            <ui:NavigationView.AutoSuggestBox>
+                <ui:AutoSuggestBox x:Name="AutoSuggestBox" PlaceholderText="Search">
+                    <ui:AutoSuggestBox.Icon>
+                        <ui:IconSourceElement>
+                            <ui:SymbolIconSource Symbol="Search24" />
+                        </ui:IconSourceElement>
+                    </ui:AutoSuggestBox.Icon>
+                </ui:AutoSuggestBox>
+            </ui:NavigationView.AutoSuggestBox>
+            <ui:NavigationView.Header>
+                <ui:BreadcrumbBar
+                Margin="42,32,0,0"
+                FontSize="28"
+                FontWeight="DemiBold" />
+            </ui:NavigationView.Header>
+        </ui:NavigationView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ui:TitleBar Panel.ZIndex="-1"  IsHitTestVisible="False"
+                Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
+                Grid.Row="0"
+                Grid.Column="1" Grid.ColumnSpan="2" 
+                 CloseWindowByDoubleClickOnIcon="True">
+                <ui:TitleBar.Icon>
+                    <ui:ImageIcon Source="C:\Users\princedelen\source\repos\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png" />
+                </ui:TitleBar.Icon>
+            </ui:TitleBar>
+
+        </Grid>
+        
+        <!--<tray:NotifyIcon
+        Grid.Row="0"
+        FocusOnLeftClick="True"c:\users\princedelen\source\repos\2_semester-individualprojectwpf\2_semester-individualprojectwpf\views\windows\mainwindowview.xaml.cs
+c:\users\princedelen\source\repos\2_semester-individualprojectwpf\2_semester-individualprojectwpf\views\windows\mainwindowview.xaml
+
+        -->
+        <!--Icon="pack://application:,,,/Assets/applicationIcon-256.png"-->
+        <!--
+        MenuOnRightClick="True"
+        TooltipText="WPF UI - MVVM Demo">
+            <tray:NotifyIcon.Menu>
+                <ContextMenu ItemsSource="{Binding ViewModel.TrayMenuItems, Mode=OneWay}" />
+            </tray:NotifyIcon.Menu>
+        </tray:NotifyIcon>-->
+    </Grid>
+</ui:FluentWindow>

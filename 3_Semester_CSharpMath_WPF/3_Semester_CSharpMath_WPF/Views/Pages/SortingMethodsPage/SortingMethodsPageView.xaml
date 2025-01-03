@@ -1,0 +1,138 @@
+﻿<Page x:Class="_3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage.SortingMethodsPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_3_Semester_CSharpMath_WPF.Views.Pages.SortingMethodsPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SortingMethodsPageView"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+      
+      xmlns:viewmodel="clr-namespace:_3_Semester_CSharpMath_WPF.ViewModels.Pages.SortingMethodsPage" 
+      d:DataContext="{d:DesignInstance Type=viewmodel:SortingMethodsPageViewModel}"
+      
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="100">
+            <TextBlock Margin="20 0 0 0" FontSize="30" Text="Методы сортировки" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="20 10 0 10" Command="{Binding OpenSortingWindowCommand}">
+                    <WrapPanel>
+                        <ui:SymbolIcon
+                             Grid.Row="0"
+                             FontSize="20"
+                             Symbol="ApprovalsApp16" />
+                        <TextBlock Padding="10 0 0 0" Text="Сортировать" VerticalAlignment="Center" />
+                    </WrapPanel>
+                </Button>
+                <Button Margin="20 10 0 10" Command="{Binding OpenFolderSelectionCommand}">
+                    <WrapPanel>
+                        <ui:SymbolIcon
+                             Grid.Row="0"
+                             FontSize="20"
+                             Symbol="DocumentSave20" /> 
+                        <TextBlock Padding="10 0 0 0" Text="Папка для результатов" VerticalAlignment="Center" />
+                    </WrapPanel>
+                </Button>
+                <Button Margin="20 10 0 10" Command="{Binding OpenDataGeneratorWindowCommand}">
+                    <WrapPanel>
+                        <ui:SymbolIcon
+                             Grid.Row="0"
+                             FontSize="20"
+                             Symbol="ClipboardDataBar20" /> 
+                        <TextBlock Padding="10 0 0 0" Text="Генератор данных" VerticalAlignment="Center" />
+                    </WrapPanel>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="100"
+            Padding="16" Margin="20"
+            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="8,8,8,8">
+            <DataGrid x:Name="dataGrid" ItemsSource="{Binding DataGrid}"
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Выбрать">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Width="*" Header="Название метода" Binding="{Binding SortMethodName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Тайминг" Binding="{Binding Timing}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Итерации" Binding="{Binding Iterations}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+        <!-- Accordion Implementation -->
+        <Expander Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Header="Вывод" IsExpanded="False">
+            <StackPanel>
+                <TextBlock Text="Пузырьком:"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding BubbleSortOutput}"/>
+                <TextBlock Text="Вставками:"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding InsertionSortOutput}"/>
+                <TextBlock Text="Шейкерная:"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding CocktailShakerSortOutput}"/>
+                <TextBlock Text="Быстрая:"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding QuickSortOutput}"/>
+                <TextBlock Text="Бого:"/>
+                <TextBox MinWidth="20" Margin="5" Text="{Binding BogoSortOutput}"/>
+            </StackPanel>
+        </Expander>
+
+        <!--<Expander Grid.Row="3" Grid.Column="1" Header="Другие опции" IsExpanded="False">
+            <StackPanel>
+                <TextBlock Text="Другие параметры"/>
+                <CheckBox Content="Опция 1" Margin="5"/>
+                <CheckBox Content="Опция 2" Margin="5"/>
+            </StackPanel>
+        </Expander>-->
+    </Grid>
+</Page>
