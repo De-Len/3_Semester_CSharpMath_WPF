@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using _3_Semester_CSharpMath_WPF.Views.Pages.LeastSquareMethodPage.Windows;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage
 {
@@ -28,6 +29,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage
         public ICommand RemoveFromTableCommand { get; }
         public ICommand ClearTableCommand { get; }
         public ICommand GetDataFromExcelCommand { get; }
+        public ICommand OpenDataGeneratorWindowCommand { get; }
         [ObservableProperty]
         private bool _isLinearRegression;
         [ObservableProperty]
@@ -46,7 +48,12 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage
         private Visibility _chartVisibility = Visibility.Hidden;
         [ObservableProperty]
         private ChartView _chartView;
+        [ObservableProperty]
+        private string _endLimit;
+        [ObservableProperty]
+        private string _startLimit;
 
+        private LeastSquareMethodDataGeneratorWindowView _leastSquareMethodDataGeneratorWindowView;
         public LeastSquareMethodPageViewModel()
         {
             InitTable();
@@ -56,6 +63,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage
             RemoveFromTableCommand = new RelayCommand(RemoveFromTable);
             ClearTableCommand = new RelayCommand(ClearTable);
             GetDataFromExcelCommand = new RelayCommand(GetDataFromExcel);
+            OpenDataGeneratorWindowCommand = new RelayCommand(OpenDataGeneratorWindow);
         }
 
         private void InitTable()
@@ -64,19 +72,50 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage
             DataTable.Columns.Add("x2", typeof(double));
             DataTable.Columns.Add("x3", typeof(double));
 
-
             DataTable.Rows.Add();
             DataTable.Rows.Add();
-
 
             DataView = DataTable.DefaultView;
         }
 
-        private void TESTInitTable()
+        public void UpdateTable(double[] independentVariable, double[] dependentVariable)
         {
             DataTable dataTable = new DataTable();
-            double[,] data = new double[2 , 7]
-            { 
+            LastColumnRow = independentVariable.Length;
+
+            for (int i = 0; i < independentVariable.Length; ++i)
+            {
+                dataTable.Columns.Add("x" + (i + 1), typeof(double));
+            }
+
+            dataTable.Rows.Add();
+            dataTable.Rows.Add();
+
+            for (int row = 0; row < dataTable.DefaultView.Table.Rows.Count; ++row)
+            {
+                for (int col = 0; col < dataTable.DefaultView.Table.Columns.Count; ++col)
+                {
+                    if (row == 0)
+                    {
+                        dataTable.DefaultView.Table.Rows[row][col] = independentVariable[col];
+                    }
+                    if (row == 1)
+                    {
+                        dataTable.DefaultView.Table.Rows[row][col] = dependentVariable[col];
+                    }
+                }
+            }
+
+            DataView = dataTable.DefaultView;
+            DataTable = dataTable;
+        }
+
+
+        public void TESTInitTable()
+        {
+            DataTable dataTable = new DataTable();
+            double[,] data = new double[2, 7]
+            {
                 { 7, 31, 61, 99, 129, 178, 209},
                 { 13, 10, 9, 10, 12, 20, 26 }
             };
@@ -110,35 +149,37 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage
             QuadraticRegressionVisibility = Visibility.Collapsed;
             ChartVisibility = Visibility.Collapsed;
 
+            double startLimitDouble = double.NaN;
+            double endLimitDouble = double.NaN;
+
             int rows = DataView.Table.DefaultView.Table.Rows.Count;
             int cols = DataView.Table.DefaultView.Table.Columns.Count;
             double[] independentVariable = new double[cols];
 
             double[] dependentVariable = new double[cols];
-
-            for (int row = 0; row < rows; ++row)
-            {
-                for (int col = 0; col < cols; ++col)
-                {
-                    if (row == 0)
-                    {
-                        independentVariable[col] = DataTable.Rows[row][col] != DBNull.Value
-                                                                ? (double)DataTable.Rows[row][col]
-                                                                : 0.0;
-                    }
-                    else
-                    {
-                        dependentVariable[col] = DataTable.Rows[row][col] != DBNull.Value
-                                        ? (double)DataTable.Rows[row][col]
-                                        : 0.0;
-                    }
-                    
-
-                }
-            }
             try
             {
-                if (!double.TryParse(AnswerCountDigitsAfterPoint, out double answerCountDigitsAfterPointDouble))
+                for (int row = 0; row < rows; ++row)
+                {
+                    for (int col = 0; col < cols; ++col)
+                    {
+                        if (row == 0)
+                        {
+                            independentVariable[col] = DataTable.Rows[row][col] != DBNull.Value
+                                                                    ? (double)DataTable.Rows[row][col]
+                                                                    : 0.0;
+                        }
+                        else
+                        {
+                            dependentVariable[col] = DataTable.Rows[row][col] != DBNull.Value
+                                            ? (double)DataTable.Rows[row][col]
+                                            : 0.0;
+                        }
+                    }
+                }
+
+                if (!double.TryParse(AnswerCountDigitsAfterPoint, out double answerCountDigitsAfterPointDouble) 
+                    || answerCountDigitsAfterPointDouble < 0 || answerCountDigitsAfterPointDouble > 17)
                 {
                     throw new FormatException("Неверный формат для точности коэффициентов. Пожалуйста, введите число.");
                 }
@@ -146,6 +187,19 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage
                 {
                     throw new ArgumentException("Выберите функцию!");
                 }
+                if (!double.TryParse(StartLimit, out startLimitDouble))
+                {
+                    throw new FormatException("Неверный формат для начала интервала. Пожалуйста, введите число.");
+                }
+
+                // Проверка и преобразование EndLimit
+                if (!double.TryParse(EndLimit, out endLimitDouble))
+                {
+                    throw new FormatException("Неверный формат для конца интервала. Пожалуйста, введите число.");
+                }
+
+                ChartModel.IsLinearRegression = false;
+                ChartModel.IsQuadraticRegression = false;
 
                 if (IsLinearRegression)
                 {
@@ -165,6 +219,12 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage
                                                             LeastSquareMethod.QuadraticRegression.ConstantTerm.ToString("F" + AnswerCountDigitsAfterPoint));
                 }
 
+                ChartModel.IndependentVariable = new List<double>(independentVariable);
+                ChartModel.DependentVariable = new List<double>(dependentVariable);
+                ChartModel.IsDotsForRegression = true;
+                ChartModel.IsMainFunctionActive = false;
+                ChartModel.StartLimit = (float)startLimitDouble;
+                ChartModel.EndLimit = (float)endLimitDouble;
                 ChartVisibility = Visibility.Visible;
                 ChartView = new ChartView();
             }
@@ -320,6 +380,12 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage
 
 
             }
+        }
+        
+        public void OpenDataGeneratorWindow()
+        {
+            _leastSquareMethodDataGeneratorWindowView = new LeastSquareMethodDataGeneratorWindowView(this);
+            _leastSquareMethodDataGeneratorWindowView.Show();
         }
     }
 }

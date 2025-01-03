@@ -45,6 +45,16 @@
                         <TextBlock Padding="10 0 0 0" Text="Из Excel файла" VerticalAlignment="Center" />
                     </WrapPanel>
                 </Button>
+                
+                <Button Margin="20 10 0 10" Command="{Binding OpenDataGeneratorWindowCommand}">
+                    <WrapPanel>
+                        <ui:SymbolIcon
+                             Grid.Row="0"
+                             FontSize="20"
+                             Symbol="ClipboardDataBar20" />
+                        <TextBlock Padding="10 0 0 0" Text="Генератор данных" VerticalAlignment="Center" />
+                    </WrapPanel>
+                </Button>
 
             </StackPanel>
         </StackPanel>
@@ -94,10 +104,10 @@
                             <TextBox   MinWidth="30" Padding="1" Text="{Binding AnswerCountDigitsAfterPoint}"/>
                         </WrapPanel>
                         <WrapPanel Margin="0 7 0 0">
-                            <TextBlock Text="Диапазон отрисовки:"  Margin="0 0 10 0" VerticalAlignment="Center"/>
-                            <TextBox  MinWidth="30" Padding="1"  Text="{Binding AnswerCountDigitsAfterPoint}"/>
+                            <TextBlock Text="Диапазон отрисовки графика:"  Margin="0 0 10 0" VerticalAlignment="Center"/>
+                            <TextBox  MinWidth="30" Padding="1"  Text="{Binding StartLimit}"/>
                             <TextBlock Text="-" VerticalAlignment="Center"/>
-                            <TextBox  MinWidth="30" Padding="1"  Text="{Binding AnswerCountDigitsAfterPoint}"/>
+                            <TextBox  MinWidth="30" Padding="1"  Text="{Binding EndLimit}"/>
 
                         </WrapPanel>
                     </StackPanel>

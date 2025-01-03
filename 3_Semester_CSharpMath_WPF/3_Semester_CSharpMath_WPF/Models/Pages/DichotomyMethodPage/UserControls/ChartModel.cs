@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using _3_Semester_CSharpMath_WPF.Models.MathMethods;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -26,7 +27,12 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
         #region Для метода наименьших квадратов
         public static bool IsLinearRegression = false;
         public static bool IsQuadraticRegression = false;
+        public static bool IsDotsForRegression = false;
+        public static List<double> IndependentVariable = new List<double>();
+        public static List<double> DependentVariable = new List<double>();
         #endregion
+
+        public static bool IsMainFunctionActive = true;
 
         public static int GraphsCount = 1;
         private static readonly SKColor s_dark = new(00, 00, 00);
@@ -56,14 +62,17 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
         private static ISeries[] CreateSeries()
         {
             var seriesList = new List<ISeries>();
-            seriesList.Add(new LineSeries<ObservablePoint>
+            if (IsMainFunctionActive)
             {
-                Values = Fetch(), 
-                Stroke = new SolidColorPaint(SKColors.Blue, 4),
-                Fill = null,
-                GeometrySize = 0
-            });
-
+                seriesList.Add(new LineSeries<ObservablePoint>
+                {
+                    Values = Fetch(),
+                    Stroke = new SolidColorPaint(SKColors.Blue, 4),
+                    Fill = null,
+                    GeometrySize = 0
+                });
+            }
+            
             if (IsSelectedRectangleMethod)
             {
                 double lowerBound = StartLimit;
@@ -164,7 +173,7 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
                 seriesList.Add(new LineSeries<ObservablePoint>
                 {
                     Values = FetchLinearRegression(), // Вызываем Fetch с индексом
-                    Stroke = new SolidColorPaint(SKColors.Red),
+                    Stroke = new SolidColorPaint(SKColors.Green),
                     Fill = null,
                     GeometrySize = 0
                 });
@@ -181,6 +190,18 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.DichotomyMethodPage.UserContro
                 });
             }
 
+            if (IsDotsForRegression)
+            {
+                for (int index = 0; index < IndependentVariable.Count; ++index)
+                {
+                    seriesList.Add(new ScatterSeries<ObservablePoint>
+                    {
+                        Values = FetchRectangleMethodX(IndependentVariable[index], DependentVariable[index], 0), // Вызываем Fetch с индексом
+                        Fill = new SolidColorPaint(SKColors.Red, 4), // Цвет точки
+                        GeometrySize = 5 // Размер точки
+                    });
+                }
+            }
             return seriesList.ToArray();
         }
 
