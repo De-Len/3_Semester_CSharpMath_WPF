@@ -10,7 +10,7 @@
         Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
         mc:Ignorable="d"
-                 Icon="\\Mac\Home\Desktop\3_Semester_CSharpMath_WPF-Lab_7-SLAE_Methods\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png"
+                 Icon="C:\Users\timof\Desktop\3_Semester_CSharpMath_WPF-Lab_8-LeastSquareMethod\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png"
         Title="MainWindow" Height="700" Width="1200">
         <ui:FluentWindow.InputBindings>
         <KeyBinding
@@ -59,7 +59,7 @@
                 Grid.Column="1" Grid.ColumnSpan="2" 
                  CloseWindowByDoubleClickOnIcon="True">
                 <ui:TitleBar.Icon>
-                    <ui:ImageIcon Source="C:\Users\princedelen\source\repos\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png" />
+                    <ui:ImageIcon Source="C:\Users\timof\Desktop\3_Semester_CSharpMath_WPF-Lab_8-LeastSquareMethod\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Pica.png" />
                 </ui:TitleBar.Icon>
             </ui:TitleBar>
 

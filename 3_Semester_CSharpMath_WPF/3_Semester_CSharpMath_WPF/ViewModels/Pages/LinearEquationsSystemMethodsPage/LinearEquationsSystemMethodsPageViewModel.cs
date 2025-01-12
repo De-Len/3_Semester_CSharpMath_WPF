@@ -11,6 +11,7 @@ using System.Windows.Input;
 using static AngouriMath.MathS;
 using ClosedXML;
 using ClosedXML.Excel;
+using _3_Semester_CSharpMath_WPF.Views.Pages.LinearEquationsSystemMethodsPage.Windows;
 
 namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMethodsPage
 {
@@ -46,8 +47,14 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
         public ICommand RemoveFromTableCommand { get; }
         public ICommand ClearTableCommand { get; }
         public ICommand SolveEquationsCommand { get; }
-        public ICommand GetDataFromExcelCommand { get; }
-        public ICommand GetDataFromGoogleTableCommand { get; }
+        public ICommand OpenGetDataFromExcelCommand { get; }
+        public ICommand OpenGetDataFromGoogleTableCommand { get; }
+        public ICommand OpenDataGeneratorCommand { get; }
+
+
+        private LinearEquationsSystemMethodsGoogleSheetWindowView _linearEquationsSystemMethodsGoogleSheetWindowView;
+        private LinearEquationsSystemMethodsDataGeneratorWindowView _linearEquationsSystemMethodsDataGeneratorWindowView;
+
 
         public LinearEquationsSystemMethodsPageViewModel()
         {
@@ -56,7 +63,9 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
             RemoveFromTableCommand = new RelayCommand(RemoveFromTable);
             ClearTableCommand = new RelayCommand(ClearTable);
             SolveEquationsCommand = new RelayCommand(SolveEquations);
-            GetDataFromExcelCommand = new RelayCommand(GetDataFromExcel);
+            OpenGetDataFromExcelCommand = new RelayCommand(GetDataFromExcel);
+            OpenGetDataFromGoogleTableCommand = new RelayCommand(GetDataFromGoogleTable);
+            OpenDataGeneratorCommand = new RelayCommand(OpenDataGenerator);
         }
 
         private void InitTable()
@@ -315,6 +324,18 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
             {
                 MessageBox.Show(ex.Message, "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        public void GetDataFromGoogleTable()
+        {
+            _linearEquationsSystemMethodsGoogleSheetWindowView = new LinearEquationsSystemMethodsGoogleSheetWindowView(this);
+            _linearEquationsSystemMethodsGoogleSheetWindowView.Show();
+        }
+
+        public void OpenDataGenerator()
+        {
+            _linearEquationsSystemMethodsDataGeneratorWindowView = new LinearEquationsSystemMethodsDataGeneratorWindowView(this);
+            _linearEquationsSystemMethodsDataGeneratorWindowView.Show();
         }
     }
 }

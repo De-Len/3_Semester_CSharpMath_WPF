@@ -36,7 +36,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="100">
             <TextBlock Margin="20 0 0 0" FontSize="30" Text="Методы решения СЛАУ" FontWeight="Bold"/>
             <StackPanel Orientation="Horizontal">
-                <Button Margin="20 10 0 10" Command="{Binding GetDataFromExcelCommand}">
+                <Button Margin="20 10 0 10" Command="{Binding OpenGetDataFromExcelCommand}">
                     <WrapPanel>
                         <ui:SymbolIcon
                          Grid.Row="0"
@@ -45,7 +45,7 @@
                         <TextBlock Padding="10 0 0 0" Text="Из Excel таблицы" VerticalAlignment="Center" />
                     </WrapPanel>
                 </Button>
-                <Button Margin="30 10 0 10" Command="{Binding GetDataFromGoogleTableCommand}">
+                <Button Margin="30 10 0 10" Command="{Binding OpenGetDataFromGoogleTableCommand}">
                     <WrapPanel>
                         <ui:SymbolIcon
                              Grid.Row="0"
@@ -54,7 +54,7 @@
                         <TextBlock Padding="10 0 0 0" Text="Из Google таблицы" VerticalAlignment="Center" />
                     </WrapPanel>
                 </Button>
-                <Button Margin="30 10 0 10" Command="{Binding GetDataFromExcelCommand}">
+                <Button Margin="30 10 0 10" Command="{Binding OpenDataGeneratorCommand}">
                     <WrapPanel>
                         <ui:SymbolIcon
                              Grid.Row="0"

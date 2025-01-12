@@ -164,7 +164,7 @@
                     <!--<TextBlock Text="Введите функцию:" Style="{StaticResource TextBlockStyle}"/>-->
                     <StackPanel>
                         <TextBox Padding="1" Height="26.28" Text="{Binding UpperBound}"/>
-                        <Image Source="\\Mac\Home\Desktop\3_Semester_CSharpMath_WPF-Lab_7-SLAE_Methods\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Integral.png" 
+                        <Image Source="C:\Users\timof\Desktop\3_Semester_CSharpMath_WPF-Lab_8-LeastSquareMethod\3_Semester_CSharpMath_WPF\3_Semester_CSharpMath_WPF\Sources\Integral.png" 
                               Width="22" Height="40"/>
                         <TextBox Padding="1" Height="26.28" Text="{Binding LowerBound}"/>
                     </StackPanel>
