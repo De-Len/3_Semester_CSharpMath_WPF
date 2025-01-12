@@ -20,22 +20,21 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
     partial class LinearEquationsSystemMethodsDataGeneratorWindowViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string _equationsCount;
-        [ObservableProperty]
         private string _accuracyCountDigitsAfterPoint;
         [ObservableProperty]
         private string _startLimit;
         [ObservableProperty]
         private string _endLimit;
         [ObservableProperty]
-        private int _progressBarValue;
+        private static int _progressBarValue;
 
-        private LinearEquationsSystemMethodsDataGeneratorWindowModel _model = new LinearEquationsSystemMethodsDataGeneratorWindowModel();
+        private LinearEquationsSystemMethodsDataGeneratorWindowModel _model;
         private LinearEquationsSystemMethodsPageViewModel _linearEquationsSystemMethodsPageViewModel;
         public ICommand GenerateNumbersCommand { get; }
 
         public LinearEquationsSystemMethodsDataGeneratorWindowViewModel(LinearEquationsSystemMethodsPageViewModel linearEquationsSystemMethodsPageViewModel)
         {
+            _model = new LinearEquationsSystemMethodsDataGeneratorWindowModel(this);
             _linearEquationsSystemMethodsPageViewModel = linearEquationsSystemMethodsPageViewModel;
             GenerateNumbersCommand = new RelayCommand(GenerateNumbers);
         }
@@ -43,7 +42,6 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
         private async void GenerateNumbers()
         {
             ProgressBarValue = 0;
-            int numbersCountInt = 0;
 
             double startLimitDouble = double.NaN;
             double endLimitDouble = double.NaN;
@@ -58,20 +56,24 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
             try
             {
                 // Проверка и получение параметров
-                (startLimitDouble, endLimitDouble, accuracyCountDigitsAfterPointInt, numbersCountInt) =
+                (startLimitDouble, endLimitDouble, accuracyCountDigitsAfterPointInt, int numbersCountInt) =
                     Helpers.CheckExceptionsSortingMethods(
                         startLimit: StartLimit,
                         endLimit: EndLimit,
-                        accuracyCountDigitsAfterPoint: AccuracyCountDigitsAfterPoint,
-                        numbersCount: EquationsCount
+                        accuracyCountDigitsAfterPoint: AccuracyCountDigitsAfterPoint
                     );
 
                 rows = _linearEquationsSystemMethodsPageViewModel.DataView.Table.Rows.Count;
                 columns = _linearEquationsSystemMethodsPageViewModel.DataView.Table.Columns.Count;
 
                 await Task.Run(() => {
-                    generatedMatrix = _model.GenerateRandomDoubles(rows, columns, startLimitDouble, endLimitDouble, accuracyCountDigitsAfterPointInt);
-                    
+                    generatedMatrix = _model.GenerateRandomDoubles(rows, columns, startLimitDouble, endLimitDouble, accuracyCountDigitsAfterPointInt).Result;
+
+                    for (int i = 0; i < columns; ++i)
+                    {
+                        dataTable.Columns.Add($"x{i + 1}", typeof(double));
+                    }
+
                     foreach (var row in generatedMatrix)
                     {
                         // Создаем новую строку и добавляем в нее значения

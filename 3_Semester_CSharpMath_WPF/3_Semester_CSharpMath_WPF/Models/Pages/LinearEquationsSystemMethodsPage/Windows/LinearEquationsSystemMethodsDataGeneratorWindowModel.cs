@@ -1,4 +1,6 @@
 ﻿using _3_Semester_CSharpMath_WPF.ViewModels.Pages.LeastSquareMethodPage.Windows;
+using _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMethodsPage.Windows;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +12,15 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.LinearEquationsSystemMethodsPa
     internal class LinearEquationsSystemMethodsDataGeneratorWindowModel
     {
         private Random _random;
+        private LinearEquationsSystemMethodsDataGeneratorWindowViewModel _linearEquationsSystemMethodsDataGeneratorWindowViewModel;
 
-        public LinearEquationsSystemMethodsDataGeneratorWindowModel()
+        public LinearEquationsSystemMethodsDataGeneratorWindowModel(LinearEquationsSystemMethodsDataGeneratorWindowViewModel linearEquationsSystemMethodsDataGeneratorWindowViewModel)
         {
+            _linearEquationsSystemMethodsDataGeneratorWindowViewModel = linearEquationsSystemMethodsDataGeneratorWindowViewModel;   
             _random = new Random();
         }
 
-        public double[][] GenerateRandomDoubles(int rows, int columns, double minValue, double maxValue, int decimalPlaces)
+        public async Task<double[][]> GenerateRandomDoubles(int rows, int columns, double minValue, double maxValue, int decimalPlaces)
         {
             if (rows <= 0)
             {
@@ -40,12 +44,18 @@ namespace _3_Semester_CSharpMath_WPF.Models.Pages.LinearEquationsSystemMethodsPa
 
             var randomDoubles = new double[rows][];
 
+            int progressBarIndex = 0;
+            int matrixSize = rows * columns;
+
             for (int rowIndex = 0; rowIndex < rows; rowIndex++)
             {
                 randomDoubles[rowIndex] = new double[columns];
 
                 for (int columnIndex = 0; columnIndex < columns; columnIndex++)
                 {
+                    ++progressBarIndex;
+                    _linearEquationsSystemMethodsDataGeneratorWindowViewModel.ProgressBarValue = (int)(((double)progressBarIndex / matrixSize) * 100);
+
                     double randomValue = _random.NextDouble() * (maxValue - minValue) + minValue;
                     randomDoubles[rowIndex][columnIndex] = Math.Round(randomValue, decimalPlaces);
                 }
