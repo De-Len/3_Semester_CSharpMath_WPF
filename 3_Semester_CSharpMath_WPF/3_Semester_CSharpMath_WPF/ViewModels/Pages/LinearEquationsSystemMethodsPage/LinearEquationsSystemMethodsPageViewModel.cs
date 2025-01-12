@@ -47,6 +47,8 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
         public ICommand ClearTableCommand { get; }
         public ICommand SolveEquationsCommand { get; }
         public ICommand GetDataFromExcelCommand { get; }
+        public ICommand GetDataFromGoogleTableCommand { get; }
+
         public LinearEquationsSystemMethodsPageViewModel()
         {
             InitTable();
@@ -190,7 +192,7 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
 
                     for (int i = 0; i < range.FirstRow().CellCount(); ++i)
                     {
-                        dtA.Columns.Add($"x{i + 1}");
+                        dtA.Columns.Add($"x{i + 1}", typeof(double));
                     }
 
 
@@ -200,7 +202,8 @@ namespace _3_Semester_CSharpMath_WPF.ViewModels.Pages.LinearEquationsSystemMetho
 
                         for (int i = 0; i < row.Cells().Count(); ++i)
                         {
-                            drA[i] = row.Cell(i + 1).Value;
+                            var data = row.Cell(i + 1).Value;
+                            drA[i] = data.IsBlank ? DBNull.Value : (double)data;
                         }
 
                         dtA.Rows.Add(drA);

@@ -36,58 +36,31 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="100">
             <TextBlock Margin="20 0 0 0" FontSize="30" Text="Методы решения СЛАУ" FontWeight="Bold"/>
             <StackPanel Orientation="Horizontal">
-                <Border Padding="10 0 10 0" Margin="20"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="5">
-                    <WrapPanel Grid.Row="0">
-                            <ui:SymbolIcon
-                                 Grid.Row="0"
-                                 FontSize="20" 
-                                 Symbol="RectangleLandscape12" />
-                            <TextBlock Padding="10 0 0 0" Text="Гаусса" VerticalAlignment="Center" />
-                        <CheckBox Content="" HorizontalAlignment="Right" IsChecked="{Binding IsSelectedGauss, UpdateSourceTrigger=PropertyChanged}"/>
-                        </WrapPanel>
-                </Border>
-
-                <Border Padding="10 0 10 0" Margin="20"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="5">
-                    <WrapPanel Grid.Row="0">
-                        <ui:SymbolIcon
-                 Grid.Row="0"
-                 FontSize="20" 
-                 Symbol="RectangleLandscape12" />
-                        <TextBlock Padding="10 0 0 0" Text="Гаусса-Жордана" VerticalAlignment="Center" />
-                        <CheckBox Content="" HorizontalAlignment="Right" IsChecked="{Binding IsSelectedGaussJordan, UpdateSourceTrigger=PropertyChanged}"/>
-                    </WrapPanel>
-                </Border>
-                
-                <Border Padding="10 0 10 0" Margin="20"
-                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="5">
-                    <WrapPanel Grid.Row="0">
-                        <ui:SymbolIcon
-                 Grid.Row="0"
-                 FontSize="20" 
-                 Symbol="RectangleLandscape12" />
-                        <TextBlock Padding="10 0 0 0" Text="Крамера" VerticalAlignment="Center" />
-                        <CheckBox Content="" HorizontalAlignment="Right" IsChecked="{Binding IsSelectedCramer, UpdateSourceTrigger=PropertyChanged}"/>
-                    </WrapPanel>
-                </Border>
-
                 <Button Margin="20 10 0 10" Command="{Binding GetDataFromExcelCommand}">
                     <WrapPanel>
                         <ui:SymbolIcon
                          Grid.Row="0"
                          FontSize="20"
-                         Symbol="Folder20" />     
-                        <TextBlock Padding="10 0 0 0" Text="Из Excel файла" VerticalAlignment="Center" />
+                         Symbol="Folder20" />
+                        <TextBlock Padding="10 0 0 0" Text="Из Excel таблицы" VerticalAlignment="Center" />
+                    </WrapPanel>
+                </Button>
+                <Button Margin="30 10 0 10" Command="{Binding GetDataFromGoogleTableCommand}">
+                    <WrapPanel>
+                        <ui:SymbolIcon
+                             Grid.Row="0"
+                             FontSize="20"
+                             Symbol="Folder20" />
+                        <TextBlock Padding="10 0 0 0" Text="Из Google таблицы" VerticalAlignment="Center" />
+                    </WrapPanel>
+                </Button>
+                <Button Margin="30 10 0 10" Command="{Binding GetDataFromExcelCommand}">
+                    <WrapPanel>
+                        <ui:SymbolIcon
+                             Grid.Row="0"
+                             FontSize="20"
+                             Symbol="ClipboardDataBar20" />
+                        <TextBlock Padding="10 0 0 0" Text="Генератор данных" VerticalAlignment="Center" />
                     </WrapPanel>
                 </Button>
 
@@ -101,6 +74,53 @@
         CornerRadius="8,8,8,8">
             
             <StackPanel Orientation="Vertical">
+                <WrapPanel>
+                    <Border Padding="10 0 10 0" Margin="0 0 0 10"
+                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                        <WrapPanel Grid.Row="0">
+                            <ui:SymbolIcon
+                                 Grid.Row="0"
+                                 FontSize="20" 
+                                 Symbol="RectangleLandscape12" />
+                            <TextBlock Padding="10 0 0 0" Text="Гаусса" VerticalAlignment="Center" />
+                            <CheckBox Content="" HorizontalAlignment="Right" IsChecked="{Binding IsSelectedGauss, UpdateSourceTrigger=PropertyChanged}"/>
+                        </WrapPanel>
+                    </Border>
+
+                    <Border Padding="10 0 10 0"  Margin="20 0 0 10"
+                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                        <WrapPanel Grid.Row="0">
+                            <ui:SymbolIcon
+                                 Grid.Row="0"
+                                 FontSize="20" 
+                                 Symbol="RectangleLandscape12" />
+                            <TextBlock Padding="10 0 0 0" Text="Гаусса-Жордана" VerticalAlignment="Center" />
+                            <CheckBox Content="" HorizontalAlignment="Right" IsChecked="{Binding IsSelectedGaussJordan, UpdateSourceTrigger=PropertyChanged}"/>
+                        </WrapPanel>
+                    </Border>
+
+                    <Border Padding="10 0 10 0" Margin="20 0 0 10"
+                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                        <WrapPanel Grid.Row="0">
+                            <ui:SymbolIcon
+                                 Grid.Row="0"
+                                 FontSize="20" 
+                                 Symbol="RectangleLandscape12" />
+                            <TextBlock Padding="10 0 0 0" Text="Крамера" VerticalAlignment="Center" />
+                            <CheckBox Content="" HorizontalAlignment="Right" IsChecked="{Binding IsSelectedCramer, UpdateSourceTrigger=PropertyChanged}"/>
+                        </WrapPanel>
+
+                    </Border>
+                </WrapPanel>
                 <TextBlock Text="Система уравнений:"/>
                 <WrapPanel  Margin="0 10 0 0">
                     <Button Content="+" Command="{Binding AddToTableCommand}" Width="40" Height="34" Margin="0 0 1 0"/>
